@@ -1,0 +1,61 @@
+"*":
+  "atom-beautify":
+    _analyticsUserId: "a56e83e5-bceb-4f65-aa32-d9bd128b54ff"
+    css_indent_size: 4
+    general:
+      _analyticsUserId: "7ea229ec-ecf1-4f90-9a42-f34a3c75e767"
+    html_indent_size: 4
+  core:
+    disabledPackages: [
+      "wrap-guide"
+      "activate-power-mode"
+      "linter-stylelint"
+      "split-diff"
+      "script"
+      "quick-editor"
+      "pretty-json"
+      "merge-conflicts"
+      "minimap"
+      "minimap-cursorline"
+      "minimap-hide"
+      "linter-json-lint"
+      "linter"
+      "git-time-machine"
+      "git-control"
+      "fold-functions"
+      "Zen"
+    ]
+    openEmptyEditorOnStart: false
+    telemetryConsent: "limited"
+    themes: [
+      "one-dark-ui"
+      "framerjs-syntax"
+    ]
+  editor:
+    backUpBeforeSaving: true
+    fontFamily: "Operator Mono"
+    fontSize: 13
+    invisibles:
+      eol: " "
+    showIndentGuide: true
+    showInvisibles: true
+    softWrap: true
+  "exception-reporting":
+    userId: "ecc3f0ff-4ba2-d994-922a-449430d5a6d4"
+  linter: {}
+  metrics:
+    userId: "c801d224d9c30722dbaaeed1e393ed49e778f0dd"
+  minimap:
+    plugins:
+      cursorline: true
+      cursorlineDecorationsZIndex: 0
+      "find-and-replace": true
+      "find-and-replaceDecorationsZIndex": 0
+      "minimap-hide": true
+      "minimap-hideDecorationsZIndex": 0
+  "one-dark-ui": {}
+  "spell-check": {}
+  "tree-view":
+    hideVcsIgnoredFiles: true
+  welcome:
+    showOnStartup: false
