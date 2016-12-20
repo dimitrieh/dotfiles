@@ -21,6 +21,10 @@ then
 
 fi
 
+# Run Homebrew through the Brewfile
+echo "› brew bundle"
+brew bundle
+
 brew update && brew upgrade --all && brew cleanup && brew prune && brew doctor
 
 exit 0
