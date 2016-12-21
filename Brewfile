@@ -33,6 +33,7 @@ brew 'python'
 brew 'python3'
 brew 'mplayer'
 brew 'httpie'
+brew 'hh'
 brew 'noti'
 brew 'openssl', args: ['universal']
 brew 'cowsay'
