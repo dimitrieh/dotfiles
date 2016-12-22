@@ -11,7 +11,7 @@ if test ! $(which node)
 then
   echo "  x You should probably install Nodejs first:"
   echo "    brew install node --without-npm"
-  echo "    echo prefix=~/.node >> ~/.npmrc"
+  echo "    echo prefix=~/.npm-packages >> ~/.npmrc"
   exit
 fi
 
@@ -22,7 +22,7 @@ then
   echo "    curl -L https://www.npmjs.com/install.sh | sh"
   echo "    if Nodejs is installed like this:"
   echo "    brew install node --without-npm"
-  echo "    echo prefix=~/.node >> ~/.npmrc"
+  echo "    echo prefix=~/.npm-packages >> ~/.npmrc"
   exit
 fi
 
@@ -192,5 +192,7 @@ then
   npm install -g svgo
 fi
 
-npm update npm -g
-sudo npm update -g
+# https://github.com/npm/npm/issues/11385
+npm install -g npm@latest
+#npm update npm -g
+#sudo npm update -g

@@ -142,7 +142,7 @@ add-zsh-hook preexec prompt_pure_preexec
 
 export RANGER_LOAD_DEFAULT_RC="false"
 
-export PROMPT=$'\n$(rb_prompt) in $(directory_name) $(git_dirty)$(need_push)\n%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%}❯)%{$fg_bold[green]%}❯%{$reset_color%} '
+export PROMPT=$'\n$(rb_prompt)  $(directory_name) $(git_dirty)$(need_push)\n%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%}❯)%{$fg_bold[green]%}❯%{$reset_color%} '
 
 set_prompt () {
   export RPROMPT="%{$fg_bold[cyan]%}$(todo)%{$reset_color%}"
