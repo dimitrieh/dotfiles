@@ -79,9 +79,9 @@ module.exports = {
   //   `hypersolar`
   //   `@company/project`
   //   `project#1.0.1`
-  // hyperfull
   plugins: [
   	"hyperlinks",
+  	"hyperfull",
   	"hyper-autohide-tabs"
   ],
 
