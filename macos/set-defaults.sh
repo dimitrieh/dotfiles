@@ -141,6 +141,10 @@ defaults write NSGlobalDomain AppleFontSmoothing -int 2
 # Minimize windows into their application icon.
 # defaults write com.apple.dock minimize-to-application -boolean true
 
+# Always prefer tabs to windows when opening documents
+defaults write NSGlobalDomain AppleWindowTabbingMode -string "always"
+
+
 # Change the layout (rows and columns) of Launchpad
 defaults write com.apple.dock springboard-columns -int 9
 defaults write com.apple.dock springboard-rows -int 4
