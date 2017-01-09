@@ -6,8 +6,8 @@ module.exports = {
     // font family with optional fallbacks
     fontFamily: 'Menlo, "DejaVu Sans Mono", "Lucida Console", monospace',
 
-	// terminal cursor shape
-	cursorShape: 'BEAM',
+  	// terminal cursor shape
+  	cursorShape: 'BEAM',
 
     // terminal cursor background color (hex)
     cursorColor: '#528bff',
@@ -47,6 +47,12 @@ module.exports = {
         border-width: 0 !important;
       }
     `,
+
+    //@media (max-width: 600px) {
+    //  x-row {
+    //    font-family: 'm+ 1m';
+    //  }
+    //}
 
     // custom padding
     padding: '7px 8px',
