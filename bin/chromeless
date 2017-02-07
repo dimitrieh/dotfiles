@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+#   This opens up a chromeless chrome window with a url
+
+open -n -a 'Google Chrome' --args "--app=$1"

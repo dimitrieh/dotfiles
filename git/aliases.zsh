@@ -39,7 +39,3 @@ alias gdell="git reset HEAD^" # Delete last commit
 # 5. git rebase -i master
 # 6. squash and Rebase
 # 7. git push -f (origin YOUR_BRANCH)
-
-alias gdkce="cd ~/Projects/gdk-ce/gitlab"
-alias gdkee="cd ~/Projects/gdk-ee/gitlab"
-alias gdkrunner="gitlab-ci-multi-runner"
