@@ -144,11 +144,11 @@ install_dotfiles
 if [ "$(uname -s)" == "Darwin" ]
 then
   info "installing dependencies"
-  if source bin/dot > /tmp/dotfiles-dot
+  if source bin/dot | tee ${/tmp/dotfiles-dot}
   then
-    success "dependencies installed"
+    success "dependencies installed, log at /tmp/dotfiles-dot"
   else
-    fail "error installing dependencies"
+    fail "error installing dependencies, log at /tmp/dotfiles-dot"
   fi
 fi
 
