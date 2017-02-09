@@ -1,5 +1,6 @@
 alias gdkce="cd ~/Projects/gdk-ce/gitlab"
 alias gdkee="cd ~/Projects/gdk-ee/gitlab"
+alias gldes="cd ~/Projects/gitlab-design"
 alias gdkrunner="gitlab-ci-multi-runner"
 
 alias gltodos="chromeless https://gitlab.com/dashboard/todos"
