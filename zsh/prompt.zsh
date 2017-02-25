@@ -14,13 +14,11 @@ git_branch() {
 }
 
 git_dirty() {
-  st=$($git status 2>/dev/null | tail -n 1)
-  if [[ $st == "" ]]
-  then
+  st=$($git status 2>&1)
+  if [[ $st =~ "Not a git repository" ]] ; then
     echo ""
   else
-    if [[ "$st" =~ ^nothing ]]
-    then
+    if [[ "$st" =~ "nothing to commit" ]] ; then
       echo "on %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
     else
       echo "on %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%}"
@@ -30,7 +28,6 @@ git_dirty() {
 
 git_prompt_info () {
  ref=$($git symbolic-ref HEAD 2>/dev/null) || return
-# echo "(%{\e[0;33m%}${ref#refs/heads/}%{\e[0m%})"
  echo "${ref#refs/heads/}"
 }
 
@@ -55,7 +52,7 @@ rb_prompt(){
 	  echo ""
   fi
 }
-
+#
 # This keeps the number of todos always available the right hand side of my
 # command line. I filter it to only count those tagged as "+next", so it's more
 # of a motivation to clear out the list.
