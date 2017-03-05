@@ -5,7 +5,7 @@ import os
 import subprocess
 
 p = subprocess.Popen(
-  ['infinit-journal', '--stat', '--script', '--as', 'strages'],
+  ['infinit', 'journal', 'stat', '--script', '--as', 'strages'],
   stdout = subprocess.PIPE,
   env = {'PATH': '/usr/local/bin:%s' % os.environ['PATH']},
 )
