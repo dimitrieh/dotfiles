@@ -21,6 +21,11 @@ module.exports = {
     // border color (window, tabs)
     borderColor: '#000',
 
+    hyperlinks: {
+      clickAction: 'ignore',
+      defaultBrowser: true
+    },
+
     // custom css to embed in the main window
     css: `
       .splitpane_divider {
