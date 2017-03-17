@@ -16,6 +16,7 @@ alias glo="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(
 alias gl="yolog" # https://github.com/karandesai-96/yolog
 alias gll="git log --color --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
+alias gf='git fetch'
 alias gp='git push origin HEAD'
 alias gd='git diff'
 alias gc='git commit'
