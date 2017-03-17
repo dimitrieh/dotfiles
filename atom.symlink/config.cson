@@ -33,7 +33,7 @@
   editor:
     backUpBeforeSaving: true
     fontFamily: "Operator Mono"
-    fontSize: 13
+    fontSize: 15
     invisibles:
       eol: " "
     showIndentGuide: true
