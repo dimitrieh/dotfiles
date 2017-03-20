@@ -1,3 +1,6 @@
+# Activate for profiling and run in terminal
+# zmodload zsh/zprof && zprof
+
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 
