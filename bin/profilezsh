@@ -1,0 +1,3 @@
+#!/bin/zsh
+
+zmodload zsh/zprof && zprof
