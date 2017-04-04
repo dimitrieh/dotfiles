@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# A very slightly quicker way to checkout a remote branch when it does not yet exist on your local repository
+#
+# $1 - The remote on which the branch resides
+# $2 - The branch you want to checkout
+#
+# Examples
+#
+#   git-checkout-remote-branch branch-a origin
+#
+#   or
+#
+#   git-checkout-remote-branch branch-b
+#
+
+git fetch ${2:-origin} && git checkout -b $1 "${2:-origin}/$1"
