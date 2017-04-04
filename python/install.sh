@@ -4,17 +4,12 @@
 # Install packages                                                            #
 ###############################################################################
 
-if test ! $(which glances)
+if test ! $(which yolog)
 then
   pip install yolog
 fi
 
-if test ! $(which glances)
-then
-  pip install yolog
-fi
-
-if test ! $(which glances)
+if test ! $(which dom)
 then
   pip install dom
 fi
