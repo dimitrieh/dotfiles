@@ -40,6 +40,6 @@ alias gdell="git reset HEAD^" # Delete last commit
 # 2. git checkout master
 # 3. git pull origin master
 # 4. git checkout YOUR_BRANCH
-# 5. git rebase -i master
-# 6. squash and Rebase
+# 5. git rebase -i master (or "git rebase -i origin/master" if you want to skip updating your own master branch)
+# 6. squash and Rebase ("git add" for fixed conflicts)
 # 7. git push -f (origin YOUR_BRANCH)
