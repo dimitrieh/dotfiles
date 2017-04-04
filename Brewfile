@@ -52,6 +52,7 @@ brew 'woff2'
 brew 'dark-mode'
 brew 'git'
 brew 'git-lfs'
+brew 'diff-so-fancy'
 brew 'go'
 brew 'grc' # Colorize logfiles and command output | http://korpus.juls.savba.sk/~garabik/software/grc.html
 brew 'imagemagick', args: ['with-webp', 'with-fontconfig']
