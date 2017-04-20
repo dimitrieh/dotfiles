@@ -25,6 +25,7 @@ brew 'bash'
 brew 'bash-completion2'
 brew 'tmux'
 brew 'ccat'
+brew 'gpg'
 brew 'ranger'
 brew 'micro'
 brew 'doxygen'
@@ -56,6 +57,7 @@ brew 'diff-so-fancy'
 brew 'go'
 brew 'grc' # Colorize logfiles and command output | http://korpus.juls.savba.sk/~garabik/software/grc.html
 brew 'imagemagick', args: ['with-webp', 'with-fontconfig']
+brew 'icdiff'
 brew 'ffmpeg', args: ['with-fontconfig', 'with-libass', 'with-faac']
 brew 'lua'
 brew 'lynx'
