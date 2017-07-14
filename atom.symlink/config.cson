@@ -54,7 +54,6 @@
       "minimap-hideDecorationsZIndex": 0
   "one-dark-ui": {}
   "spell-check": {}
-  "tree-view":
-    hideVcsIgnoredFiles: true
+  "tree-view": {}
   welcome:
     showOnStartup: false

@@ -34,7 +34,7 @@
 [difftool "icdiff"]
         cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE
 [help]
-        autocorrect = 1
+	autocorrect = 1
 [push]
         # See `git help config` (search for push.default)
         # for more information on different options of the below setting.
@@ -44,10 +44,14 @@
 [status]
         showUntrackedFiles = all
 [credential]
-	       helper = osxkeychain
+	helper = cache --timeout=3600
 [filter "lfs"]
         clean = git-lfs clean -- %f
         smudge = git-lfs smudge -- %f
         required = true
+	process = git-lfs filter-process
 [gpg]
         program = gpg1
+[user]
+	name = Dimitrie Hoekstra
+	email = dimitriehoekstra@gmail.com

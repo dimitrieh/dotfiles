@@ -93,7 +93,10 @@ module.exports = {
   plugins: [
   	"hyperlinks",
   	"hyperfull",
-  	"hyper-autohide-tabs"
+  	"hyper-autohide-tabs",
+    "hyper-search",
+    "hypercwd",
+    "hyperterm-alternatescroll"
   ],
 
   // in development, you can create a directory under
