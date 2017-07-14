@@ -81,7 +81,6 @@ brew 'spark'
 brew 'unrar'
 brew 'wget', args: ['with-iri']
 brew 'youtube-dl'
-brew 'infinit/releases/infinit'
 
 cask 'avast'
 cask '1password'
