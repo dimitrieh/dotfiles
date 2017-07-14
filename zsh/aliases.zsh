@@ -3,9 +3,6 @@ alias reload!='. ~/.zshrc'
 # Improved cat command https://github.com/jingweno/ccat
 alias cat=ccat
 
-# Lookup all aliases
-alias allshortcuts="find ~/.dotfiles -type f -name 'aliases.zsh' -exec ccat {} +"
-
 # Edit dotfiles
 alias dotf="atom ~/.dotfiles"
 

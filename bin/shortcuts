@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+#   This outputs all aliases of a certainn folder within the dotfiles
+
+find ~/.dotfiles/$1 -type f -name 'aliases.zsh' -exec ccat {} +
