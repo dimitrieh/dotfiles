@@ -1,158 +1,212 @@
 cask_args appdir: '/Applications'
 
-tap 'caskroom/cask'
-tap 'caskroom/versions'
-tap 'cytopia/tap'
-tap 'homebrew/binary'
-tap 'homebrew/core'
-tap 'homebrew/dupes'
-tap 'homebrew/games'
-tap 'homebrew/gui'
-tap 'homebrew/science'
-tap 'homebrew/versions'
-tap 'homebrew/homebrew-php'
-tap 'infinit/releases'
-tap 'zyedidia/micro'
-tap 'homebrew/bundle'
-tap 'bramstein/webfonttools'
-
-brew 'ack'
-brew 'coreutils' # Install GNU core utilities (those that come with OS X are outdated) | https://www.gnu.org/software/coreutils
-brew 'moreutils' # Install some other useful utilities like `sponge`. A collection of tools that nobody wrote when UNIX was young | https://joeyh.name/code/moreutils/
-brew 'findutils' # Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed | https://www.gnu.org/software/findutils/
-brew 'gnu-sed', args: ['with-default-names'] # Install GNU `sed`, overwriting the built-in `sed` | https://www.gnu.org/software/sed/
-brew 'bash'
-brew 'bash-completion2'
-brew 'tmux'
-brew 'ccat'
-brew 'gpg'
-brew 'ranger'
-brew 'micro'
-brew 'doxygen'
-brew 'mplayer'
-brew 'python'
-brew 'python3'
-brew 'mplayer'
-brew 'httpie'
-brew 'hh'
-brew 'noti'
-brew 'openssl', args: ['universal']
-brew 'cowsay'
-brew 'curl'
-# Install more recent versions of some OS X tools.
-brew 'vim', args: ['override-system-vi']
-brew 'homebrew/dupes/grep'
-brew 'homebrew/dupes/openssh'
-brew 'homebrew/dupes/screen'
-brew 'php56', args: ['with-gmp']
-# brew 'ruby' # Don't install ruby through brew, but with "rvm"
-# Install font tools.
-brew 'sfnt2woff'
-brew 'sfnt2woff-zopfli'
-brew 'woff2'
-brew 'dark-mode'
-brew 'git'
-brew 'git-lfs'
-brew 'diff-so-fancy'
-brew 'go'
-brew 'grc' # Colorize logfiles and command output | http://korpus.juls.savba.sk/~garabik/software/grc.html
-brew 'imagemagick', args: ['with-webp', 'with-fontconfig']
-brew 'icdiff'
-brew 'ffmpeg', args: ['with-fontconfig', 'with-libass', 'with-faac']
-brew 'lua'
-brew 'lynx'
-brew 'p7zip'
-brew 'pigz'
-brew 'pv'
-brew 'michaeldfallen/formula/git-radar'
-brew 'rename'
-brew 'rhino'
-brew 'speedtest-cli'
-brew 'translate-shell'
-brew 'ssh-copy-id'
-brew 'tree'
-brew 'webkit2png'
-brew 'zopfli'
-brew 'jp2a'
-brew 'jq'
-brew 'thefuck'
-# brew 'node', args: ['without-npm'] Install by node install.sh
-brew 'spark'
-brew 'unrar'
-brew 'wget', args: ['with-iri']
-brew 'youtube-dl'
-
-cask 'avast'
-cask '1password'
-cask 'android-studio'
-cask 'android-file-transfer'
-cask 'atom'
-cask 'appcleaner'
-cask 'basictex'
-cask 'battle-net'
-cask 'beardedspice'
-cask 'bitbar'
-cask 'color-oracle'
-cask 'disk-inventory-x'
-# cask 'disablemonitor'
-cask 'docker'
-cask 'dropbox'
-cask 'ealeksandrov-cd-to'
-cask 'firefox'
-cask 'flux'
-cask 'framer'
-cask 'gfxcardstatus'
-cask 'gitkraken'
-cask 'gitter'
-cask 'glueprint'
-cask 'grammarly'
-cask 'google-drive'
-cask 'google-chrome'
-cask 'google-chrome-canary'
-cask 'hyper'
-cask 'infinit'
-cask 'karabiner-elements'
-cask 'keepingyouawake'
-cask 'keycastr'
-cask 'lumen'
-cask 'mactex'
-cask 'numi'
-cask 'openemu'
-cask 'opera-developer'
-cask 'osxfuse'
-cask 'rcdefaultapp'
-cask 'simple-comic'
-cask 'sketch'
-cask 'sketch-toolbox'
-cask 'skype'
-cask 'slack'
-cask 'spectacle'
-cask 'spotify'
-cask 'steam'
-cask 'the-unarchiver'
-cask 'torbrowser'
-cask 'transmission'
-cask 'vivaldi'
-cask 'vlc'
-cask 'xquartz'
-cask 'wacom-intuos-pro-tablet'
-cask 'wwdc'
-cask 'zoomus'
-
-## List of useful Quick Look plugins for developers | https://github.com/sindresorhus/quick-look-plugins
-cask 'qlcolorcode'
-cask 'qlstephen'
-cask 'ttscoff-mmd-quicklook'
-cask 'quicklook-json'
-cask 'betterzipql'
-cask 'qlimagesize'
-cask 'suspicious-package'
-cask 'quicklookase'
-cask 'qlvideo'
-cask 'quicklookapk'
-
-brew 'diff-pdf'
-
-## List of other applications
-cask 'colorsnapper'
-# cask 'istat-menus'
+tap "bramstein/webfonttools"
+tap "caskroom/cask"
+tap "caskroom/versions"
+tap "cytopia/tap"
+tap "homebrew/binary"
+tap "homebrew/bundle"
+tap "homebrew/core"
+tap "homebrew/dupes"
+tap "homebrew/games"
+tap "homebrew/gui"
+tap "homebrew/php"
+tap "homebrew/science"
+tap "homebrew/versions"
+tap "infinit/releases"
+tap "michaeldfallen/formula"
+tap "zyedidia/micro"
+cask "xquartz"
+brew "ack"
+brew "autoconf"
+brew "automake"
+brew "bash"
+brew "bash-completion@2"
+brew "boost"
+brew "fontconfig"
+brew "gettext"
+brew "pixman"
+brew "cairo"
+brew "ccat"
+brew "cmake"
+brew "coreutils"
+brew "cowsay"
+brew "curl"
+brew "dark-mode"
+brew "git"
+brew "python"
+brew "jpeg"
+brew "little-cms2"
+brew "openjpeg"
+brew "poppler"
+brew "wxmac"
+brew "diff-pdf"
+brew "diff-so-fancy"
+brew "docker-machine-driver-xhyve"
+brew "doxygen"
+brew "fribidi"
+brew "lame"
+brew "xvid"
+brew "findutils"
+brew "gmp"
+brew "mpfr"
+brew "gawk"
+brew "git-lfs"
+brew "gnu-sed", args: ["with-default-names"]
+brew "libksba"
+brew "gnupg"
+brew "gnupg@1.4"
+brew "go"
+brew "xz"
+brew "python3"
+brew "grc"
+brew "grep"
+brew "hh"
+brew "lua"
+brew "highlight"
+brew "httpie"
+brew "hyper"
+brew "icdiff"
+brew "libtool"
+brew "imagemagick", args: ["with-fontconfig", "with-webp"]
+brew "irssi"
+brew "jp2a"
+brew "oniguruma"
+brew "jq"
+brew "kubernetes-helm"
+brew "libevent"
+brew "libiconv"
+brew "libidn"
+brew "libxml2"
+brew "libyaml"
+brew "lynx"
+brew "mas"
+brew "micro"
+brew "moreutils"
+brew "mplayer"
+brew "mpv"
+brew "mysql"
+brew "nginx"
+brew "noti"
+brew "openssh"
+brew "p7zip"
+brew "pigz"
+brew "postgresql"
+brew "pv"
+brew "ranger"
+brew "re2"
+brew "redis"
+brew "rename"
+brew "rhino"
+brew "rlwrap"
+brew "screen"
+brew "spark"
+brew "speedtest-cli"
+brew "ssh-copy-id"
+brew "texi2html"
+brew "thefuck"
+brew "tmux"
+brew "translate-shell"
+brew "tree"
+brew "unixodbc"
+brew "unrar"
+brew "vim", args: ["with-override-system-vi"]
+brew "webkit2png"
+brew "webp"
+brew "wget", args: ["with-iri"]
+brew "yarn"
+brew "yasm"
+brew "zlib"
+brew "zopfli"
+brew "bramstein/webfonttools/sfnt2woff"
+brew "bramstein/webfonttools/sfnt2woff-zopfli"
+brew "bramstein/webfonttools/woff2"
+brew "homebrew/php/php56", args: ["with-gmp"]
+brew "michaeldfallen/formula/git-radar"
+cask "1password"
+cask "android-file-transfer"
+cask "android-studio"
+cask "appcleaner"
+cask "atom"
+cask "avast"
+cask "basictex"
+cask "battle-net"
+cask "beardedspice"
+cask "betterzipql"
+cask "bitbar"
+cask "calibre"
+cask "captain"
+cask "color-oracle"
+cask "commander-one"
+cask "disablemonitor"
+cask "disk-inventory-x"
+cask "docker"
+cask "dropbox"
+cask "firefox"
+cask "flux"
+cask "framer"
+cask "gfxcardstatus"
+cask "gitkraken"
+cask "gitter"
+cask "glueprint"
+cask "google-chrome"
+cask "google-chrome-canary"
+cask "google-drive"
+cask "grammarly"
+cask "hyper"
+cask "infinit"
+cask "karabiner-elements"
+cask "keepingyouawake"
+cask "keycastr"
+cask "lumen"
+cask "mactex"
+cask "numi"
+cask "obs"
+cask "openemu"
+cask "opera-developer"
+cask "osxfuse"
+cask "private-eye"
+cask "qlcolorcode"
+cask "qlimagesize"
+cask "qlprettypatch"
+cask "qlstephen"
+cask "qlvideo"
+cask "quicklook-csv"
+cask "quicklook-json"
+cask "quicklookapk"
+cask "quicklookase"
+cask "rcdefaultapp"
+cask "sabnzbd"
+cask "simple-comic"
+cask "sketch"
+cask "sketch-toolbox"
+cask "skype"
+cask "slack"
+cask "soundcloud-downloader"
+cask "soundnode"
+cask "spectacle"
+cask "spotify"
+cask "steam"
+cask "suspicious-package"
+cask "the-unarchiver"
+cask "torbrowser"
+cask "transmission"
+cask "ttscoff-mmd-quicklook"
+cask "upterm"
+cask "vivaldi"
+cask "vlc"
+cask "wacom-intuos-pro-tablet"
+cask "wwdc"
+cask "zoomus"
+mas "Clocker", id: 1056643111
+mas "ColorSnapper2", id: 969418666
+mas "GarageBand", id: 682658836
+mas "Gifox", id: 1082624744
+mas "iMovie", id: 408981434
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "Pixelmator", id: 407963104
+mas "Sim Daltonism", id: 693112260
+mas "Teampaper Snap", id: 1199502670
+mas "Transmit", id: 403388562
