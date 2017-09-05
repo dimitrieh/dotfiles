@@ -3187,11 +3187,13 @@
 	<key>HotKeyTogglesWindow</key>
 	<true/>
 	<key>Hotkey</key>
-	<true/>
+	<false/>
 	<key>HotkeyChar</key>
-	<integer>84</integer>
+	<integer>0</integer>
 	<key>HotkeyCode</key>
-	<integer>17</integer>
+	<integer>0</integer>
+	<key>HotkeyMigratedFromSingleToMulti</key>
+	<true/>
 	<key>HotkeyModifiers</key>
 	<integer>1966080</integer>
 	<key>IRMemory</key>
@@ -3209,7 +3211,7 @@
 	<key>MaxVertically</key>
 	<false/>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/Downloads/themer-1504387803087/themer-iterm</string>
+	<string>~/Desktop</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
 	<string>{712, 448}</string>
 	<key>NSQuotedKeystrokeBinding</key>
@@ -3248,10 +3250,12 @@
 		<key>TB Is Shown</key>
 		<integer>1</integer>
 	</dict>
+	<key>NSWindow Frame SUUpdateAlert</key>
+	<string>528 493 620 392 0 0 1680 1050 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>297 299 918 381 0 0 1680 1028 </string>
+	<string>157 80 918 512 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>105 51 1434 891 0 0 1680 1028 </string>
+	<string>950 0 730 1028 0 0 1680 1028 </string>
 	<key>NeverWarnAboutShortLivedSessions_B621911C-ED69-428F-88D8-E23FE4CD805A</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -3535,7 +3539,7 @@
 			<key>Columns</key>
 			<integer>90</integer>
 			<key>Command</key>
-			<string></string>
+			<string>/bin/zsh -i -x</string>
 			<key>Cursor Boost</key>
 			<real>0.0</real>
 			<key>Cursor Color</key>
@@ -3922,7 +3926,7 @@
 				<real>0.29397028684616089</real>
 			</dict>
 			<key>Log Directory</key>
-			<string></string>
+			<string>/Users/dimitrie/Desktop</string>
 			<key>Minimum Contrast</key>
 			<real>0.0</real>
 			<key>Mouse Reporting</key>
@@ -4191,7 +4195,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/dimitrie/.dotfiles/iTerm2</string>
+	<string>/Users/dimitrie/.dotfiles/iterm</string>
 	<key>PromptOnQuit</key>
 	<false/>
 	<key>QuitWhenAllWindowsClosed</key>
@@ -4209,7 +4213,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-09-02T21:12:49Z</date>
+	<date>2017-09-04T14:01:37Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -4235,7 +4239,7 @@
 	<key>TabStyle</key>
 	<integer>1</integer>
 	<key>TabViewType</key>
-	<integer>2</integer>
+	<integer>0</integer>
 	<key>ThreeFingerEmulates</key>
 	<false/>
 	<key>TmuxDashboardLimit</key>
@@ -10327,7 +10331,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.15</string>
+	<string>3.1.beta.8</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
