@@ -198,6 +198,7 @@ cask "vlc"
 cask "wacom-intuos-pro-tablet"
 cask "wwdc"
 cask "zoomus"
+cask "background-music"
 mas "Clocker", id: 1056643111
 mas "ColorSnapper2", id: 969418666
 mas "GarageBand", id: 682658836
