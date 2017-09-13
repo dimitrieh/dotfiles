@@ -5,7 +5,6 @@
 Run this:
 
 ```sh
-git clone https://github.com/holman/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 script/bootstrap
 ```
@@ -15,5 +14,5 @@ Everything is configured and tweaked within `~/.dotfiles`.
 
 ## Thanks
 
-I forked from [Zach Holman](https://github.com/holman), which again forked from [Ryan Bates](http://github.com/ryanb)' excellent
+I forked from [Zach Holman](https://github.com/holman/dotfiles), which again forked from [Ryan Bates](http://github.com/ryanb)' excellent
 [dotfiles](https://github.com/ryanb/dotfiles)
