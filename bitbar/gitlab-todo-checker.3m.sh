@@ -2,7 +2,7 @@
 source ~/.localrc
 privatetoken=$GLPRIVATETOKEN
 username=dimitrieh
-monofont=SFMono-Regular
+monofont=Menlo-Regular
 curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?type=MergeRequest" -o /tmp/gitlab-todo-checker-1-1.json;
 curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/" -o /tmp/gitlab-todo-checker-2-1.json;
 number1=$(cat /tmp/gitlab-todo-checker-2-1.json | /usr/local/bin/jq -r '.[] | select(.target.assignee.username == "'$username'") | .target_url' | wc -l);
