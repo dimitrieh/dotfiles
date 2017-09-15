@@ -23,3 +23,6 @@
 # If you run into problems with keybindings, the Keybinding Resolver is a huge help. It can be opened
 # with the Cmd+. key combination. It will show you what keys Atom saw you press and what command Atom
 # executed because of that combination. Or do a google search with `github keymap.cson "full-screen"`
+
+'body':
+  'cmd-alt-ctrl-shift-f': 'window:toggle-full-screen'
