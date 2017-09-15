@@ -12,3 +12,5 @@
 #   editor = editorView.getEditor()
 #   if path.extname(editor.getPath()) is '.md'
 #     editor.setSoftWrapped(true)
+
+atom.commands.dispatch(atom.views.getView(atom.workspace), 'window:toggle-full-screen')
