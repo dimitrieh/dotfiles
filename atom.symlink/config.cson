@@ -11,6 +11,11 @@
       "split-diff"
       "pretty-json"
       "minimap-codeglance"
+      "Sublime-Style-Column-Selection"
+      "linter-csslint"
+      "linter-sass-lint"
+      "about"
+      "snippets"
     ]
     openEmptyEditorOnStart: false
     telemetryConsent: "limited"
@@ -30,7 +35,10 @@
     softWrap: true
   "exception-reporting":
     userId: "ecc3f0ff-4ba2-d994-922a-449430d5a6d4"
-  linter: {}
+  linter:
+    lintOnOpen: false
+    lintPreviewTabs: false
+  "linter-ui-default": {}
   metrics:
     userId: "c801d224d9c30722dbaaeed1e393ed49e778f0dd"
   minimap:
@@ -45,6 +53,8 @@
       "git-diffDecorationsZIndex": 0
       "highlight-selected": true
       "highlight-selectedDecorationsZIndex": 0
+      linter: true
+      linterDecorationsZIndex: 0
       "minimap-hide": true
       "minimap-hideDecorationsZIndex": 0
       pigments: true
