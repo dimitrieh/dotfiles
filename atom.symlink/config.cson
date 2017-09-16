@@ -20,8 +20,8 @@
     openEmptyEditorOnStart: false
     telemetryConsent: "limited"
     themes: [
-      "one-dark-ui"
-      "duotone-dark-space-syntax"
+      "one-light-ui"
+      "duotone-light-syntax"
     ]
     titleBar: "hidden"
   editor:
@@ -65,9 +65,15 @@
     numberOfLines: 10
     softWrap: "always"
   "one-dark-ui": {}
-  "one-vibrancy":
-    effect: "ultra-dark"
+  "one-vibrancy": {}
   "spell-check": {}
+  sunset:
+    daytime_syntax_theme: "duotone-light-syntax"
+    daytime_ui_theme: "one-light-ui"
+    nighttime_syntax_theme: "duotone-dark-space-syntax"
+    nighttime_ui_theme: "one-dark-ui"
+    when_does_it_get_dark: 2000
+    when_does_it_get_light: 800
   "tool-bar":
     position: "Left"
   "tree-view": {}
