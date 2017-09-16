@@ -3174,6 +3174,8 @@
 	<false/>
 	<key>HideActivityIndicator</key>
 	<false/>
+	<key>HideFromDockAndAppSwitcher</key>
+	<false/>
 	<key>HideMenuBarInFullscreen</key>
 	<true/>
 	<key>HideScrollbar</key>
@@ -3253,9 +3255,9 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>528 493 620 392 0 0 1680 1050 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>272 432 918 452 0 0 1680 1050 </string>
+	<string>365 380 1016 512 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1680 404 0 0 1680 1050 </string>
+	<string>0 0 1676 1028 0 0 1680 1028 </string>
 	<key>NeverWarnAboutShortLivedSessions_B621911C-ED69-428F-88D8-E23FE4CD805A</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -3623,15 +3625,15 @@
 			<key>HotKey Alternate Shortcuts</key>
 			<array/>
 			<key>HotKey Characters</key>
-			<string></string>
+			<string></string>
 			<key>HotKey Characters Ignoring Modifiers</key>
-			<string>T</string>
+			<string></string>
 			<key>HotKey Key Code</key>
-			<integer>17</integer>
+			<integer>0</integer>
 			<key>HotKey Modifier Activation</key>
 			<integer>0</integer>
 			<key>HotKey Modifier Flags</key>
-			<integer>1966080</integer>
+			<integer>0</integer>
 			<key>HotKey Window Animates</key>
 			<true/>
 			<key>HotKey Window AutoHides</key>
@@ -4416,7 +4418,7 @@
 			<key>Blur</key>
 			<true/>
 			<key>Blur Radius</key>
-			<real>14.015712738037109</real>
+			<real>30</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -4523,11 +4525,11 @@
 			<key>HotKey Alternate Shortcuts</key>
 			<array/>
 			<key>HotKey Characters</key>
-			<string></string>
+			<string></string>
 			<key>HotKey Characters Ignoring Modifiers</key>
-			<string>T</string>
+			<string>Y</string>
 			<key>HotKey Key Code</key>
-			<integer>17</integer>
+			<integer>16</integer>
 			<key>HotKey Modifier Activation</key>
 			<integer>0</integer>
 			<key>HotKey Modifier Flags</key>
@@ -5032,7 +5034,7 @@
 			<key>Thin Strokes</key>
 			<integer>1</integer>
 			<key>Transparency</key>
-			<real>0.0</real>
+			<real>0.25348191624365485</real>
 			<key>Triggers</key>
 			<array/>
 			<key>Unlimited Scrollback</key>
@@ -5056,7 +5058,7 @@
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
-			<integer>5</integer>
+			<integer>11</integer>
 			<key>Working Directory</key>
 			<string>/Users/dimitriehoekstra</string>
 		</dict>
