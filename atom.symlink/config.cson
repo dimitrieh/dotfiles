@@ -18,6 +18,9 @@
       "snippets"
     ]
     openEmptyEditorOnStart: false
+    packagesWithKeymapsDisabled: [
+      "night-day-theming"
+    ]
     telemetryConsent: "limited"
     themes: [
       "one-light-ui"
@@ -64,8 +67,13 @@
     decorations: false
     numberOfLines: 10
     softWrap: "always"
+  "night-day-theming":
+    darkSyntaxTheme: "duotone-dark-space-syntax"
+    darkUITheme: "one-dark-ui"
+    lightUITheme: "one-light-ui"
   "one-dark-ui": {}
-  "one-vibrancy": {}
+  "one-vibrancy":
+    effect: "auto-opaque"
   "spell-check": {}
   sunset:
     daytime_ui_theme: "one-light-ui"
