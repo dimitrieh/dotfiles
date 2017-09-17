@@ -26,3 +26,6 @@
 
 'body':
   'cmd-alt-ctrl-shift-f': 'window:toggle-full-screen'
+
+'atom-workspace':
+  'cmd-alt-ctrl-shift-t': 'night-day-theming:toggle'
