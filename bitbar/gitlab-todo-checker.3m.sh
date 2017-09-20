@@ -80,7 +80,7 @@ while read -r iid
       read -r title
       read -r target_url; do
     echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target.labels[] == "Portfolio Management") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-2-1.json);
+done < <(/usr/local/bin/jq -rc '.[] | select(.target.labels[]? == "Portfolio Management") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-2-1.json);
 
 echo "---";
 echo "5 most recent todo's";
