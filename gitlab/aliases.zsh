@@ -8,3 +8,8 @@ alias glissues="chromeless https://gitlab.com/dashboard/issues?assignee_id=48955
 alias glmrs="chomeless https://gitlab.com/dashboard/merge_requests?assignee_id=489558"
 
 alias nbigdkrun="npm install && bundle install && gdk run"
+
+alias cp3000='lsof | grep ":3000"''
+alias cp3001='lsof | grep ":3001"''
+
+alias kill9="kill -9"
