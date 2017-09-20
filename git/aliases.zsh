@@ -28,6 +28,7 @@ alias gdelh="git clean -f" # Delete all changes in the Git repository, including
 alias gdell="git reset HEAD^" # Delete last commit
 alias gundo="git reset --soft HEAD^"
 
+alias gcm="git checkout master"
 # Rebase and squash
 # 1. Do your edits on your branch and commit those
 # 2. git checkout master
