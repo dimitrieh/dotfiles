@@ -23,7 +23,7 @@ github_api_key = os.getenv( 'GITHUB_TOKEN', '' )
 enterprise_api_key = os.getenv( 'GITHUB_ENTERPRISE_TOKEN', 'Enter your GitHub:Enterprise Personal Access Token here...' )
 enterprise_api_url = os.getenv( 'GITHUB_ENTERPRISE_API', 'https://github.example.com/api/v3' )
 
-active = '#4078C0'
+active = '#FFFFFF'
 inactive = '#7d7d7d'
 
 # Utility Functions
