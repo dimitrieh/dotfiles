@@ -153,4 +153,8 @@ then
 fi
 
 echo ''
+echo '  Doing a safety check'
+safety-check
+
+echo ''
 echo '  All installed!'
