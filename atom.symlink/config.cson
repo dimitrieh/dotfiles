@@ -21,6 +21,7 @@
     packagesWithKeymapsDisabled: [
       "night-day-theming"
     ]
+    restorePreviousWindowsOnStart: "no"
     telemetryConsent: "limited"
     themes: [
       "one-dark-ui"
