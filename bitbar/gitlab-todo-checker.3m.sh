@@ -41,16 +41,6 @@ while read -r iid
 done < <(/usr/local/bin/jq -rc '.[] | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
-echo "Todo's with milestone 10.0";
-while read -r iid
-      read -r path
-      read -r state
-      read -r title
-      read -r target_url; do
-    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target.milestone.title == "10.0") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-2-1.json);
-
-echo "---";
 echo "Todo's with milestone 10.1";
 while read -r iid
       read -r path
