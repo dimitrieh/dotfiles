@@ -6,8 +6,8 @@ managerusername=sarrahvesselov
 monofont=Menlo-Regular
 
 > /tmp/gitlab-todo-checker-1-1.json
-PAGES=$(curl -i -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/todos/?per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
-for i in $(seq 1 $PAGES); do
+TPAGES=$(curl -i -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/todos/?per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
+for i in $(seq 1 $TPAGES); do
   curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100&page=$i" >> /tmp/gitlab-todo-checker-1-1.json;
 done
 
