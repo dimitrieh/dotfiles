@@ -117,8 +117,18 @@ while read -r iid
     echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
 done < <(/usr/local/bin/jq -rc '.[] | select(.target.author.username == "'$username'") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
-echo "---";
-echo "Todo's on issues and merge requests which you have awarded a star emoji";
+# BROKEN!
+# echo "---";
+# echo "Todo's on issues and merge requests which you have awarded a star emoji";
+# while read -r iid
+#       read -r path
+#       read -r project_id
+#       read -r state
+#       read -r title
+#       read -r target_url; do
+#     echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
+# done < <(/usr/local/bin/jq -rc '.[] | select(.name == "star") |  | select(.user.username == "'$username'") | .target.iid,.project.path,.target.project_id,.target.state,.target.title,.target_url' < curl -s -L -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/projects/$project_id/issues/$iid/award_emoji");
+
 
 echo "---";
 echo "Todo's from your manager on issues and merge requests";
