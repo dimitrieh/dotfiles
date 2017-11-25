@@ -5,18 +5,21 @@ username=dimitrieh
 assigneeid=489558
 monofont=Menlo-Regular
 
+# Getting all issue assignments
 > /tmp/gitlab-assignments-checker-1-1.json
 PAGES=$(curl -i -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/issues?scope=all&assignee_id=$assigneeid&state=opened&per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
 for i in $(seq 1 $PAGES); do
   curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/issues?scope=all&assignee_id=$assigneeid&state=opened&per_page=100&page=$i" >> /tmp/gitlab-assignments-checker-1-1.json;
 done
 
+# Getting all merge request assignments
 > /tmp/gitlab-assignments-checker-2-1.json
 PAGES=$(curl -i -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/merge_requests?scope=all&assignee_id=$assigneeid&state=opened&per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
 for i in $(seq 1 $PAGES); do
   curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/merge_requests?scope=all&assignee_id=$assigneeid&state=opened&per_page=100&page=$i" >> /tmp/gitlab-assignments-checker-2-1.json;
 done
 
+# Getting all assignments awarded a star emoji by you
 > /tmp/gitlab-assignments-checker-3-1.json
 PAGES=$(curl -i -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/issues?scope=all&assignee_id=$assigneeid&my_reaction_emoji=star&state=opened&per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
 for i in $(seq 1 $PAGES); do
