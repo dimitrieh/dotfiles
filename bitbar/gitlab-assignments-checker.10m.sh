@@ -7,21 +7,21 @@ monofont=Menlo-Regular
 
 # Getting all issue assignments
 > /tmp/gitlab-assignments-checker-1-1.json
-PAGES=$(curl -i -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/issues?scope=all&assignee_id=$assigneeid&state=opened&per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
+PAGES=$(curl -i -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/issues?scope=all&assignee_id=$assigneeid&state=opened&per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
 for i in $(seq 1 $PAGES); do
   curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/issues?scope=all&assignee_id=$assigneeid&state=opened&per_page=100&page=$i" >> /tmp/gitlab-assignments-checker-1-1.json;
 done
 
 # Getting all merge request assignments
 > /tmp/gitlab-assignments-checker-2-1.json
-PAGES=$(curl -i -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/merge_requests?scope=all&assignee_id=$assigneeid&state=opened&per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
+PAGES=$(curl -i -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/merge_requests?scope=all&assignee_id=$assigneeid&state=opened&per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
 for i in $(seq 1 $PAGES); do
   curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/merge_requests?scope=all&assignee_id=$assigneeid&state=opened&per_page=100&page=$i" >> /tmp/gitlab-assignments-checker-2-1.json;
 done
 
 # Getting all assignments awarded a star emoji by you
 > /tmp/gitlab-assignments-checker-3-1.json
-PAGES=$(curl -i -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/issues?scope=all&assignee_id=$assigneeid&my_reaction_emoji=star&state=opened&per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
+PAGES=$(curl -i -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/issues?scope=all&assignee_id=$assigneeid&my_reaction_emoji=star&state=opened&per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
 for i in $(seq 1 $PAGES); do
   curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/issues?scope=all&assignee_id=$assigneeid&my_reaction_emoji=star&state=opened&per_page=100&page=$i" >> /tmp/gitlab-assignments-checker-3-1.json;
 done
@@ -41,7 +41,7 @@ while read -r iid
       read -r project_id
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
 done < <(/usr/local/bin/jq -rc '.[] | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-2-1.json);
 
 echo "---";
@@ -50,7 +50,7 @@ while read -r iid
       read -r project_id
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont";
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont";
 done < <(/usr/local/bin/jq -rc '.[] | select(.milestone.title == "10.1") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
@@ -59,7 +59,7 @@ while read -r iid
       read -r project_id
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
 done < <(/usr/local/bin/jq -rc '.[] | select(.milestone.title == "10.2") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
@@ -68,7 +68,7 @@ while read -r iid
       read -r project_id
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
 done < <(/usr/local/bin/jq -rc '.[] | select(.milestone.title == "10.3") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
@@ -77,7 +77,7 @@ while read -r iid
       read -r project_id
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
 done < <(/usr/local/bin/jq -rc '.[] | select(.milestone.title == "10.4") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
@@ -86,7 +86,7 @@ while read -r iid
       read -r project_id
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
 done < <(/usr/local/bin/jq -rc '.[] | select(.labels[]? == "multi-file editor") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
@@ -95,7 +95,7 @@ while read -r iid
       read -r project_id
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
 done < <(/usr/local/bin/jq -rc '.[] | select(.labels[]? == "auto devops") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
@@ -104,7 +104,7 @@ while read -r iid
       read -r project_id
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
 done < <(/usr/local/bin/jq -rc '.[] | select(.author.username == "'$username'") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
@@ -113,7 +113,7 @@ while read -r iid
       read -r project_id
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
 done < <(/usr/local/bin/jq -rc '.[] | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-3-1.json);
 
 echo "---";
@@ -122,5 +122,5 @@ while read -r iid
       read -r project_id
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
 done < <(/usr/local/bin/jq -rc '.[] | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
