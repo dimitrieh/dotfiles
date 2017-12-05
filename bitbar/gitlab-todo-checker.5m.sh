@@ -6,7 +6,7 @@ managerusername=sarrahvesselov
 monofont=Menlo-Regular
 
 > /tmp/gitlab-todo-checker-1-1.json
-TPAGES=$(curl -i -s -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/todos/?per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
+TPAGES=$(curl -i -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
 for i in $(seq 1 $TPAGES); do
   curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100&page=$i" >> /tmp/gitlab-todo-checker-1-1.json;
 done
@@ -130,7 +130,7 @@ done < <(/usr/local/bin/jq -rc '.[] | select(.target.author.username == "'$usern
 #       read -r title
 #       read -r target_url; do
 #     echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-# done < <(/usr/local/bin/jq -rc '.[] | select(.name == "star") |  | select(.user.username == "'$username'") | .target.iid,.project.path,.target.project_id,.target.state,.target.title,.target_url' < curl -s -L -H "PRIVATE-TOKEN: $GLPRIVATETOKEN" "https://gitlab.com/api/v4/projects/$project_id/issues/$iid/award_emoji");
+# done < <(/usr/local/bin/jq -rc '.[] | select(.name == "star") |  | select(.user.username == "'$username'") | .target.iid,.project.path,.target.project_id,.target.state,.target.title,.target_url' < curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id/issues/$iid/award_emoji");
 
 
 echo "---";
