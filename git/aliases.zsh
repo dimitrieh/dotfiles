@@ -29,6 +29,10 @@ alias gdell="git reset HEAD^" # Delete last commit
 alias gundo="git reset --soft HEAD^"
 
 alias gcm="git checkout master"
+alias gcrb="git-checkout-remote-branch" #script "gcrb branch-a origin" or "gcrb branch-b"
+alias gcbn="git-copy-branch-name" #script
+alias gprom="git-promoto" #script Promotes a local topic branch to a remote tracking branch of the same name,by pushing and then setting up the git config
+
 # Rebase and squash
 # 1. Do your edits on your branch and commit those
 # 2. git checkout master
