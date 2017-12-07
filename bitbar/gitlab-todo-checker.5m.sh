@@ -51,26 +51,6 @@ while read -r iid
 done < <(/usr/local/bin/jq -rc '.[] | select(.target_type == "MergeRequest") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
-echo "Todo's with milestone 10.1";
-while read -r iid
-      read -r path
-      read -r state
-      read -r title
-      read -r target_url; do
-    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target.milestone.title == "10.1") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
-
-echo "---";
-echo "Todo's with milestone 10.2";
-while read -r iid
-      read -r path
-      read -r state
-      read -r title
-      read -r target_url; do
-    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target.milestone.title == "10.2") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
-
-echo "---";
 echo "Todo's with milestone 10.3";
 while read -r iid
       read -r path
@@ -91,6 +71,26 @@ while read -r iid
 done < <(/usr/local/bin/jq -rc '.[] | select(.target.milestone.title == "10.4") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
+echo "Todo's with milestone 10.5";
+while read -r iid
+      read -r path
+      read -r state
+      read -r title
+      read -r target_url; do
+    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.target.milestone.title == "10.5") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+
+echo "---";
+echo "Todo's with milestone 10.6";
+while read -r iid
+      read -r path
+      read -r state
+      read -r title
+      read -r target_url; do
+    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.target.milestone.title == "10.6") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+
+echo "---";
 echo "Todo's with label multi-file editor";
 while read -r iid
       read -r path
@@ -99,6 +99,16 @@ while read -r iid
       read -r target_url; do
     echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
 done < <(/usr/local/bin/jq -rc '.[] | select(.target.labels[]? == "multi-file editor") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+
+echo "---";
+echo "Todo's with label web ide";
+while read -r iid
+      read -r path
+      read -r state
+      read -r title
+      read -r target_url; do
+    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.target.labels[]? == "web ide") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 echo "Todo's with label auto devops";
