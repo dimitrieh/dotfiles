@@ -33,6 +33,8 @@ alias gcrb="git-checkout-remote-branch" #script "gcrb branch-a origin" or "gcrb 
 alias gcbn="git-copy-branch-name" #script
 alias gprom="git-promoto" #script Promotes a local topic branch to a remote tracking branch of the same name,by pushing and then setting up the git config
 
+alias dontaskmeagain="ssh-add" #If git keeps asking for your password with ssh remotes
+
 # Rebase and squash
 # 1. Do your edits on your branch and commit those
 # 2. git checkout master
