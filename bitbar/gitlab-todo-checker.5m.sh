@@ -19,6 +19,7 @@ echo " T $number1 | templateImage=iVBORw0KGgoAAAANSUhEUgAAACIAAAAgAQMAAABNQTiKAA
 
 echo "---";
 echo "Refresh | refresh=true"
+echo "Your todos on GitLab | href=https://gitlab.com/dashboard/todos";
 
 echo "---";
 echo "Todo's on assigned merge requests";

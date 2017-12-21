@@ -34,6 +34,9 @@ echo " A $number1 | templateImage=iVBORw0KGgoAAAANSUhEUgAAACIAAAAgAQMAAABNQTiKAA
 
 echo "---";
 echo "Refresh | refresh=true"
+echo "Your assigned merge requests on GitLab | href=https://gitlab.com/dashboard/merge_requests?assignee_id=$assigneeid";
+echo "Your assigned issues on GitLab | href=https://gitlab.com/dashboard/issues?assignee_id=$assigneeid";
+
 
 echo "---";
 echo "Assigned merge requests";
