@@ -32,16 +32,6 @@ while read -r iid
 done < <(/usr/local/bin/jq -rc '.[] | select(.target_type == "MergeRequest") | select(.target.assignee.username == "'$username'") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
-echo "Todo's on assigned issues";
-while read -r iid
-      read -r path
-      read -r state
-      read -r title
-      read -r target_url; do
-    echo "$(printf %-15.15s "$path") #$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target_type == "Issue") | select(.target.assignees[].username == "'$username'") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
-
-echo "---";
 echo "Todo's on merge requests";
 while read -r iid
       read -r path
@@ -120,6 +110,16 @@ while read -r iid
       read -r target_url; do
     echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
 done < <(/usr/local/bin/jq -rc '.[] | select(.target.labels[]? == "auto devops") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+
+echo "---";
+echo "Todo's on assigned issues ###";
+while read -r iid
+      read -r path
+      read -r state
+      read -r title
+      read -r target_url; do
+    echo "$(printf %-15.15s "$path") #$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.target_type == "Issue") | select(.target.assignees[].username == "'$username'") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 echo "Todo's on issues and merge requests which you have created yourself";
