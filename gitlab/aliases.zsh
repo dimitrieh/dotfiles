@@ -22,4 +22,4 @@ alias cp3001='lsof | grep ":3001"'
 
 alias kill9="kill -9" #kill -9 ID found with lsof
 
-alias gdkkill="killall chromedriver chromium-browser ruby ruby2.3 node postgres" #kill all lingering processes, if not working use `-9`
+alias gdkkill="killall chromedriver chromium-browser ruby ruby2.3 node postgres" #kill all lingering processes, if not working use -9
