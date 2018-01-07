@@ -36,6 +36,7 @@ echo "---";
 echo "Refresh | refresh=true"
 echo "Your assigned merge requests on GitLab | href=https://gitlab.com/dashboard/merge_requests?assignee_id=$assigneeid";
 echo "Your assigned issues on GitLab | href=https://gitlab.com/dashboard/issues?assignee_id=$assigneeid";
+echo "Edit this file | bash=/usr/local/bin/atom param1=--add param2=/Users/dimitrie/.dotfiles/bitbar terminal=false";
 
 
 echo "---";
