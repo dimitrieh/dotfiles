@@ -48,15 +48,6 @@ while read -r iid
 done < <(/usr/local/bin/jq -rc '.[] | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-2-1.json);
 
 echo "---";
-echo "Assigned issues with milestone 10.3";
-while read -r iid
-      read -r project_id
-      read -r title
-      read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.milestone.title == "10.3") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
-
-echo "---";
 echo "Assigned issues with milestone 10.4";
 while read -r iid
       read -r project_id
