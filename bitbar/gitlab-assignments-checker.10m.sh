@@ -4,6 +4,8 @@ privatetoken=$GLPRIVATETOKEN
 username=dimitrieh
 assigneeid=489558
 monofont=Menlo-Regular
+speciallabel=Deliverable
+speciallabelimg=Ⓓ
 
 # Getting all issue assignments
 > /tmp/gitlab-assignments-checker-1-1.json
@@ -43,88 +45,98 @@ echo "---";
 echo "Assigned merge requests";
 while read -r iid
       read -r project_id
+      read -r labels
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-2-1.json);
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$web_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | .iid,.project_id,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-2-1.json);
 
 echo "---";
 echo "Assigned issues with milestone 10.4";
 while read -r iid
       read -r project_id
+      read -r labels
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.milestone.title == "10.4") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$web_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.milestone.title == "10.4") | .iid,.project_id,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
 echo "Assigned issues with milestone 10.5";
 while read -r iid
       read -r project_id
+      read -r labels
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.milestone.title == "10.5") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$web_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.milestone.title == "10.5") | .iid,.project_id,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
 echo "Assigned issues with milestone 10.6";
 while read -r iid
       read -r project_id
+      read -r labels
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.milestone.title == "10.6") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$web_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.milestone.title == "10.6") | .iid,.project_id,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
 echo "Assigned issues with milestone 10.7";
 while read -r iid
       read -r project_id
+      read -r labels
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.milestone.title == "10.7") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$web_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.milestone.title == "10.7") | .iid,.project_id,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
 echo "Assigned issues with label web ide";
 while read -r iid
       read -r project_id
+      read -r labels
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.labels[]? == "web ide") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$web_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.labels[]? == "web ide") | .iid,.project_id,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
 echo "Assigned issues with label auto devops";
 while read -r iid
       read -r project_id
+      read -r labels
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.labels[]? == "auto devops") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$web_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.labels[]? == "auto devops") | .iid,.project_id,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
 echo "Assigned issues which you have created yourself";
 while read -r iid
       read -r project_id
+      read -r labels
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.author.username == "'$username'") | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$web_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.author.username == "'$username'") | .iid,.project_id,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
 echo "Assigned issues which you have awarded a star emoji";
 while read -r iid
       read -r project_id
+      read -r labels
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-3-1.json);
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$web_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | .iid,.project_id,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-3-1.json);
 
 echo "---";
 echo "All your other assigned issues";
 while read -r iid
       read -r project_id
+      read -r labels
       read -r title
       read -r web_url; do
-    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$title") | href=$web_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | .iid,.project_id,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
+    echo "$(printf %-15.15s "$(curl -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/projects/$project_id" | /usr/local/bin/jq -r '.path' | cat)") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$web_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | .iid,.project_id,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);

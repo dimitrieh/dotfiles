@@ -4,6 +4,8 @@ privatetoken=$GLPRIVATETOKEN
 username=dimitrieh
 managerusername=sarrahvesselov
 monofont=Menlo-Regular
+speciallabel=Deliverable
+speciallabelimg=Ⓓ
 
 > /tmp/gitlab-todo-checker-1-1.json
 TPAGES=$(curl -i -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
@@ -27,120 +29,121 @@ echo "Todo's on assigned merge requests";
 while read -r iid
       read -r path
       read -r state
+      read -r labels
       read -r title
       read -r target_url; do
-    echo "$(printf %-15.15s "$path") !$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target_type == "MergeRequest") | select(.target.assignee.username == "'$username'") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+    echo "$(printf %-15.15s "$path") !$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.target_type == "MergeRequest") | select(.target.assignee.username == "'$username'") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 echo "Todo's on design repository issues";
 while read -r iid
       read -r path
       read -r state
+      read -r labels
       read -r title
       read -r target_url; do
-    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.project.path == "gitlab-design") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.project.path == "gitlab-design") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 echo "Todo's on merge requests";
 while read -r iid
       read -r path
       read -r state
+      read -r labels
       read -r title
       read -r target_url; do
-    echo "$(printf %-15.15s "$path") !$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target_type == "MergeRequest") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+    echo "$(printf %-15.15s "$path") !$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.target_type == "MergeRequest") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 echo "Todo's with milestone 10.4";
 while read -r iid
       read -r path
       read -r state
+      read -r labels
       read -r title
       read -r target_url; do
-    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target.milestone.title == "10.4") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.target.milestone.title == "10.4") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 echo "Todo's with milestone 10.5";
 while read -r iid
       read -r path
       read -r state
+      read -r labels
       read -r title
       read -r target_url; do
-    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target.milestone.title == "10.5") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.target.milestone.title == "10.5") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 echo "Todo's with milestone 10.6";
 while read -r iid
       read -r path
       read -r state
+      read -r labels
       read -r title
       read -r target_url; do
-    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target.milestone.title == "10.6") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.target.milestone.title == "10.6") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 echo "Todo's with milestone 10.7";
 while read -r iid
       read -r path
       read -r state
+      read -r labels
       read -r title
       read -r target_url; do
-    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target.milestone.title == "10.7") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.target.milestone.title == "10.7") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 echo "Todo's with label web ide";
 while read -r iid
       read -r path
       read -r state
+      read -r labels
       read -r title
       read -r target_url; do
-    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target.labels[]? == "web ide") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
-
-echo "---";
-echo "Todo's with label web ide";
-while read -r iid
-      read -r path
-      read -r state
-      read -r title
-      read -r target_url; do
-    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target.labels[]? == "web ide") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.target.labels[]? == "web ide") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 echo "Todo's with label auto devops";
 while read -r iid
       read -r path
       read -r state
+      read -r labels
       read -r title
       read -r target_url; do
-    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target.labels[]? == "auto devops") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.target.labels[]? == "auto devops") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 echo "Todo's on assigned issues ###";
 while read -r iid
       read -r path
       read -r state
+      read -r labels
       read -r title
       read -r target_url; do
-    echo "$(printf %-15.15s "$path") #$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target_type == "Issue") | select(.target.assignees[].username == "'$username'") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+    echo "$(printf %-15.15s "$path") #$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.target_type == "Issue") | select(.target.assignees[].username == "'$username'") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 echo "Todo's on issues and merge requests which you have created yourself";
 while read -r iid
       read -r path
       read -r state
+      read -r labels
       read -r title
       read -r target_url; do
-    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.target.author.username == "'$username'") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.target.author.username == "'$username'") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 # BROKEN!
 # echo "---";
@@ -160,17 +163,19 @@ echo "Todo's from your manager on issues and merge requests";
 while read -r iid
       read -r path
       read -r state
+      read -r labels
       read -r title
       read -r target_url; do
-    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | select(.author.username == "'$managerusername'") | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.author.username == "'$managerusername'") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 echo "5 most recent todo's";
 while read -r iid
       read -r path
       read -r state
+      read -r labels
       read -r title
       read -r target_url; do
-    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[range(0;10)] | .target.iid,.project.path,.target.state,.target.title,.target_url' < /tmp/gitlab-todo-checker-2-1.json);
+    echo "$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')$(printf '%-6s' "$iid") $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$(if $(echo ${labels} | /usr/local/bin/jq '.' | /usr/local/bin/jq 'contains(["'$speciallabel'"])') == true; then echo "$speciallabelimg "; fi)$title") | href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[range(0;10)] | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-2-1.json);
