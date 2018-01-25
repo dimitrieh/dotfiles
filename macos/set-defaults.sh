@@ -320,6 +320,13 @@ defaults write com.apple.appstore ShowDebugMenu -bool true
 defaults write -g NSUserKeyEquivalents '{
 "Enter Full Screen"="@~^$f";
 "Exit Full Screen"="@~^$f";
+"Enter Full Screen Mode"="@~^$f";
+"Exit Full Screen Mode"="@~^$f";
+"Toggle Full Screen"="@~^$f";
+"Full Screen"="@~^$f";
+"Fullscreen"="@~^$f";
+"Normal Screen"="@~^$f";
+"Remove Full Screen"="@~^$f";
 }'
 
 echo "Done. Do a restart to let all changes take effect ;)"
