@@ -59,6 +59,21 @@ $(printf %-75.75s "$title")\
 done < <(/usr/local/bin/jq -rc '.[] | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-2-1.json);
 
 echo "---";
+echo "Assigned issues which you have awarded a star emoji";
+while read -r iid
+      read -r labels
+      read -r title
+      read -r web_url; do
+    echo "\
+$(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
+$(printf '%-6s' "$iid")\
+$(printf '%-2.2s' "$(echo ${labels} | /usr/local/bin/jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
+$(printf '%-2.2s' "$(echo ${labels} | /usr/local/bin/jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
+$(printf %-75.75s "$title")\
+| href=$web_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-3-1.json);
+
+echo "---";
 echo "Assigned issues with milestone 10.4";
 while read -r iid
       read -r labels
@@ -162,21 +177,6 @@ $(printf '%-2.2s' "$(echo ${labels} | /usr/local/bin/jq '.[]? | select(. == "'$s
 $(printf %-75.75s "$title")\
 | href=$web_url font=$monofont"
 done < <(/usr/local/bin/jq -rc '.[] | select(.author.username == "'$username'") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
-
-echo "---";
-echo "Assigned issues which you have awarded a star emoji";
-while read -r iid
-      read -r labels
-      read -r title
-      read -r web_url; do
-    echo "\
-$(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
-$(printf '%-6s' "$iid")\
-$(printf '%-2.2s' "$(echo ${labels} | /usr/local/bin/jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | /usr/local/bin/jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf %-75.75s "$title")\
-| href=$web_url font=$monofont"
-done < <(/usr/local/bin/jq -rc '.[] | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-3-1.json);
 
 echo "---";
 echo "All your assigned issues";
