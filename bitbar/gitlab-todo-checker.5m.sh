@@ -272,6 +272,24 @@ $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") "
 | href=$target_url font=$monofont"
 done < <(/usr/local/bin/jq -rc '.[] | select(.author.username == "'$managerusername'") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
+echo "---";
+echo "Todo's from filipa";
+while read -r iid
+      read -r path
+      read -r state
+      read -r labels
+      read -r title
+      read -r target_url; do
+    echo "\
+$(printf %-15.15s "$path")\
+$([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')\
+$(printf '%-6s' "$iid")\
+$(printf '%-2.2s' "$(echo ${labels} | /usr/local/bin/jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
+$(printf '%-2.2s' "$(echo ${labels} | /usr/local/bin/jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
+$(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title")\
+| href=$target_url font=$monofont"
+done < <(/usr/local/bin/jq -rc '.[] | select(.author.username == "filipa") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+
 
 echo "---";
 echo "5 most recent todo's";
