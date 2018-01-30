@@ -108,6 +108,9 @@ defaults write NSGlobalDomain AppleLocale -string "en_GB@currency=EUR"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
 
+# Enable text replacement across all applications
+defaults write -g WebAutomaticTextReplacementEnabled -bool true
+
 ###############################################################################
 # Time Machine                                                                #
 ###############################################################################
