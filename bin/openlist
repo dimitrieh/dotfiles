@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+#   This opens all urls/files from a list within a file
+
+open $(cat $1)
