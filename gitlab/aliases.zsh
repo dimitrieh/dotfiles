@@ -10,13 +10,7 @@ alias gdkeerun="gdkee && npm install && bundle install && gdk run & (sleep 120 &
 
 alias gldes="cd ~/Projects/gitlab-design"
 
-alias gltodos="chromeless https://gitlab.com/dashboard/todos"
-alias glissues="chromeless https://gitlab.com/dashboard/issues?assignee_id=489558"
-alias glmrs="chomeless https://gitlab.com/dashboard/merge_requests?assignee_id=489558"
+alias kill3000='kill -9 $(lsof -i tcp:3000 -t)'
+alias kill3001='kill -9 $(lsof -i tcp:3001 -t)'
 
-alias cp3000='lsof | grep ":3000"'
-alias cp3001='lsof | grep ":3001"'
-
-alias kill9="kill -9" #kill -9 ID found with lsof
-
-alias gdkkill="killall chromedriver chromium-browser ruby ruby2.3 node postgres redis redis-server" #kill all lingering processes, if not working use -9
+alias gdkkill="pkill -f chromedriver chromium-browser ruby ruby2.3 node postgres redis redis-server"
