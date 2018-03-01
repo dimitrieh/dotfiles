@@ -16,6 +16,7 @@
       "linter-sass-lint"
       "about"
       "snippets"
+      "linter-markdown"
     ]
     openEmptyEditorOnStart: false
     packagesWithKeymapsDisabled: [
@@ -31,7 +32,6 @@
   editor:
     backUpBeforeSaving: true
     fontFamily: "Operator Mono"
-    fontSize: 15
     invisibles:
       eol: " "
     showIndentGuide: true
@@ -42,7 +42,9 @@
   linter:
     lintOnOpen: false
     lintPreviewTabs: false
-  "linter-ui-default": {}
+  "linter-ui-default":
+    panelHeight: 170
+    showPanel: true
   metrics:
     userId: "c801d224d9c30722dbaaeed1e393ed49e778f0dd"
   minimap:
