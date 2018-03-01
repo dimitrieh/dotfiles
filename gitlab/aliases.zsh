@@ -2,11 +2,13 @@ alias migrategl='bin/rake db:migrate RAILS_ENV=development'
 
 alias gdkce="cd ~/Projects/gdk-ce/gitlab"
 alias gdkcemg="gdkce && migrategl && o http://localhost:3000"
-alias gdkcerun="gdkce && npm install && bundle install && gdk run & (sleep 120 && gdkcemg)"
+alias gdkcerun="gdkce && gdk run && sleep 60 && o http://localhost:3000"
+alias gdkcerunfull="gdkce && npm install && bundle install && gdk run & (sleep 120 && gdkcemg)"
 
 alias gdkee="cd ~/Projects/gdk-ee/gitlab"
 alias gdkeemg="gdkee && migrategl && o http://localhost:3001"
-alias gdkeerun="gdkee && npm install && bundle install && gdk run & (sleep 120 && gdkeemg)"
+alias gdkeerun="gdkee && gdk run && sleep 60 && o http://localhost:3001"
+alias gdkeerunfull="gdkee && npm install && bundle install && gdk run & (sleep 120 && gdkeemg)"
 
 alias gldes="cd ~/Projects/gitlab-design"
 
