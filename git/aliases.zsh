@@ -22,11 +22,13 @@ alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias gac='git add -A && git commit -m'
 alias gpr='git pull --rebase'
+alias gtrack="git-track" # Sets up your branch to track a remote branch. Assumes you mean `origin/$branch-name` | Function in bin
 
 alias gdels="git checkout ." # Delete all changes in the Git repository, but leave unstaged things
 alias gdelh="git clean -f" # Delete all changes in the Git repository, including untracked files
 alias gdell="git reset HEAD^" # Delete last commit
 alias gundo="git reset --soft HEAD^" # Undo your last commit, but don't throw away your changes
+alias gresettoremote="git-reset-to-remote" # Resets local branch to be identical to the remote branch | Function in bin
 
 alias gcm="git checkout master"
 alias gcrb="git-checkout-remote-branch" #script "gcrb branch-a origin" or "gcrb branch-b"
