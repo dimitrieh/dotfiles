@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Resets local branch to be identical to the remote branch
+
+branch=$(git rev-parse --abbrev-ref HEAD)
+git reset --hard origin/$branch
