@@ -26,7 +26,7 @@ alias gpr='git pull --rebase'
 alias gdels="git checkout ." # Delete all changes in the Git repository, but leave unstaged things
 alias gdelh="git clean -f" # Delete all changes in the Git repository, including untracked files
 alias gdell="git reset HEAD^" # Delete last commit
-alias gundo="git reset --soft HEAD^"
+alias gundo="git reset --soft HEAD^" # Undo your last commit, but don't throw away your changes
 
 alias gcm="git checkout master"
 alias gcrb="git-checkout-remote-branch" #script "gcrb branch-a origin" or "gcrb branch-b"
