@@ -1,1 +1,1 @@
-export EDITOR="micro"
+export EDITOR="code"

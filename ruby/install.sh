@@ -6,22 +6,19 @@
 # Check for required tool                                                     #
 ###############################################################################
 
-# Check for RVM
-if test ! $(which rvm)
+# Check for rbenv
+if test ! $(which rbenv)
 then
-  echo "  x You should probably install RVM (Ruby Version Manager) first:"
-  echo "    curl -L https://get.rvm.io | bash -s stable --ruby"
+  echo "  x You should probably install rbenv (Ruby Version Manager) first:"
+  echo "    brew install rbenv"
+  echo "    curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash"
+  echo "    rbenv install RUBY_VERSION"
+  echo "    rbenv local RUBY_VERSION"
   echo "    Restart your shell after it's done and test with ruby --version"
-  echo "    If you want to use/install a specific version use:"
-  echo "    rvm install ruby-X.X.X"
-  echo "    rvm --default use ruby-X.X.X"
-  echo "    Once RVM is installed you can install your favorite packages:"
+  echo "    gem install bundler"
+  echo "    Further instructions on https://github.com/rbenv/rbenv"
   exit
 fi
-
-# To update RVM
-
-rvm get stable
 
 # To update RubyGems
 

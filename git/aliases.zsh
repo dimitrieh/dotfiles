@@ -1,3 +1,5 @@
+# For more aliases look at https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/git/git.plugin.zsh
+
 alias g="git"
 alias ga="git add"
 alias gstash= "git stash save --include-untracked"

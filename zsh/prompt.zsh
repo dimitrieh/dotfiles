@@ -1,3 +1,6 @@
+# Activate for profiling and run in terminal
+# zmodload zsh/zprof
+
 autoload colors && colors
 # cheers, @ehrenmurdick
 # http://github.com/ehrenmurdick/config/blob/master/zsh/prompt.zsh
@@ -41,34 +44,6 @@ need_push () {
     echo " "
   else
     echo " with %{$fg_bold[magenta]%}unpushed%{$reset_color%} "
-  fi
-}
-
-rb_prompt(){
-  if (( $+commands[rbenv] ))
-  then
-	  echo "%{$fg_bold[yellow]%}$(rbenv version | awk '{print $1}')%{$reset_color%}"
-	else
-	  echo ""
-  fi
-}
-#
-# This keeps the number of todos always available the right hand side of my
-# command line. I filter it to only count those tagged as "+next", so it's more
-# of a motivation to clear out the list.
-todo(){
-  if (( $+commands[todo.sh] ))
-  then
-    num=$(echo $(todo.sh ls +next | wc -l))
-    let todos=num-2
-    if [ $todos != 0 ]
-    then
-      echo "$todos"
-    else
-      echo ""
-    fi
-  else
-    echo ""
   fi
 }
 
@@ -140,13 +115,18 @@ add-zsh-hook preexec prompt_pure_preexec
 export RANGER_LOAD_DEFAULT_RC="false"
 export GIT_RADAR_FORMAT="%{changes: }%{remote: }%{local: }%{stash}"
 
-export PROMPT=$'\n$(rb_prompt)  $(directory_name) $(git_dirty)$(need_push)\$(git-radar --zsh --fetch) \n%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%}❯)%{$fg_bold[green]%}❯%{$reset_color%} '
+export PROMPT=$'\n  $(directory_name) $(git_dirty)$(need_push)\$(git-radar --zsh --fetch) \n%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%}❯)%{$fg_bold[green]%}❯%{$reset_color%} '
 
 set_prompt () {
-  export RPROMPT="%{$fg_bold[cyan]%}$(todo)%{$reset_color%}"
+  export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
 }
 
 precmd() {
   title "zsh" "%m" "%55<...<%~"
   set_prompt
 }
+
+# Activate for profiling and run in terminal
+# zprof
+
+ 
