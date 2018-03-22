@@ -12,3 +12,5 @@ atom.symlink/blob-store
 atom.symlink/recovery
 
 git/gitconfig.local.symlink
+
+.vscode/
