@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Creates new gitlab project from repository
+
+dir=${PWD##*/} 
+git push --set-upstream https://gitlab.com/$GITLAB_USERNAME/$dir.git master
