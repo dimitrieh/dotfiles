@@ -17,7 +17,6 @@ alias -- -="cd -"
 # Shortcuts
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
-alias gitp="cd ~/Projects"
 alias cdb='cd -'
 alias c='clear'
 alias cls='clear;ls'
