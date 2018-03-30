@@ -116,7 +116,7 @@ alias hostsfile="sudo micro /private/etc/hosts"
 alias reloadhostsfile="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder"
 
 # Automatically start Python server at current directory
-alias lserve="php -S 127.0.0.1:8000"
+alias lserve="php -S localhost:3000"
 
 alias vlc="/Applications/VLC.app/Contents/MacOS/VLC"
 alias yt="mpsyt"
