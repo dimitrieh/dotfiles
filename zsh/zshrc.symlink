@@ -43,6 +43,9 @@ done
 
 unset config_files
 
+# resolve problems with runaway processes, closes them when closing the terminal
+set +o nohup
+
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Activate for profiling and run in terminal
