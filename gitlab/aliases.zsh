@@ -1,4 +1,5 @@
 alias migrategl='bin/rake db:migrate RAILS_ENV=development'
+alias migrateglfull='bundle exec rake dev:setup RAILS_ENV=development'
 
 alias gdkce="cd ~/Projects/gdk-ce/gitlab"
 alias gdkcemg="gdkce && migrategl && o http://localhost:3000"
