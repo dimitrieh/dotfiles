@@ -3153,7 +3153,7 @@
 		</dict>
 	</dict>
 	<key>Default Arrangement Name</key>
-	<string>Full screen</string>
+	<string>center-normal</string>
 	<key>Default Bookmark Guid</key>
 	<string>FAEE55DD-FF3B-4B97-9757-0D2618C1501E</string>
 	<key>DimBackgroundWindows</key>
@@ -3254,12 +3254,35 @@
 		<key>TB Is Shown</key>
 		<integer>1</integer>
 	</dict>
+	<key>NSTouchBarConfig: full screen</key>
+	<dict>
+		<key>CurrentItems</key>
+		<array>
+			<string>iTermTouchBarFunctionKeysScrollView</string>
+			<string>tab bar</string>
+			<string>NSTouchBarItemIdentifierOtherItemsProxy</string>
+		</array>
+		<key>DefaultItems</key>
+		<array>
+			<string>iTermTouchBarIdentifierManPage</string>
+			<string>iTermTouchBarIdentifierColorPreset</string>
+			<string>iTermTouchBarIdentifierFunctionKeys</string>
+			<string>NSTouchBarItemIdentifierFlexibleSpace</string>
+			<string>tab bar</string>
+			<string>NSTouchBarItemIdentifierOtherItemsProxy</string>
+			<string>iTermTouchBarIdentifierAddMark</string>
+			<string>iTermTouchBarIdentifierPreviousMark</string>
+			<string>iTermTouchBarIdentifierNextMark</string>
+		</array>
+	</dict>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>528 493 620 392 0 0 1680 1050 </string>
+	<string>496 477 620 392 0 0 1680 1028 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>365 363 796 473 0 0 1680 1050 </string>
+	<string>947 716 918 452 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1676 1028 0 0 1680 1028 </string>
+	<string>950 312 730 404 0 0 1680 1028 </string>
+	<key>NSWindow Frame iTerm Window 1</key>
+	<string>2 0 1242 1418 0 0 2560 1418 </string>
 	<key>NeverWarnAboutShortLivedSessions_B621911C-ED69-428F-88D8-E23FE4CD805A</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -4158,7 +4181,7 @@
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
-			<integer>1</integer>
+			<integer>0</integer>
 			<key>Working Directory</key>
 			<string>/Users/dimitriehoekstra</string>
 		</dict>
@@ -5156,6 +5179,8 @@
 	<integer>8</integer>
 	<key>RightOption</key>
 	<integer>3</integer>
+	<key>SUAutomaticallyUpdate</key>
+	<true/>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
@@ -5165,7 +5190,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-11-08T13:50:44Z</date>
+	<date>2018-04-26T17:48:26Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -5218,7 +5243,7 @@
 	<string>Lucida Grande</string>
 	<key>Window Arrangements</key>
 	<dict>
-		<key>Full screen</key>
+		<key>center-normal</key>
 		<array>
 			<dict>
 				<key>Desired Columns</key>
@@ -5228,25 +5253,17 @@
 				<key>Has Toolbelt</key>
 				<false/>
 				<key>Height</key>
-				<real>1050</real>
+				<real>683</real>
 				<key>Hide After Opening</key>
 				<false/>
 				<key>Hiding Toolbelt Should Resize Window</key>
-				<false/>
+				<true/>
 				<key>Is Hotkey Window</key>
 				<false/>
-				<key>Old Height</key>
-				<real>422</real>
-				<key>Old Width</key>
-				<real>400</real>
-				<key>Old X Origin</key>
-				<real>-104</real>
-				<key>Old Y Origin</key>
-				<real>1254</real>
 				<key>Saved Window Type</key>
-				<integer>4</integer>
-				<key>Screen</key>
 				<integer>0</integer>
+				<key>Screen</key>
+				<integer>1</integer>
 				<key>Selected Tab Index</key>
 				<integer>0</integer>
 				<key>Tabs</key>
@@ -5614,10 +5631,36 @@
 											</dict>
 											<key>Guid</key>
 											<string>FAEE55DD-FF3B-4B97-9757-0D2618C1501E</string>
+											<key>Has Hotkey</key>
+											<false/>
 											<key>Hide After Opening</key>
 											<false/>
 											<key>Horizontal Spacing</key>
 											<real>1</real>
+											<key>HotKey Activated By Modifier</key>
+											<false/>
+											<key>HotKey Alternate Shortcuts</key>
+											<array/>
+											<key>HotKey Characters</key>
+											<string></string>
+											<key>HotKey Characters Ignoring Modifiers</key>
+											<string></string>
+											<key>HotKey Key Code</key>
+											<integer>0</integer>
+											<key>HotKey Modifier Activation</key>
+											<integer>0</integer>
+											<key>HotKey Modifier Flags</key>
+											<integer>0</integer>
+											<key>HotKey Window Animates</key>
+											<true/>
+											<key>HotKey Window AutoHides</key>
+											<true/>
+											<key>HotKey Window Dock Click Action</key>
+											<integer>0</integer>
+											<key>HotKey Window Floats</key>
+											<false/>
+											<key>HotKey Window Reopens On Activation</key>
+											<false/>
 											<key>Idle Code</key>
 											<integer>0</integer>
 											<key>Initial Text</key>
@@ -6130,18 +6173,19 @@
 											<key>Visual Bell</key>
 											<true/>
 											<key>Window Type</key>
-											<integer>1</integer>
+											<integer>0</integer>
 											<key>Working Directory</key>
 											<string>/Users/dimitriehoekstra</string>
 										</dict>
 										<key>Bookmark Name</key>
 										<string>Default</string>
 										<key>Columns</key>
-										<integer>208</integer>
+										<integer>122</integer>
 										<key>Commands</key>
 										<array/>
 										<key>Directories</key>
 										<array>
+											<string>/Users/dimitrie</string>
 											<string>/Users/dimitrie</string>
 											<string>/Users/dimitrie</string>
 										</array>
@@ -6152,6 +6196,12 @@
 										</dict>
 										<key>Hosts</key>
 										<array>
+											<dict>
+												<key>Host name</key>
+												<string>MacBook-Pro-van-D.local</string>
+												<key>User name</key>
+												<string>dimitrie</string>
+											</dict>
 											<dict>
 												<key>Host name</key>
 												<string>MacBook-Pro-van-D.local</string>
@@ -6175,11 +6225,11 @@
 											<string>Command</string>
 										</dict>
 										<key>Rows</key>
-										<integer>65</integer>
+										<integer>41</integer>
 										<key>Session Default Name</key>
 										<string>Default</string>
 										<key>Session GUID</key>
-										<string>930065C9-9A59-431C-B5DC-835F35D98BF7</string>
+										<string>84A12079-C110-4A27-BA7D-4BA22495BF64</string>
 										<key>Session Name</key>
 										<string>Default</string>
 										<key>Session Window Title</key>
@@ -6196,9 +6246,9 @@
 									<key>frame</key>
 									<dict>
 										<key>height</key>
-										<real>1050</real>
+										<real>660</real>
 										<key>width</key>
-										<real>1680</real>
+										<real>986</real>
 										<key>x</key>
 										<real>0.0</real>
 										<key>y</key>
@@ -6211,9 +6261,9 @@
 							<key>frame</key>
 							<dict>
 								<key>height</key>
-								<real>1050</real>
+								<real>660</real>
 								<key>width</key>
-								<real>1680</real>
+								<real>986</real>
 								<key>x</key>
 								<real>0.0</real>
 								<key>y</key>
@@ -6225,15 +6275,15 @@
 					</dict>
 				</array>
 				<key>TerminalGuid</key>
-				<string>pty-63D1C052-1BD0-4CF7-87B8-2F1A97BFE8D1</string>
+				<string>pty-12F53D57-857F-49A6-9D5A-CB2B6DA124B7</string>
 				<key>Width</key>
-				<real>1680</real>
+				<real>986</real>
 				<key>Window Type</key>
-				<integer>4</integer>
+				<integer>0</integer>
 				<key>X Origin</key>
-				<real>0.0</real>
+				<real>773</real>
 				<key>Y Origin</key>
-				<real>0.0</real>
+				<real>-877</real>
 			</dict>
 		</array>
 	</dict>
@@ -6250,7 +6300,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.1.5.beta.2</string>
+	<string>3.1.6beta5</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
