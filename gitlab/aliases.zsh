@@ -1,3 +1,4 @@
+alias remigrate='migrate' # Re-migratex a selected migration | Function in bin
 alias migrategl='bin/rake db:migrate RAILS_ENV=development'
 alias migrateglfull='bundle exec rake dev:setup RAILS_ENV=development'
 
