@@ -1,6 +1,7 @@
 alias remigrate='migrate' # Re-migratex a selected migration | Function in bin
 alias migrategl='bin/rake db:migrate RAILS_ENV=development'
 alias migrateglfull='bundle exec rake dev:setup RAILS_ENV=development'
+alias deldb="rm -rf ../postgresql/data && cd ../ && make" # Delete db and reconstruct it, be in gitlab folder of gdk
 
 alias gdkce="cd ~/Projects/gdk-ce/gitlab"
 alias gdkcemg="gdkce && migrategl && o http://localhost:3000"
