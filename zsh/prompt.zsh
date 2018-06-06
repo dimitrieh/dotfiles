@@ -18,7 +18,7 @@ git_branch() {
 
 git_dirty() {
   st=$($git status 2>&1)
-  if [[ $st =~ "Not a git repository" ]] ; then
+  if [[ "$st" =~ "not a git repository" ]] ; then
     echo ""
   else
     if [[ "$st" =~ "nothing to commit" ]] ; then
