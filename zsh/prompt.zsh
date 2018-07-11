@@ -11,7 +11,7 @@ then
 else
   git="/usr/bin/git"
 fi
-
+#
 git_branch() {
   echo $($git symbolic-ref HEAD 2>/dev/null | awk -F/ {'print $NF'})
 }
@@ -120,7 +120,9 @@ export PROMPT=$'\n  $(directory_name) $(git_dirty)$(need_push)\$(git-radar --zsh
 set_prompt () {
   export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
 }
-
+#
+#
+#
 precmd() {
   title "zsh" "%m" "%55<...<%~"
   set_prompt
