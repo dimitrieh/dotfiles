@@ -137,48 +137,6 @@ echo $target_url >> $file;
 done < <(jq -rc '.[] | select(.target_type == "MergeRequest") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
-file=/tmp/gitlab-todo-checker-1-milestone-11-0.txt
-> $file
-echo "Todo's with milestone 11.0 | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
-while read -r iid
-      read -r path
-      read -r state
-      read -r labels
-      read -r title
-      read -r target_url; do
-    echo "\
-$(printf %-15.15s "$path")\
-$([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')\
-$(printf '%-6s' "$iid")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title")\
-| href=$target_url font=$monofont";
-echo $target_url >> $file;
-done < <(jq -rc '.[] | select(.target.milestone.title == "11.0") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
-
-echo "---";
-file=/tmp/gitlab-todo-checker-1-milestone-11-1.txt
-> $file
-echo "Todo's with milestone 11.1 | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
-while read -r iid
-      read -r path
-      read -r state
-      read -r labels
-      read -r title
-      read -r target_url; do
-    echo "\
-$(printf %-15.15s "$path")\
-$([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')\
-$(printf '%-6s' "$iid")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title")\
-| href=$target_url font=$monofont";
-echo $target_url >> $file;
-done < <(jq -rc '.[] | select(.target.milestone.title == "11.1") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
-
-echo "---";
 file=/tmp/gitlab-todo-checker-1-milestone-11-2.txt
 > $file
 echo "Todo's with milestone 11.2 | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
@@ -219,6 +177,69 @@ $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") "
 | href=$target_url font=$monofont";
 echo $target_url >> $file;
 done < <(jq -rc '.[] | select(.target.milestone.title == "11.3") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+
+echo "---";
+file=/tmp/gitlab-todo-checker-1-milestone-11-4.txt
+> $file
+echo "Todo's with milestone 11.4 | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
+while read -r iid
+      read -r path
+      read -r state
+      read -r labels
+      read -r title
+      read -r target_url; do
+    echo "\
+$(printf %-15.15s "$path")\
+$([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')\
+$(printf '%-6s' "$iid")\
+$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
+$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
+$(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title")\
+| href=$target_url font=$monofont";
+echo $target_url >> $file;
+done < <(jq -rc '.[] | select(.target.milestone.title == "11.4") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+
+echo "---";
+file=/tmp/gitlab-todo-checker-1-milestone-11-5.txt
+> $file
+echo "Todo's with milestone 11.5 | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
+while read -r iid
+      read -r path
+      read -r state
+      read -r labels
+      read -r title
+      read -r target_url; do
+    echo "\
+$(printf %-15.15s "$path")\
+$([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')\
+$(printf '%-6s' "$iid")\
+$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
+$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
+$(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title")\
+| href=$target_url font=$monofont";
+echo $target_url >> $file;
+done < <(jq -rc '.[] | select(.target.milestone.title == "11.5") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
+
+echo "---";
+file=/tmp/gitlab-todo-checker-1-verify-release-1-1-1-1-1.txt
+> $file
+echo "Todo's from verify-release-1-1-1-1-1 | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
+while read -r iid
+      read -r path
+      read -r state
+      read -r labels
+      read -r title
+      read -r target_url; do
+    echo "\
+$(printf %-15.15s "$path")\
+$([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')\
+$(printf '%-6s' "$iid")\
+$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
+$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
+$(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title")\
+| href=$target_url font=$monofont";
+echo $target_url >> $file;
+done < <(jq -rc '.[] | select(.author.username == "jlenny" or .author.username == "filipa" or .author.username == "ayufan"  or .author.username == "erushton") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 file=/tmp/gitlab-todo-checker-1-web-ide.txt
@@ -262,27 +283,6 @@ $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") "
 | href=$target_url font=$monofont";
 echo $target_url >> $file;
 done < <(jq -rc '.[] | select(.author.username == "'$managerusername'") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
-
-echo "---";
-file=/tmp/gitlab-todo-checker-1-filipa.txt
-> $file
-echo "Todo's from filipa | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
-while read -r iid
-      read -r path
-      read -r state
-      read -r labels
-      read -r title
-      read -r target_url; do
-    echo "\
-$(printf %-15.15s "$path")\
-$([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')\
-$(printf '%-6s' "$iid")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title")\
-| href=$target_url font=$monofont";
-echo $target_url >> $file;
-done < <(jq -rc '.[] | select(.author.username == "filipa") | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < /tmp/gitlab-todo-checker-1-1.json);
 
 echo "---";
 file=/tmp/gitlab-todo-checker-1-assigned-issues.txt
