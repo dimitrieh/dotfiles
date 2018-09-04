@@ -1,1 +1,1 @@
-export PATH="/Applications/Android Studio.app/sdk/platform-tools:$PATH"
+export PATH="~/platform-tools:$PATH"

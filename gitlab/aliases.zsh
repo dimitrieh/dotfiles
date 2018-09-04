@@ -21,3 +21,5 @@ alias kill3001='kill -9 $(lsof -i tcp:3001 -t)'
 alias gdkkill="pkill -f chromedriver chromium-browser ruby ruby2.3 node postgres redis redis-server"
 
 alias gpgitlab="git-push-gitlab"  # Creates new gitlab project from repository | Function in bin
+
+alias glmr="git lab mr --checkout --id"

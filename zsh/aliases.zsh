@@ -111,6 +111,9 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 # Imgur uploader | https://github.com/kevva/imgur-uploader-cli
 alias imgur="imgur-uploader"
 
+# Website download for local access (including all of the JavaScript CSS and images + convert links)
+alias wgetwebsite="wget -mpk "
+
 # Edit hosts file
 alias hostsfile="sudo micro /private/etc/hosts"
 alias reloadhostsfile="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder"
