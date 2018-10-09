@@ -6,12 +6,12 @@ alias deldb="rm -rf ../postgresql/data && cd ../ && make" # Delete db and recons
 alias gdkce="cd ~/Projects/gdk-ce/gitlab"
 alias gdkcemg="gdkce && migrategl && o http://localhost:3000"
 alias gdkcerun="gdkce && gdk run & (sleep 60 && o http://localhost:3000)"
-alias gdkcerunfull="gdkce && yarn install && bundle install && gdk run & (sleep 120 && gdkcemg)"
+alias gdkcerunfull="gdkce && npm install && bundle install && gdk run & (sleep 120 && gdkcemg)"
 
 alias gdkee="cd ~/Projects/gdk-ee/gitlab"
 alias gdkeemg="gdkee && migrategl && o http://localhost:3001"
 alias gdkeerun="gdkee && gdk run & (sleep 60 && o http://localhost:3001)"
-alias gdkeerunfull="gdkee && yarn install && bundle install && gdk run & (sleep 120 && gdkeemg)"
+alias gdkeerunfull="gdkee && npm install && bundle install && gdk run & (sleep 120 && gdkeemg)"
 
 alias gldes="cd ~/Projects/gitlab-design"
 

@@ -228,6 +228,24 @@ echo $web_url >> $file;
 done < <(jq -rc '.[] | select(.labels[]? == "web ide") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
+file=/tmp/gitlab-assignments-checker-1-milestone-backlog-accepting-mr.txt
+> $file
+echo "Assigned issues with milestone Backlog (Accepting merge requests) | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
+while read -r iid
+      read -r labels
+      read -r title
+      read -r web_url; do
+    echo "\
+$(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
+$(printf '%-6s' "$iid")\
+$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
+$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
+$(printf %-75.75s "$title")\
+| href=$web_url font=$monofont";
+echo $web_url >> $file;
+done < <(jq -rc '.[] | select(.milestone.title == "Backlog (Accepting merge requests)") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
+
+echo "---";
 file=/tmp/gitlab-assignments-checker-1-created-yourself.txt
 > $file
 echo "Assigned issues which you have created yourself | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
