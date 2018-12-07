@@ -16,13 +16,13 @@ present=$(jq -n 'now' | awk '{print int($0)}')
 daysago=$(($days * 86400))
 timeago=$(($present - $daysago))
 
-# > /tmp/gitlab-todo-checker-1-1.json
-# TPAGES=$(curl -i -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
-# for i in $(seq 1 $TPAGES); do
-#   curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100&page=$i" | jq -rc '.[].created_at |= (sub("\\....Z";"Z") | fromdate)' >> /tmp/gitlab-todo-checker-1-1.json;
-#   sed -i.bck '$s/$/,/' /tmp/gitlab-todo-checker-1-1.json;
-# done
-# tr '\n' ' ' < /tmp/gitlab-todo-checker-1-1.json > /tmp/blubtmp.json;
+> /tmp/gitlab-todo-checker-1-1.json
+TPAGES=$(curl -i -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
+for i in $(seq 1 $TPAGES); do
+  curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100&page=$i" | jq -rc '.[].created_at |= (sub("\\....Z";"Z") | fromdate)' >> /tmp/gitlab-todo-checker-1-1.json;
+  sed -i.bck '$s/$/,/' /tmp/gitlab-todo-checker-1-1.json;
+done
+tr '\n' ' ' < /tmp/gitlab-todo-checker-1-1.json > /tmp/blubtmp.json;
 cat /tmp/blubtmp.json > /tmp/gitlab-todo-checker-1-1.json;
 perl -pi -e 's/\], \[/,/g' /tmp/gitlab-todo-checker-1-1.json;
 /usr/local/bin/sed -i '$ s/..$//' /tmp/gitlab-todo-checker-1-1.json;
@@ -38,7 +38,6 @@ echo "---";
 echo "Refresh | refresh=true"
 echo "Your todos on GitLab | href=https://gitlab.com/dashboard/todos";
 echo "Edit this file | bash=code param1=--add param2=/Users/dimitrie/.dotfiles/bitbar terminal=false";
-echo $timeago
 
 echo "---";
 file=/tmp/gitlab-todo-checker-1-assigned-merge-requests.txt
