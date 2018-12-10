@@ -111,8 +111,8 @@ filter 'Milestone backlog' '.target.milestone.title == "Backlog"'
 filter 'From Rayana' '.author.username == "rverissimo"'
 filter 'On assigned issues' '.target_type == "Issue" and .target.assignees[].username == "'$username'"'
 filter 'On created by yourself' '.target.author.username == "'$username'"'
-filter 'For Divine' '.project.path == "divine-home"'
 
+# Filtered lists of todos for most 10 recent ones
 cat /tmp/gitlab-todos.json | jq '.[:10]' > /tmp/gitlab-todos-10.json # Create todos file with 10 items
 filter 'Most recent 10 todos' '.' '/tmp/gitlab-todos-10.json'
 
