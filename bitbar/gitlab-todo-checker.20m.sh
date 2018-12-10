@@ -64,7 +64,7 @@ echo "---";
 echo "Refresh | refresh=true"
 echo "Your todos on GitLab | href=https://gitlab.com/dashboard/todos";
 echo "Edit this file | bash=/usr/local/bin/code param1=--add param2=/Users/dimitrie/.dotfiles/bitbar terminal=false";
-echo "$counttotal($countfordays)"
+echo "$countfordays($counttotal)"
 
 # Function to create filtered lists of todos
 filter () {
