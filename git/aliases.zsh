@@ -12,19 +12,23 @@ alias gll="git log --color --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset 
 
 alias gf='git fetch'
 alias gfp='git fetch origin && git pull'
-alias gp='git push origin HEAD'
+alias gp='git push'
+alias gpo='git push origin HEAD'
 alias gd='git diff'
 alias gc='git commit'
 alias gca='git commit -a'
+alias gac="git add . && git commit -m"
 alias gco='git checkout'
 alias gb='git branch'
 alias gcb='git checkout -b'
 alias gcrb='git-checkout-remote-branch'
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
-alias gac='git add -A && git commit -m'
-alias gpr='git pull --rebase'
+alias gl="git pull"
+alias glo="git pull origin"
+alias glr='git pull --rebase'
 alias gtrack="git-track" # Sets up your branch to track a remote branch. Assumes you mean `origin/$branch-name` | Function in bin
+alias gi="git init && gac 'Initial commit'"
 
 alias gdels="git checkout ." # Delete all changes in the Git repository, but leave unstaged things
 alias gdelh="git clean -f" # Delete all changes in the Git repository, including untracked files
