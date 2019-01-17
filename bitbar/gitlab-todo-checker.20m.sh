@@ -6,7 +6,7 @@ export PATH=:/usr/local/bin:$PATH
 source ~/.localrc
 privatetoken=$GLPRIVATETOKEN
 username=dimitrieh
-managerusername=sarrahvesselov
+managerusername=sarahod
 monofont=Menlo-Regular
 monosize=12
 speciallabel=Deliverable
@@ -92,23 +92,25 @@ $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") "
 filter 'On assigned merge requests' '.target_type == "MergeRequest" and .target.assignee.username == "'$username'"'
 filter 'On epics' '.target_type == "Epic"'
 filter 'On design.gitlab.com' '.project.path == "design.gitlab.com"'
-filter 'On design.gitlab.com' '.project.path == "design.gitlab.com"'
 filter 'On merge requests' '.target_type == "MergeRequest"'
-filter 'On merge requests' '.target_type == "MergeRequest"'
-filter 'Milestone 11.6' '.target.milestone.title == "11.6"'
-filter 'Milestone 11.7' '.target.milestone.title == "11.7"'
 filter 'Milestone 11.8' '.target.milestone.title == "11.8"'
+filter 'Milestone 11.8' '.target.milestone.title == "11.9"'
+filter 'Milestone 11.8' '.target.milestone.title == "11.10"'
+filter 'Milestone 11.8' '.target.milestone.title == "11.11"'
 filter 'Milestone 12.0' '.target.milestone.title == "12.0"'
 filter 'Milestone 12.1' '.target.milestone.title == "12.1"'
 filter 'From Jason' '.author.username == "jlenny"'
+filter 'From Jason' '.author.username == "joshlambert"'
+filter 'From Jason' '.author.username == "kencjohnston"'
+filter 'From bugs label' '.target.labels[]? == "Package"'
 filter 'From bugs label' '.target.labels[]? == "bug"'
 filter 'From customer label' '.target.labels[]? == "customer"'
-filter 'From Sarrah Vesselov' '.author.username == "'$managerusername'"'
+filter 'From manager' '.author.username == "'$managerusername'"'
+filter 'From Rayana' '.author.username == "rverissimo"'
 filter 'Milestone next 3-4 releases' '.target.milestone.title == "Next 3-4 releases"'
 filter 'Milestone next 4-7 releases' '.target.milestone.title == "Next 4-7 releases"'
 filter 'Milestone next 7-13 releases' '.target.milestone.title == "Next 7-13 releases"'
 filter 'Milestone backlog' '.target.milestone.title == "Backlog"'
-filter 'From Rayana' '.author.username == "rverissimo"'
 filter 'On assigned issues' '.target_type == "Issue" and .target.assignees[].username == "'$username'"'
 filter 'On created by yourself' '.target.author.username == "'$username'"'
 
