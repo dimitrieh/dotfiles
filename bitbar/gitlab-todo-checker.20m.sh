@@ -21,33 +21,33 @@ present=$(jq -n 'now' | awk '{print int($0)}')
 daysago=$(($days * 86400))
 timeago=$(($present - $daysago))
 
-# Get total number of todo pages if 100 todos per page
-TPAGES=$(curl -i -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
+# # Get total number of todo pages if 100 todos per page
+# TPAGES=$(curl -i -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
 
-# Clear JSON file
-> $todos
+# # Clear JSON file
+# > $todos
 
-# Clear sublists
-rm -f /tmp/gitlab-todos-lists.*
+# # Clear sublists
+# rm -f /tmp/gitlab-todos-lists.*
 
-# Write todos to JSON file for each page
-for i in $(seq 1 $TPAGES); do
-  curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100&page=$i" | jq -rc '.[].created_at |= (sub("\\....Z";"Z") | fromdate)' >> $todos;
+# # Write todos to JSON file for each page
+# for i in $(seq 1 $TPAGES); do
+#   curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100&page=$i" | jq -rc '.[].created_at |= (sub("\\....Z";"Z") | fromdate)' >> $todos;
 
-  # If GitLab is not responding, exit with error message
-  if grep -Fq "GitLab is not responding" $todos
-  then
-    echo " T | templateImage=$gitlabicon";
-    echo "---"
-    echo "Error: GitLab is not responding"
-    echo "---";
-    echo "Retry | refresh=true"
-    exit 1
-  fi
-done
+#   # If GitLab is not responding, exit with error message
+#   if grep -Fq "GitLab is not responding" $todos
+#   then
+#     echo " T | templateImage=$gitlabicon";
+#     echo "---"
+#     echo "Error: GitLab is not responding"
+#     echo "---";
+#     echo "Retry | refresh=true"
+#     exit 1
+#   fi
+# done
 
-# Join page arrays
-jq -s 'add' $todos > /tmp/todos.tmp && mv /tmp/todos.tmp $todos
+# # Join page arrays
+# jq -s 'add' $todos > /tmp/todos.tmp && mv /tmp/todos.tmp $todos
 
 # Count of todos
 counttotal=$(jq -s '.[] | length' $todos);
@@ -74,18 +74,19 @@ filter () {
   echo "$1 | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$tfile terminal=false color=$headercolor";
   while read -r iid
         read -r path
+        read -r group_path
         read -r state
         read -r labels
         read -r title
         read -r target_url;
     do echo "\
-$(printf %-15.15s "$path") $([[ $target_url == *'merge_requests'* ]] && echo '!' || echo '#')\
+$(printf %-15.15s "$([[ $target_url == *'/-/epics/'* ]] && echo $group_path || echo $path)") $([[ $target_url == *'/merge_requests/'* ]] && echo '!' || echo '')$([[ $target_url == *'/issues/'* ]] && echo '#' || echo '')$([[ $target_url == *'/-/epics/'* ]] && echo '&' || echo '')\
 $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont size=$monosize";
     echo $target_url >> $tfile;
-  done < <(jq -rc '.[] | select(.created_at > '$timeago') | select('"$2"')? | .target.iid,.project.path,.target.state,.target.labels,.target.title,.target_url' < $todosfile);
+  done < <(jq -rc '.[] | select(.created_at > '$timeago') | select('"$2"')? | .target.iid,.project.path,.group.path,.target.state,.target.labels,.target.title,.target_url' < $todosfile);
 }
 
 # Filtered lists of todos
