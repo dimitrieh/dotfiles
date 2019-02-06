@@ -21,33 +21,33 @@ present=$(jq -n 'now' | awk '{print int($0)}')
 daysago=$(($days * 86400))
 timeago=$(($present - $daysago))
 
-# # Get total number of todo pages if 100 todos per page
-# TPAGES=$(curl -i -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
+# Get total number of todo pages if 100 todos per page
+TPAGES=$(curl -i -s -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100" | grep -Fi X-Total-Pages | awk '/X-Total-Pages/ { print $2 }' | tr -d '\r');
 
-# # Clear JSON file
-# > $todos
+# Clear JSON file
+> $todos
 
-# # Clear sublists
-# rm -f /tmp/gitlab-todos-lists.*
+# Clear sublists
+rm -f /tmp/gitlab-todos-lists.*
 
-# # Write todos to JSON file for each page
-# for i in $(seq 1 $TPAGES); do
-#   curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100&page=$i" | jq -rc '.[].created_at |= (sub("\\....Z";"Z") | fromdate)' >> $todos;
+# Write todos to JSON file for each page
+for i in $(seq 1 $TPAGES); do
+  curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/todos/?per_page=100&page=$i" | jq -rc '.[].created_at |= (sub("\\....Z";"Z") | fromdate)' >> $todos;
 
-#   # If GitLab is not responding, exit with error message
-#   if grep -Fq "GitLab is not responding" $todos
-#   then
-#     echo " T | templateImage=$gitlabicon";
-#     echo "---"
-#     echo "Error: GitLab is not responding"
-#     echo "---";
-#     echo "Retry | refresh=true"
-#     exit 1
-#   fi
-# done
+  # If GitLab is not responding, exit with error message
+  if grep -Fq "GitLab is not responding" $todos
+  then
+    echo " T | templateImage=$gitlabicon";
+    echo "---"
+    echo "Error: GitLab is not responding"
+    echo "---";
+    echo "Retry | refresh=true"
+    exit 1
+  fi
+done
 
-# # Join page arrays
-# jq -s 'add' $todos > /tmp/todos.tmp && mv /tmp/todos.tmp $todos
+# Join page arrays
+jq -s 'add' $todos > /tmp/todos.tmp && mv /tmp/todos.tmp $todos
 
 # Count of todos
 counttotal=$(jq -s '.[] | length' $todos);
