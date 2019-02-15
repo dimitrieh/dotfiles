@@ -6,7 +6,7 @@ export PATH=:/usr/local/bin:$PATH
 source ~/.localrc
 privatetoken=$GLPRIVATETOKEN
 username=dimitrieh
-managerusername=sarahod
+managerusername=clenneville
 monofont=Menlo-Regular
 monosize=12
 speciallabel=Deliverable
