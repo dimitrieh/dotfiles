@@ -55,3 +55,5 @@
 [user]
 	name = Dimitrie Hoekstra
 	email = dimitriehoekstra@gmail.com
+[commit]
+	template = /Users/dimitrie/.git-commit-template
