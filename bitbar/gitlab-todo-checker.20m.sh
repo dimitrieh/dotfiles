@@ -6,7 +6,8 @@ export PATH=:/usr/local/bin:$PATH
 source ~/.localrc
 privatetoken=$GLPRIVATETOKEN
 username=dimitrieh
-managerusername=clenneville
+managerusername=vkarnes
+directorusername=clenneville
 monofont=Menlo-Regular
 monosize=12
 speciallabel=Deliverable
@@ -105,6 +106,7 @@ filter 'Package label' '.target.labels[]? == "Verify"'
 filter 'bugs label' '.target.labels[]? == "bug"'
 filter 'customer label' '.target.labels[]? == "customer"'
 filter 'manager' '.author.username == "'$managerusername'"'
+filter 'director' '.author.username == "'$directorusername'"'
 filter 'Rayana' '.author.username == "rverissimo"'
 filter 'Milestone next 3-4 releases' '.target.milestone.title == "Next 3-4 releases"'
 filter 'Milestone next 4-7 releases' '.target.milestone.title == "Next 4-7 releases"'
