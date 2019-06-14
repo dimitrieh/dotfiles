@@ -91,20 +91,25 @@ $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") "
 }
 
 # Filtered lists of todos
-filter 'Assigned merge requests' '.target_type == "MergeRequest" and .target.assignee.username == "'$username'"'
+filter 'Merge requests' '.target_type == "MergeRequest"'
 filter 'Epics' '.target_type == "Epic"'
 filter 'Outside CE/EE/Design system' '.target_type != "MergeRequest" and .target_type != "Epic" and .project.path != "gitlab-ce" and .project.path != "gitlab-ee" and .project.path != "design.gitlab.com" and .project.path != "gitlab-design" and .project.path != "gitlab-ui" and .project.path != "gitlab-svgs"'
 filter 'Design system' '.project.path == "design.gitlab.com" or .project.path == "gitlab-design" or .project.path == "gitlab-ui" or .project.path == "gitlab-svgs"'
-filter 'Merge requests' '.target_type == "MergeRequest"'
+
 filter 'Milestone 11.10' '.target.milestone.title == "11.10"'
 filter 'Milestone 11.11' '.target.milestone.title == "11.11"'
 filter 'Milestone 12.0' '.target.milestone.title == "12.0"'
 filter 'Milestone 12.1' '.target.milestone.title == "12.1"'
 filter 'Milestone 12.2' '.target.milestone.title == "12.2"'
+filter 'Milestone 12.2' '.target.milestone.title == "12.3"'
+filter 'Milestone 12.2' '.target.milestone.title == "12.4"'
+
+filter 'Verify direction' '.target.labels[]? == "Verify" and .target.labels[]? == "direction"'
+filter 'Verify bugs' '.target.labels[]? == "Verify" and .target.labels[]? == "bug"'
+filter 'Verify customer' '.target.labels[]? == "Verify" and .target.labels[]? == "customer"'
 filter 'Brendan' '.author.username == "brendan"'
-filter 'Verify label' '.target.labels[]? == "Verify"'
-filter 'Bugs label' '.target.labels[]? == "bug"'
-filter 'Customer label' '.target.labels[]? == "customer"'
+filter 'Jason' '.author.username == "jlenny"'
+filter 'Verify all' '.target.labels[]? == "Verify"'
 filter 'Manager' '.author.username == "'$managerusername'"'
 filter 'Director' '.author.username == "'$directorusername'"'
 filter 'Rayana' '.author.username == "rverissimo"'

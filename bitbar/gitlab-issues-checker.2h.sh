@@ -92,26 +92,19 @@ $(printf %-75.75s "$title") | href=https://gitlab.com/groups/gitlab-org/-/epics/
   done < <(jq -rc ''"$2"' | .iid,.title' < $issuesfile);
 }
 
-# Lists of epics
-curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/groups/9970/epics/?labels=$mainlabel&state=opened&order_by=updated_at&per_page=100" > /tmp/gitlab-issues-epics.json # Create issues file with 10 items
-filterepics 'Epics' '.[] | select(.)?' '/tmp/gitlab-issues-epics.json'
-
 # Filtered lists of todos
-filter 'Milestone 11.8' '.[] | select(.milestone.title == "11.8")?'
-filter 'Milestone 11.9' '.[] | select(.milestone.title == "11.9")?'
-filter 'Milestone 11.10' '.[] | select(.milestone.title == "11.10")?'
-filter 'Milestone 11.11' '.[] | select(.milestone.title == "11.11")?'
-filter 'Milestone 12.0' '.[] | select(.milestone.title == "12.0")?'
-filter 'Milestone 12.1' '.[] | select(.milestone.title == "12.1")?'
-filter 'Upvotes sorted (>25 upvotes)' 'sort_by(.upvotes) | reverse[] | select(.upvotes > 25)'
-filter 'Comments sorted (>25 comments)' 'sort_by(.user_notes_count) | reverse[] | select(.user_notes_count > 25)'
-filter 'bugs label' '.[] | select(.labels[]? == "bug")?'
-filter 'customer label' '.[] | select(.labels[]? == "customer")?'
-filter 'Milestone next 3-4 releases' '.[] | select(.milestone.title == "Next 3-4 releases")?'
-filter 'Milestone next 4-7 releases' '.[] | select(.milestone.title == "Next 4-7 releases")?'
-filter 'Milestone next 7-13 releases' '.[] | select(.milestone.title == "Next 7-13 releases")?'
-filter 'Milestone backlog' '.[] | select(.milestone.title == "Backlog")?'
-filter 'No milestone' '.[] | select(.milestone.title == null)?'
+filter 'Milestone 12.0 direction' '.[] | select(.milestone.title == "12.0" and .labels[]? == "direction")?'
+filter 'Milestone 12.1 direction' '.[] | select(.milestone.title == "12.1" and .labels[]? == "direction")?'
+filter 'Milestone 12.2 direction' '.[] | select(.milestone.title == "12.2" and .labels[]? == "direction")?'
+filter 'Milestone 12.3 direction' '.[] | select(.milestone.title == "12.3" and .labels[]? == "direction")?'
+filter 'Milestone 12.4 direction' '.[] | select(.milestone.title == "12.4" and .labels[]? == "direction")?'
+
+# filter 'Upvotes sorted (>25 upvotes)' 'sort_by(.upvotes) | reverse[] | select(.upvotes > 25)'
+# filter 'Comments sorted (>25 comments)' 'sort_by(.user_notes_count) | reverse[] | select(.user_notes_count > 25)'
+# filter 'bugs label' '.[] | select(.labels[]? == "bug")?'
+# filter 'customer label' '.[] | select(.labels[]? == "customer")?'
+# filter 'Milestone backlog' '.[] | select(.milestone.title == "Backlog" and .labels[]? == "direction")?'
+# filter 'No milestone' '.[] | select(.milestone.title == null)?'
 
 # Filtered lists of issues for most 10 recent created ones
 cat /tmp/gitlab-issues.json | jq '.[:10]' > /tmp/gitlab-issues-created-10.json # Create issues file with 10 items
@@ -120,3 +113,7 @@ filter 'Last created 10 issues' '.[] | select(.)?' '/tmp/gitlab-issues-created-1
 # Filtered lists of issues for most 10 recently updated ones
 cat /tmp/gitlab-issues.json | jq 'sort_by(.updated_at) | reverse[:10]' > /tmp/gitlab-issues-updated-10.json # Create issues file with 10 items
 filter 'Last updated 10 issues' '.[] | select(.)?' '/tmp/gitlab-issues-updated-10.json'
+
+# Lists of epics
+curl -s -L -H "PRIVATE-TOKEN: $privatetoken" "https://gitlab.com/api/v4/groups/9970/epics/?labels=$mainlabel&state=opened&order_by=updated_at&per_page=100" > /tmp/gitlab-issues-epics.json # Create issues file with 10 items
+filterepics 'Epics' '.[] | select(.)?' '/tmp/gitlab-issues-epics.json'
