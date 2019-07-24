@@ -40,11 +40,12 @@ jq -s 'add' $boards > /tmp/boards.tmp && mv /tmp/boards.tmp $boards
 filter () {
   echo "---";
   echo "$1 | color=$headercolor";
-  while read -r name
+  while read -r id
+        read -r name
         read -r web_url;
     do echo "\
-$(printf %-15.15s "${name}") | href=$web_url font=$monofont size=$monosize";
-  done < <(jq -rc '.[] | select('"$2"')? | .name,.group.web_url' < $boards);
+$(printf %-15.15s "${name}") | href=$web_url/-/boards/$id font=$monofont size=$monosize";
+  done < <(jq -rc '.[] | select('"$2"')? | .id,.name,.group.web_url' < $boards);
 }
 
 echo " B | templateImage=$gitlabicon";
