@@ -3,6 +3,7 @@ source ~/.localrc
 privatetoken=$GLPRIVATETOKEN
 username=dimitrieh
 assigneeid=489558
+monosize=12
 monofont=Menlo-Regular
 speciallabel=Deliverable
 speciallabel2=UX
@@ -60,7 +61,7 @@ $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
-| href=$web_url font=$monofont";
+| href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-2-1.json);
 
@@ -78,7 +79,7 @@ $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
-| href=$web_url font=$monofont";
+| href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-3-1.json);
 
@@ -96,7 +97,7 @@ $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
-| href=$web_url font=$monofont";
+| href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | select(.project_id == 443787 or .project_id == 4456656 or .project_id == 4149988 or .project_id ==7071551) | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
@@ -114,7 +115,7 @@ $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
-| href=$web_url font=$monofont";
+| href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | select(.milestone.title == "12.1") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
@@ -132,7 +133,7 @@ $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
-| href=$web_url font=$monofont";
+| href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | select(.milestone.title == "12.2") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
@@ -150,7 +151,7 @@ $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
-| href=$web_url font=$monofont";
+| href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | select(.milestone.title == "12.3") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
@@ -168,7 +169,7 @@ $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
-| href=$web_url font=$monofont";
+| href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | select(.milestone.title == "12.4") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
@@ -186,7 +187,7 @@ $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
-| href=$web_url font=$monofont";
+| href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | select(.milestone.title == "12.5") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
@@ -204,7 +205,7 @@ $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
-| href=$web_url font=$monofont";
+| href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | select(.labels[]? == "Verify") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
@@ -222,7 +223,7 @@ done < <(jq -rc '.[] | select(.labels[]? == "Verify") | .iid,.labels,.title,.web
 # $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 # $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 # $(printf %-75.75s "$title")\
-# | href=$web_url font=$monofont";
+# | href=$web_url font=$monofont size=$monosize";
 # echo $web_url >> $file;
 # done < <(jq -rc '.[] | select(.milestone.title == "Next 3-4 releases") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
@@ -240,7 +241,7 @@ done < <(jq -rc '.[] | select(.labels[]? == "Verify") | .iid,.labels,.title,.web
 # $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 # $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 # $(printf %-75.75s "$title")\
-# | href=$web_url font=$monofont";
+# | href=$web_url font=$monofont size=$monosize";
 # echo $web_url >> $file;
 # done < <(jq -rc '.[] | select(.milestone.title == "Next 4-7 releases") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
@@ -258,7 +259,7 @@ done < <(jq -rc '.[] | select(.labels[]? == "Verify") | .iid,.labels,.title,.web
 # $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 # $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 # $(printf %-75.75s "$title")\
-# | href=$web_url font=$monofont";
+# | href=$web_url font=$monofont size=$monosize";
 # echo $web_url >> $file;
 # done < <(jq -rc '.[] | select(.milestone.title == "Next 7-13 releases") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
@@ -276,7 +277,7 @@ $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
-| href=$web_url font=$monofont";
+| href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | select(.milestone.title == "Backlog") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
@@ -294,7 +295,7 @@ $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
-| href=$web_url font=$monofont";
+| href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | select(.author.username == "'$username'") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
@@ -312,7 +313,7 @@ $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
-| href=$web_url font=$monofont";
+| href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | select(.web_url | contains("stichtingnatuurlijkverder") ) | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
@@ -330,6 +331,6 @@ $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
-| href=$web_url font=$monofont";
+| href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
