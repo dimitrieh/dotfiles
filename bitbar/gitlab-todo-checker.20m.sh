@@ -58,15 +58,6 @@ countfordays=$(cat $todos | jq -rc '.[] | select(.created_at > '$timeago') | .ta
 
 countmrandspeciallabel=$(($(cat $todos | jq -rc '.[] | select(.created_at > '$timeago') | select(.target_type == "MergeRequest") | .target_url' | wc -l) + $(cat $todos | jq -rc '.[] | select(.created_at > '$timeago') | select(.target_type == "Issue") | select(.target.assignees[].username == "'$username'") | select(.target.labels[]? == "'$speciallabel'") | .target_url' | wc -l)));
 
-# Set text and icon for BitBar
-echo " T $countmrandspeciallabel | templateImage=$gitlabicon";
-
-echo "---";
-echo "Refresh | refresh=true"
-echo "Your todos on GitLab | href=https://gitlab.com/dashboard/todos";
-echo "Edit this file | bash=/usr/local/bin/code param1=--add param2=/Users/dimitrie/.dotfiles/bitbar terminal=false";
-echo "$countfordays($counttotal)"
-
 # Function to create filtered lists of todos
 filter () {
   tfile=$(mktemp /tmp/gitlab-todos-lists.XXXXXXXXX)
@@ -90,29 +81,34 @@ $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") "
   done < <(jq -rc '.[] | select(.created_at > '$timeago') | select('"$2"')? | .target.iid,.project.path,.group.path,.target.state,.target.labels,.target.title,.target_url' < $todosfile);
 }
 
+# Set text and icon for BitBar
+echo " T $countmrandspeciallabel | templateImage=$gitlabicon";
+
+echo "---";
+echo "Refresh | refresh=true"
+echo "Your todos on GitLab | href=https://gitlab.com/dashboard/todos";
+echo "Edit this file | bash=/usr/local/bin/code param1=--add param2=/Users/dimitrie/.dotfiles/bitbar terminal=false";
+echo "$countfordays($counttotal)"
+
 # Filtered lists of todos
 filter 'Merge requests' '.target_type == "MergeRequest"'
 filter 'Epics' '.target_type == "Epic"'
 filter 'Outside CE/EE/Design system' '.target_type != "MergeRequest" and .target_type != "Epic" and .project.path != "gitlab-ce" and .project.path != "gitlab-ee" and .project.path != "design.gitlab.com" and .project.path != "gitlab-design" and .project.path != "gitlab-ui" and .project.path != "gitlab-svgs"'
 filter 'Design system' '.project.path == "design.gitlab.com" or .project.path == "gitlab-design" or .project.path == "gitlab-ui" or .project.path == "gitlab-svgs"'
 
-filter 'Milestone 11.10' '.target.milestone.title == "11.10"'
-filter 'Milestone 11.11' '.target.milestone.title == "11.11"'
-filter 'Milestone 12.0' '.target.milestone.title == "12.0"'
 filter 'Milestone 12.1' '.target.milestone.title == "12.1"'
 filter 'Milestone 12.2' '.target.milestone.title == "12.2"'
 filter 'Milestone 12.3' '.target.milestone.title == "12.3"'
 filter 'Milestone 12.4' '.target.milestone.title == "12.4"'
+filter 'Milestone 12.4' '.target.milestone.title == "12.5"'
 
 filter 'Verify direction' '.target.labels[]? == "Verify" and .target.labels[]? == "direction"'
 filter 'Verify bugs' '.target.labels[]? == "Verify" and .target.labels[]? == "bug"'
 filter 'Verify customer' '.target.labels[]? == "Verify" and .target.labels[]? == "customer"'
-filter 'Brendan' '.author.username == "brendan"'
 filter 'Jason' '.author.username == "jlenny"'
 filter 'Verify all' '.target.labels[]? == "Verify"'
 filter 'Manager' '.author.username == "'$managerusername'"'
 filter 'Director' '.author.username == "'$directorusername'"'
-filter 'Rayana' '.author.username == "rverissimo"'
 # filter 'Milestone next 3-4 releases' '.target.milestone.title == "Next 3-4 releases"'
 # filter 'Milestone next 4-7 releases' '.target.milestone.title == "Next 4-7 releases"'
 # filter 'Milestone next 7-13 releases' '.target.milestone.title == "Next 7-13 releases"'
