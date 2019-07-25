@@ -100,7 +100,7 @@ filter 'Milestone 12.1' '.target.milestone.title == "12.1"'
 filter 'Milestone 12.2' '.target.milestone.title == "12.2"'
 filter 'Milestone 12.3' '.target.milestone.title == "12.3"'
 filter 'Milestone 12.4' '.target.milestone.title == "12.4"'
-filter 'Milestone 12.4' '.target.milestone.title == "12.5"'
+filter 'Milestone 12.5' '.target.milestone.title == "12.5"'
 
 filter 'Verify direction' '.target.labels[]? == "Verify" and .target.labels[]? == "direction"'
 filter 'Verify bugs' '.target.labels[]? == "Verify" and .target.labels[]? == "bug"'
