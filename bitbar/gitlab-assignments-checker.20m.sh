@@ -207,7 +207,7 @@ $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")
 $(printf %-75.75s "$title")\
 | href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
-done < <(jq -rc '.[] | select(.labels[]? == "Verify") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
+done < <(jq -rc '.[] | select(.labels[]? == "devops::verify") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 # echo "---";
 # file=/tmp/gitlab-assignments-checker-1-milestone-next-3-4.txt

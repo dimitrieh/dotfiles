@@ -52,7 +52,7 @@ echo " B | templateImage=$gitlabicon";
 echo "---";
 echo "Refresh | refresh=true";
 
-filter 'Verify label boards' '.labels[].name == "Verify"'
+filter 'Verify label boards' '.labels[].name == "devops::verify"'
 
 echo "---";
 echo "UX boards | color=$headercolor";
