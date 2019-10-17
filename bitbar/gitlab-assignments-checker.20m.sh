@@ -6,7 +6,6 @@ assigneeid=489558
 monosize=12
 monofont=Menlo-Regular
 speciallabel=Deliverable
-speciallabel2=UX
 headercolor=#444444
 
 export PATH="$PATH:/usr/local/bin"
@@ -34,12 +33,11 @@ done
 
 cat /tmp/gitlab-assignments-checker-1-1.json > /tmp/gitlab-assignments-checker-4-1.json
 
-# Creating count for assigned mr's, x/x assigned issues with deliverable label which need UX vs all assigned issues with Deliverable label
+# Creating count for assigned mr's, all assigned issues
 number1=$(cat /tmp/gitlab-assignments-checker-2-1.json | jq -rc '.[] | .web_url' | wc -l | tr -d '[:space:]')
-number2=$(cat /tmp/gitlab-assignments-checker-1-1.json | jq -rc '.[] | select(.labels[]? == "'$speciallabel'") | select(.labels[]? == "'$speciallabel2'") | .web_url' | wc -l | tr -d '[:space:]')
-number3=$(cat /tmp/gitlab-assignments-checker-1-1.json | jq -rc '.[] | select(.labels[]? == "'$speciallabel'") | .web_url' | wc -l | tr -d '[:space:]')
+number2=$(cat /tmp/gitlab-assignments-checker-1-1.json | jq -rc '.[] | .web_url' | wc -l | tr -d '[:space:]')
 
-echo " A ($number1) $number2/$number3 | templateImage=iVBORw0KGgoAAAANSUhEUgAAACIAAAAgAQMAAABNQTiKAAABG2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+Gkqr6gAAAYJpQ0NQc1JHQiBJRUM2MTk2Ni0yLjEAACiRdZHfK4NRGMc/G/Jroka5cLE0rkxDLW6ULaGkNVOGm+3du01t8/a+k5Zb5VZR4savC/4CbpVrpYiUlDvXxA3r9by22pI9p+c8n/M953k65zlgD6eVjFHrhUw2p4cm/K75yIKr/oVGWnDSgTuqGNpYMDhNVfu8x2bFW49Vq/q5f605rhoK2BqERxVNzwlPCk+v5TSLd4TblVQ0Lnwm3KfLBYXvLD1W5FeLk0X+tlgPhwJgbxN2JSs4VsFKSs8Iy8txZ9KrSuk+1kscanZuVmK3eBcGISbw42KKcQL4GGBEZh8eBumXFVXyvb/5M6xIriKzRh6dZZKkyNEn6qpUVyUmRFdlpMlb/f/bVyMxNFis7vBD3bNpvvdA/TYUtkzz68g0C8dQ8wSX2XL+yiEMf4i+VdbcB9C6AedXZS22Cxeb0PmoRfXor1Qjbk8k4O0UWiLgvIGmxWLPSvucPEB4Xb7qGvb2oVfOty79AERNZ9aX3fKfAAAABlBMVEUAAAAmRcn2EULJAAAAAnRSTlP/AOW3MEoAAAAJcEhZcwAAFiUAABYlAUlSJPAAAABmSURBVAiZY/gPBAcYkMm////vRyV//P8vj0p+qP/Hj0o+sP/DDjfnAT+QPP+B/zOYfHyA4TiYbP4hf/AAw8Ef8s1A9T/kgbp+/LEHmvanxs4eqMvGBqR3XiWIvFcMIv/Vo7kNgwQA44R8QJN1/JwAAAAASUVORK5CYII=";
+echo " A ($number1) $number2 | templateImage=iVBORw0KGgoAAAANSUhEUgAAACIAAAAgAQMAAABNQTiKAAABG2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+Gkqr6gAAAYJpQ0NQc1JHQiBJRUM2MTk2Ni0yLjEAACiRdZHfK4NRGMc/G/Jroka5cLE0rkxDLW6ULaGkNVOGm+3du01t8/a+k5Zb5VZR4savC/4CbpVrpYiUlDvXxA3r9by22pI9p+c8n/M953k65zlgD6eVjFHrhUw2p4cm/K75yIKr/oVGWnDSgTuqGNpYMDhNVfu8x2bFW49Vq/q5f605rhoK2BqERxVNzwlPCk+v5TSLd4TblVQ0Lnwm3KfLBYXvLD1W5FeLk0X+tlgPhwJgbxN2JSs4VsFKSs8Iy8txZ9KrSuk+1kscanZuVmK3eBcGISbw42KKcQL4GGBEZh8eBumXFVXyvb/5M6xIriKzRh6dZZKkyNEn6qpUVyUmRFdlpMlb/f/bVyMxNFis7vBD3bNpvvdA/TYUtkzz68g0C8dQ8wSX2XL+yiEMf4i+VdbcB9C6AedXZS22Cxeb0PmoRfXor1Qjbk8k4O0UWiLgvIGmxWLPSvucPEB4Xb7qGvb2oVfOty79AERNZ9aX3fKfAAAABlBMVEUAAAAmRcn2EULJAAAAAnRSTlP/AOW3MEoAAAAJcEhZcwAAFiUAABYlAUlSJPAAAABmSURBVAiZY/gPBAcYkMm////vRyV//P8vj0p+qP/Hj0o+sP/DDjfnAT+QPP+B/zOYfHyA4TiYbP4hf/AAw8Ef8s1A9T/kgbp+/LEHmvanxs4eqMvGBqR3XiWIvFcMIv/Vo7kNgwQA44R8QJN1/JwAAAAASUVORK5CYII=";
 
 echo "---";
 echo "Refresh | refresh=true"
@@ -59,101 +57,10 @@ while read -r iid
 $(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
 $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
 | href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-2-1.json);
-
-echo "---";
-file=/tmp/gitlab-assignments-checker-1-star-emoji.txt
-> $file
-echo "Assigned issues which you have awarded a star emoji | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
-while read -r iid
-      read -r labels
-      read -r title
-      read -r web_url; do
-    echo "\
-$(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
-$(printf '%-6s' "$iid")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf %-75.75s "$title")\
-| href=$web_url font=$monofont size=$monosize";
-echo $web_url >> $file;
-done < <(jq -rc '.[] | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-3-1.json);
-
-echo "---";
-file=/tmp/gitlab-assignments-checker-1-gitlab-design-system.txt
-> $file
-echo "Assigned issues on design system | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
-while read -r iid
-      read -r labels
-      read -r title
-      read -r web_url; do
-    echo "\
-$(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
-$(printf '%-6s' "$iid")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf %-75.75s "$title")\
-| href=$web_url font=$monofont size=$monosize";
-echo $web_url >> $file;
-done < <(jq -rc '.[] | select(.project_id == 443787 or .project_id == 4456656 or .project_id == 4149988 or .project_id ==7071551) | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
-
-echo "---";
-file=/tmp/gitlab-assignments-checker-1-milestone-12-1.txt
-> $file
-echo "Assigned issues with milestone 12.1 | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
-while read -r iid
-      read -r labels
-      read -r title
-      read -r web_url; do
-    echo "\
-$(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
-$(printf '%-6s' "$iid")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf %-75.75s "$title")\
-| href=$web_url font=$monofont size=$monosize";
-echo $web_url >> $file;
-done < <(jq -rc '.[] | select(.milestone.title == "12.1") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
-
-echo "---";
-file=/tmp/gitlab-assignments-checker-1-milestone-12-2.txt
-> $file
-echo "Assigned issues with milestone 12.2 | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
-while read -r iid
-      read -r labels
-      read -r title
-      read -r web_url; do
-    echo "\
-$(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
-$(printf '%-6s' "$iid")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf %-75.75s "$title")\
-| href=$web_url font=$monofont size=$monosize";
-echo $web_url >> $file;
-done < <(jq -rc '.[] | select(.milestone.title == "12.2") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
-
-echo "---";
-file=/tmp/gitlab-assignments-checker-1-milestone-12-3.txt
-> $file
-echo "Assigned issues with milestone 12.3 | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
-while read -r iid
-      read -r labels
-      read -r title
-      read -r web_url; do
-    echo "\
-$(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
-$(printf '%-6s' "$iid")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf %-75.75s "$title")\
-| href=$web_url font=$monofont size=$monosize";
-echo $web_url >> $file;
-done < <(jq -rc '.[] | select(.milestone.title == "12.3") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
 file=/tmp/gitlab-assignments-checker-1-milestone-12-4.txt
@@ -167,7 +74,6 @@ while read -r iid
 $(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
 $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
 | href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
@@ -185,16 +91,15 @@ while read -r iid
 $(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
 $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
 | href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
 done < <(jq -rc '.[] | select(.milestone.title == "12.5") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
-file=/tmp/gitlab-assignments-checker-1-verify.txt
+file=/tmp/gitlab-assignments-checker-1-milestone-12-6.txt
 > $file
-echo "Assigned issues with label Verify | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
+echo "Assigned issues with milestone 12.6 | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
 while read -r iid
       read -r labels
       read -r title
@@ -203,70 +108,15 @@ while read -r iid
 $(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
 $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
 | href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
-done < <(jq -rc '.[] | select(.labels[]? == "devops::verify") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
-
-# echo "---";
-# file=/tmp/gitlab-assignments-checker-1-milestone-next-3-4.txt
-# > $file
-# echo "Assigned issues with milestone next 3-4 releases | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
-# while read -r iid
-#       read -r labels
-#       read -r title
-#       read -r web_url; do
-#     echo "\
-# $(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
-# $(printf '%-6s' "$iid")\
-# $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-# $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-# $(printf %-75.75s "$title")\
-# | href=$web_url font=$monofont size=$monosize";
-# echo $web_url >> $file;
-# done < <(jq -rc '.[] | select(.milestone.title == "Next 3-4 releases") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
-
-# echo "---";
-# file=/tmp/gitlab-assignments-checker-1-milestone-next-4-7.txt
-# > $file
-# echo "Assigned issues with milestone next 4-7 releases | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
-# while read -r iid
-#       read -r labels
-#       read -r title
-#       read -r web_url; do
-#     echo "\
-# $(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
-# $(printf '%-6s' "$iid")\
-# $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-# $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-# $(printf %-75.75s "$title")\
-# | href=$web_url font=$monofont size=$monosize";
-# echo $web_url >> $file;
-# done < <(jq -rc '.[] | select(.milestone.title == "Next 4-7 releases") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
-
-# echo "---";
-# file=/tmp/gitlab-assignments-checker-1-milestone-next-7-13.txt
-# > $file
-# echo "Assigned issues with milestone next 7-13 releases | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
-# while read -r iid
-#       read -r labels
-#       read -r title
-#       read -r web_url; do
-#     echo "\
-# $(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
-# $(printf '%-6s' "$iid")\
-# $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-# $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-# $(printf %-75.75s "$title")\
-# | href=$web_url font=$monofont size=$monosize";
-# echo $web_url >> $file;
-# done < <(jq -rc '.[] | select(.milestone.title == "Next 7-13 releases") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
+done < <(jq -rc '.[] | select(.milestone.title == "12.6") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
-file=/tmp/gitlab-assignments-checker-1-milestone-backlog.txt
+file=/tmp/gitlab-assignments-checker-1-milestone-12-7.txt
 > $file
-echo "Assigned issues with milestone Backlog | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
+echo "Assigned issues with milestone 12.7 | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
 while read -r iid
       read -r labels
       read -r title
@@ -275,47 +125,10 @@ while read -r iid
 $(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
 $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
 | href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;
-done < <(jq -rc '.[] | select(.milestone.title == "Backlog") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
-
-echo "---";
-file=/tmp/gitlab-assignments-checker-1-created-yourself.txt
-> $file
-echo "Assigned issues which you have created yourself | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
-while read -r iid
-      read -r labels
-      read -r title
-      read -r web_url; do
-    echo "\
-$(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
-$(printf '%-6s' "$iid")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf %-75.75s "$title")\
-| href=$web_url font=$monofont size=$monosize";
-echo $web_url >> $file;
-done < <(jq -rc '.[] | select(.author.username == "'$username'") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
-
-echo "---";
-file=/tmp/gitlab-assignments-checker-1-snv.txt
-> $file
-echo "Assigned issues for SNV | bash=/Users/dimitrie/.dotfiles/bin/openlist param1=$file terminal=false color=$headercolor";
-while read -r iid
-      read -r labels
-      read -r title
-      read -r web_url; do
-    echo "\
-$(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
-$(printf '%-6s' "$iid")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf %-75.75s "$title")\
-| href=$web_url font=$monofont size=$monosize";
-echo $web_url >> $file;
-done < <(jq -rc '.[] | select(.web_url | contains("stichtingnatuurlijkverder") ) | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
+done < <(jq -rc '.[] | select(.milestone.title == "12.7") | .iid,.labels,.title,.web_url' < /tmp/gitlab-assignments-checker-1-1.json);
 
 echo "---";
 file=/tmp/gitlab-assignments-checker-1-all-assigned.txt
@@ -329,7 +142,6 @@ while read -r iid
 $(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
 $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title")\
 | href=$web_url font=$monofont size=$monosize";
 echo $web_url >> $file;

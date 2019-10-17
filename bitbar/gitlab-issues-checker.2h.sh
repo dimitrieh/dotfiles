@@ -10,9 +10,7 @@ monofont=Menlo-Regular
 monosize=12
 headercolor=#444444
 days=90
-mainlabel=Verify
-speciallabel=Deliverable
-speciallabel2=Stretch
+mainlabel=devops::verify
 allissues="/tmp/gitlab-issues.json"
 gitlabicon="iVBORw0KGgoAAAANSUhEUgAAACIAAAAgAQMAAABNQTiKAAABG2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+Gkqr6gAAAYJpQ0NQc1JHQiBJRUM2MTk2Ni0yLjEAACiRdZHfK4NRGMc/G/Jroka5cLE0rkxDLW6ULaGkNVOGm+3du01t8/a+k5Zb5VZR4savC/4CbpVrpYiUlDvXxA3r9by22pI9p+c8n/M953k65zlgD6eVjFHrhUw2p4cm/K75yIKr/oVGWnDSgTuqGNpYMDhNVfu8x2bFW49Vq/q5f605rhoK2BqERxVNzwlPCk+v5TSLd4TblVQ0Lnwm3KfLBYXvLD1W5FeLk0X+tlgPhwJgbxN2JSs4VsFKSs8Iy8txZ9KrSuk+1kscanZuVmK3eBcGISbw42KKcQL4GGBEZh8eBumXFVXyvb/5M6xIriKzRh6dZZKkyNEn6qpUVyUmRFdlpMlb/f/bVyMxNFis7vBD3bNpvvdA/TYUtkzz68g0C8dQ8wSX2XL+yiEMf4i+VdbcB9C6AedXZS22Cxeb0PmoRfXor1Qjbk8k4O0UWiLgvIGmxWLPSvucPEB4Xb7qGvb2oVfOty79AERNZ9aX3fKfAAAABlBMVEUAAAAmRcn2EULJAAAAAnRSTlP/AOW3MEoAAAAJcEhZcwAAFiUAABYlAUlSJPAAAABmSURBVAiZY/gPBAcYkMm////vRyV//P8vj0p+qP/Hj0o+sP/DDjfnAT+QPP+B/zOYfHyA4TiYbP4hf/AAw8Ef8s1A9T/kgbp+/LEHmvanxs4eqMvGBqR3XiWIvFcMIv/Vo7kNgwQA44R8QJN1/JwAAAAASUVORK5CYII="
 
@@ -69,8 +67,6 @@ filter () {
     do echo "\
 $(printf %-15.15s "$(echo $web_url | sed -E 's#([^/]+)/(issues|merge_requests)/[0-9]+#\1#' | sed -E 's#.*/([^/]+)#\1#')") $([[ $web_url == *'merge_requests'* ]] && echo '!' || echo '#')\
 $(printf '%-6s' "$iid")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$title") | href=$web_url font=$monofont size=$monosize";
     echo $web_url >> $tfile;
   done < <(jq -rc ''"$2"' | .iid,.labels,.title,.web_url' < $issuesfile);
@@ -93,11 +89,10 @@ $(printf %-75.75s "$title") | href=https://gitlab.com/groups/gitlab-org/-/epics/
 }
 
 # Filtered lists of todos
-filter 'Milestone 12.0 direction' '.[] | select(.milestone.title == "12.0" and .labels[]? == "direction")?'
-filter 'Milestone 12.1 direction' '.[] | select(.milestone.title == "12.1" and .labels[]? == "direction")?'
-filter 'Milestone 12.2 direction' '.[] | select(.milestone.title == "12.2" and .labels[]? == "direction")?'
-filter 'Milestone 12.3 direction' '.[] | select(.milestone.title == "12.3" and .labels[]? == "direction")?'
 filter 'Milestone 12.4 direction' '.[] | select(.milestone.title == "12.4" and .labels[]? == "direction")?'
+filter 'Milestone 12.5 direction' '.[] | select(.milestone.title == "12.5" and .labels[]? == "direction")?'
+filter 'Milestone 12.6 direction' '.[] | select(.milestone.title == "12.6" and .labels[]? == "direction")?'
+filter 'Milestone 12.7 direction' '.[] | select(.milestone.title == "12.7" and .labels[]? == "direction")?'
 
 # filter 'Upvotes sorted (>25 upvotes)' 'sort_by(.upvotes) | reverse[] | select(.upvotes > 25)'
 # filter 'Comments sorted (>25 comments)' 'sort_by(.user_notes_count) | reverse[] | select(.user_notes_count > 25)'

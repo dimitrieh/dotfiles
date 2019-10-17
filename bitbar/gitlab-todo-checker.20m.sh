@@ -6,12 +6,12 @@ export PATH=:/usr/local/bin:$PATH
 source ~/.localrc
 privatetoken=$GLPRIVATETOKEN
 username=dimitrieh
-managerusername=vkarnes
+managerusername=nudalova
 directorusername=clenneville
+productmanager=jlenny
 monofont=Menlo-Regular
 monosize=12
 speciallabel=Deliverable
-speciallabel2=UX
 headercolor=#444444
 days=90
 todos="/tmp/gitlab-todos.json"
@@ -75,7 +75,6 @@ filter () {
 $(printf %-15.15s "$([[ $target_url == *'/-/epics/'* ]] && echo $group_path || echo $path)") $([[ $target_url == *'/merge_requests/'* ]] && echo '!' || echo '')$([[ $target_url == *'/issues/'* ]] && echo '#' || echo '')$([[ $target_url == *'/-/epics/'* ]] && echo '&' || echo '')\
 $(printf '%-6s' "$iid")\
 $(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
-$(printf '%-2.2s' "$(echo ${labels} | jq '.[]? | select(. == "'$speciallabel2'")' | sed 's/"//g' | sed 's/^\(.\).*/\1/')")\
 $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") ")$title") | href=$target_url font=$monofont size=$monosize";
     echo $target_url >> $tfile;
   done < <(jq -rc '.[] | select(.created_at > '$timeago') | select('"$2"')? | .target.iid,.project.path,.group.path,.target.state,.target.labels,.target.title,.target_url' < $todosfile);
@@ -96,24 +95,24 @@ filter 'Epics' '.target_type == "Epic"'
 filter 'Outside CE/EE/Design system' '.target_type != "MergeRequest" and .target_type != "Epic" and .project.path != "gitlab" and .project.path != "gitlab-ce" and .project.path != "gitlab-ee" and .project.path != "design.gitlab.com" and .project.path != "gitlab-design" and .project.path != "gitlab-ui" and .project.path != "gitlab-svgs"'
 filter 'Design system' '.project.path == "design.gitlab.com" or .project.path == "gitlab-design" or .project.path == "gitlab-ui" or .project.path == "gitlab-svgs"'
 
-filter 'Milestone 12.1' '.target.milestone.title == "12.1"'
-filter 'Milestone 12.2' '.target.milestone.title == "12.2"'
-filter 'Milestone 12.3' '.target.milestone.title == "12.3"'
 filter 'Milestone 12.4' '.target.milestone.title == "12.4"'
 filter 'Milestone 12.5' '.target.milestone.title == "12.5"'
+filter 'Milestone 12.6' '.target.milestone.title == "12.6"'
+filter 'Milestone 12.7' '.target.milestone.title == "12.7"'
+filter 'Milestone 12.8' '.target.milestone.title == "12.8"'
+
+filter 'Manager' '.author.username == "'$managerusername'"'
+filter 'Director' '.author.username == "'$directorusername'"'
+filter 'PM' '.author.username == "'$productmanager'"'
+
+filter 'Assigned issues' '.target_type == "Issue" and .target.assignees[].username == "'$username'"'
 
 filter 'Verify direction' '.target.labels[]? == "devops::verify" and .target.labels[]? == "direction"'
 filter 'Verify bugs' '.target.labels[]? == "devops::verify" and .target.labels[]? == "bug"'
 filter 'Verify customer' '.target.labels[]? == "devops::verify" and .target.labels[]? == "customer"'
-filter 'Jason' '.author.username == "jlenny"'
+
 filter 'Verify all' '.target.labels[]? == "devops::verify"'
-filter 'Manager' '.author.username == "'$managerusername'"'
-filter 'Director' '.author.username == "'$directorusername'"'
-# filter 'Milestone next 3-4 releases' '.target.milestone.title == "Next 3-4 releases"'
-# filter 'Milestone next 4-7 releases' '.target.milestone.title == "Next 4-7 releases"'
-# filter 'Milestone next 7-13 releases' '.target.milestone.title == "Next 7-13 releases"'
 filter 'Milestone backlog' '.target.milestone.title == "Backlog"'
-filter 'Assigned issues' '.target_type == "Issue" and .target.assignees[].username == "'$username'"'
 filter 'Created by yourself' '.target.author.username == "'$username'"'
 
 # Filtered lists of todos for most 10 recent ones
