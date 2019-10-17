@@ -45,9 +45,8 @@ jq -s 'add' $allissues > /tmp/issues.tmp && mv /tmp/issues.tmp $allissues
 # Count of issues
 counttotal=$(jq -s '.[] | length' $allissues);
 
-mainlabelcapitals=$(echo "$mainlabel" | tr '[:lower:]' '[:upper:]')
 # Set text and icon for BitBar
-echo " ${mainlabelcapitals:0:2} $counttotal | templateImage=$gitlabicon";
+echo " I $counttotal | templateImage=$gitlabicon";
 
 echo "---";
 echo "Refresh | refresh=true"
