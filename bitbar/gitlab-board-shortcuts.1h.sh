@@ -51,14 +51,12 @@ $(printf %-15.15s "${name}") | href=$web_url/-/boards/$id font=$monofont size=$m
 echo " B | templateImage=$gitlabicon";
 echo "---";
 echo "Refresh | refresh=true";
+echo "---";
+echo "Personal boards | color=$headercolor";
 echo "Workflow board | font=$monofont size=$monosize href=https://gitlab.com/groups/gitlab-org/-/boards/1363414";
 echo "Milestones board | font=$monofont size=$monosize href=https://gitlab.com/groups/gitlab-org/-/boards/1352495";
 
-echo "Personal boards | color=$headercolor";
-echo "UX team | font=$monofont size=$monosize href=https://gitlab.com/groups/gitlab-org/-/boards/849926";
-
 echo "---";
-echo "Verify boards | color=$headercolor";
 filter 'Verify label boards' '.labels[].name == "devops::verify"'
 
 echo "---";
