@@ -142,3 +142,7 @@ alias incolumns="column -t"
 alias reload="exec $SHELL -l"
 
 alias lorem="python ~/.dotfiles/zsh/functions/lorem "
+
+# Hide show desktop icons
+alias hidedesk='defaults write com.apple.finder CreateDesktop -bool false; killall Finder;'
+alias showdesk='defaults write com.apple.finder CreateDesktop -bool true; killall Finder;'

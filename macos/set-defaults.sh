@@ -278,6 +278,9 @@ defaults write com.apple.finder DisableAllAnimations -bool true
 
 killall Finder
 
+# Hide desktop icons
+defaults write com.apple.finder CreateDesktop -bool false; killall Finder;
+
 ###############################################################################
 # Photos                                                                      #
 ###############################################################################
