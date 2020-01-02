@@ -95,24 +95,19 @@ filter 'Epics' '.target_type == "Epic"'
 filter 'Outside CE/EE/Design system' '.target_type != "MergeRequest" and .target_type != "Epic" and .project.path != "gitlab" and .project.path != "gitlab-ce" and .project.path != "gitlab-ee" and .project.path != "design.gitlab.com" and .project.path != "gitlab-design" and .project.path != "gitlab-ui" and .project.path != "gitlab-svgs"'
 filter 'Design system' '.project.path == "design.gitlab.com" or .project.path == "gitlab-design" or .project.path == "gitlab-ui" or .project.path == "gitlab-svgs"'
 
-filter 'Milestone 12.4' '.target.milestone.title == "12.4"'
-filter 'Milestone 12.5' '.target.milestone.title == "12.5"'
-filter 'Milestone 12.6' '.target.milestone.title == "12.6"'
+filter 'Planning breakdown' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "workflow::planning breakdown"'
 filter 'Milestone 12.7' '.target.milestone.title == "12.7"'
 filter 'Milestone 12.8' '.target.milestone.title == "12.8"'
+filter 'Milestone 12.9' '.target.milestone.title == "12.9"'
+filter 'Milestone 12.10' '.target.milestone.title == "12.10"'
 
+filter 'Capstone' '.author.username == "rogerslaria"'
 filter 'Manager' '.author.username == "'$managerusername'"'
 filter 'Director' '.author.username == "'$directorusername'"'
 filter 'PM' '.author.username == "'$productmanager'"'
 
 filter 'Assigned issues' '.target_type == "Issue" and .target.assignees[].username == "'$username'"'
 
-filter 'Verify direction' '.target.labels[]? == "devops::verify" and .target.labels[]? == "direction"'
-filter 'Verify bugs' '.target.labels[]? == "devops::verify" and .target.labels[]? == "bug"'
-filter 'Verify customer' '.target.labels[]? == "devops::verify" and .target.labels[]? == "customer"'
-
-filter 'Verify all' '.target.labels[]? == "devops::verify"'
-filter 'Milestone backlog' '.target.milestone.title == "Backlog"'
 filter 'Created by yourself' '.target.author.username == "'$username'"'
 
 # Filtered lists of todos for most 10 recent ones
