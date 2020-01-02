@@ -149,46 +149,46 @@ defaults write NSGlobalDomain AppleWindowTabbingMode -string "always"
 
 
 # Change the layout (rows and columns) of Launchpad
-defaults write com.apple.dock springboard-columns -int 9
-defaults write com.apple.dock springboard-rows -int 4
-defaults write com.apple.dock ResetLaunchPad -bool true
+# defaults write com.apple.dock springboard-columns -int 9
+# defaults write com.apple.dock springboard-rows -int 4
+# defaults write com.apple.dock ResetLaunchPad -bool true
 
 # Disable automatically rearrange Spaces based on recent use
 # defaults write com.apple.dock mru-spaces -bool false
 
 # Enable a really nice looking list view in stacks complete with icons and a scroll bar.
-defaults write com.apple.dock use-new-list-stack -bool YES
+# defaults write com.apple.dock use-new-list-stack -bool YES
 
 # Sets the dock to the right of the screen
-defaults write com.apple.dock orientation right
+# defaults write com.apple.dock orientation right
 
 # Make icons of hidden applications translucent
-defaults write com.apple.dock showhidden -bool true
+# defaults write com.apple.dock showhidden -bool true
 
 # Deactivate dashboard
 defaults write com.apple.dashboard mcx-disabled -boolean true
 
 # Disable bouncing dock icons
-defaults write com.apple.dock no-bouncing -bool true
+# defaults write com.apple.dock no-bouncing -bool true
 
 # Enables Autohide dock to be fast and easy.
-defaults write com.apple.Dock autohide-delay -float 0
-defaults write com.apple.dock autohide-time-modifier -float 0.24
+# defaults write com.apple.Dock autohide-delay -float 0
+# defaults write com.apple.dock autohide-time-modifier -float 0.24
 
 # Disable animations when you open an application from the Dock
-defaults write com.apple.dock launchanim -bool false
+# defaults write com.apple.dock launchanim -bool false
 
 # Autohide the dock
-defaults write com.apple.dock autohide -bool YES
+# defaults write com.apple.dock autohide -bool YES
 
 # Set the right size of dock icons
-defaults write com.apple.dock tilesize -integer 45
+# defaults write com.apple.dock tilesize -integer 45
 
 # Turn off magnification
-defaults delete com.apple.dock magnification
+# defaults delete com.apple.dock magnification
 
 # Make all animations faster that are used by Mission Control
-defaults write com.apple.dock expose-animation-duration -float 0.1
+# defaults write com.apple.dock expose-animation-duration -float 0.1
 
 killall Dock
 
@@ -204,17 +204,17 @@ killall Dock
 # 10: Put display to sleep
 # 11: Launchpad
 # Top left screen corner → Launchpad
-defaults write com.apple.dock wvous-tl-corner -int 0
-defaults write com.apple.dock wvous-tl-modifier -int 0
+# defaults write com.apple.dock wvous-tl-corner -int 0
+# defaults write com.apple.dock wvous-tl-modifier -int 0
 # Top right screen corner → Mission Control
-defaults write com.apple.dock wvous-tr-corner -int 0
-defaults write com.apple.dock wvous-tr-modifier -int 0
+# defaults write com.apple.dock wvous-tr-corner -int 0
+# defaults write com.apple.dock wvous-tr-modifier -int 0
 # Bottom left screen corner → Put display to sleep
-defaults write com.apple.dock wvous-bl-corner -int 0
-defaults write com.apple.dock wvous-bl-modifier -int 0
+# defaults write com.apple.dock wvous-bl-corner -int 0
+# defaults write com.apple.dock wvous-bl-modifier -int 0
 # Bottom right screen corner → Desktop
-defaults write com.apple.dock wvous-br-corner -int 0
-defaults write com.apple.dock wvous-br-modifier -int 0
+# defaults write com.apple.dock wvous-br-corner -int 0
+# defaults write com.apple.dock wvous-br-modifier -int 0
 
 ###############################################################################
 # Finder                                                                      #
@@ -225,6 +225,9 @@ defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
 defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
 defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+
+# Finder: show hidden files
+defaults write com.apple.finder AppleShowAllFiles -bool true
 
 # Finder: allow text selection in Quick Look
 defaults write com.apple.finder QLEnableTextSelection -bool true
