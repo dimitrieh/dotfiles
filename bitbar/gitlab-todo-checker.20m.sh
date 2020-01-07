@@ -91,15 +91,16 @@ echo "$countfordays($counttotal)"
 
 # Filtered lists of todos
 filter 'Merge requests' '.target_type == "MergeRequest"'
-filter 'Epics' '.target_type == "Epic"'
-filter 'Outside CE/EE/Design system' '.target_type != "MergeRequest" and .target_type != "Epic" and .project.path != "gitlab" and .project.path != "gitlab-ce" and .project.path != "gitlab-ee" and .project.path != "design.gitlab.com" and .project.path != "gitlab-design" and .project.path != "gitlab-ui" and .project.path != "gitlab-svgs"'
-filter 'Design system' '.project.path == "design.gitlab.com" or .project.path == "gitlab-design" or .project.path == "gitlab-ui" or .project.path == "gitlab-svgs"'
 
 filter 'Planning breakdown' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "workflow::planning breakdown"'
 filter 'Milestone 12.7' '.target.milestone.title == "12.7"'
 filter 'Milestone 12.8' '.target.milestone.title == "12.8"'
 filter 'Milestone 12.9' '.target.milestone.title == "12.9"'
 filter 'Milestone 12.10' '.target.milestone.title == "12.10"'
+
+filter 'Epics' '.target_type == "Epic"'
+filter 'Outside CE/EE/Design system' '.target_type != "MergeRequest" and .target_type != "Epic" and .project.path != "gitlab" and .project.path != "gitlab-ce" and .project.path != "gitlab-ee" and .project.path != "design.gitlab.com" and .project.path != "gitlab-design" and .project.path != "gitlab-ui" and .project.path != "gitlab-svgs"'
+filter 'Design system' '.project.path == "design.gitlab.com" or .project.path == "gitlab-design" or .project.path == "gitlab-ui" or .project.path == "gitlab-svgs"'
 
 filter 'Capstone' '.author.username == "rogerslaria"'
 filter 'Manager' '.author.username == "'$managerusername'"'
