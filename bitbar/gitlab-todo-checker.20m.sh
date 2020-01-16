@@ -92,8 +92,19 @@ echo "$countfordays($counttotal)"
 # Filtered lists of todos
 filter 'Merge requests' '.target_type == "MergeRequest"'
 
+echo "---"
+echo "IMPLEMEMENTATION ISSUES | color=#0000ff"
+
+filter 'ci::active' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "ci::active"'
+filter 'ci::planning' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "ci::active"'
+filter 'ci::triage' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "ci::triage"'
 filter 'Planning breakdown' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "workflow::planning breakdown"'
 filter 'Milestone 12.7' '.target.milestone.title == "12.7"'
+
+echo "---"
+echo "VALIDATION ISSUES | color=#0000ff"
+
+
 filter 'Milestone 12.8' '.target.milestone.title == "12.8"'
 filter 'Milestone 12.9' '.target.milestone.title == "12.9"'
 filter 'Milestone 12.10' '.target.milestone.title == "12.10"'
