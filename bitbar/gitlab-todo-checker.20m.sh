@@ -8,7 +8,6 @@ privatetoken=$GLPRIVATETOKEN
 username=dimitrieh
 managerusername=nudalova
 directorusername=clenneville
-productmanager=thaoyeager
 monofont=Menlo-Regular
 monosize=12
 speciallabel=Deliverable
@@ -92,22 +91,19 @@ echo "$countfordays($counttotal)"
 # Filtered lists of todos
 filter 'Merge requests' '.target_type == "MergeRequest"'
 
-echo "---"
-echo "IMPLEMEMENTATION ISSUES | color=#0000ff"
+filter 'workflow::problem validation' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "workflow::problem validation"'
+filter 'workflow::design' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "workflow::design"'
+filter 'workflow::solution validation' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "workflow::solution validation"'
+filter 'workflow::planning breakdown' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "workflow::planning breakdown"'
+filter 'workflow::scheduling' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "workflow::scheduling"'
 
-filter 'ci::active' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "ci::active"'
-filter 'ci::planning' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "ci::active"'
-filter 'ci::triage' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "ci::triage"'
-filter 'Planning breakdown' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "workflow::planning breakdown"'
 filter 'Milestone 12.7' '.target.milestone.title == "12.7"'
-
-echo "---"
-echo "VALIDATION ISSUES | color=#0000ff"
-
-
 filter 'Milestone 12.8' '.target.milestone.title == "12.8"'
 filter 'Milestone 12.9' '.target.milestone.title == "12.9"'
 filter 'Milestone 12.10' '.target.milestone.title == "12.10"'
+filter 'Milestone 13.0' '.target.milestone.title == "13.0"'
+
+filter 'workflow::validation backlog' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "workflow::validation backlog"'
 
 filter 'Epics' '.target_type == "Epic"'
 filter 'Outside CE/EE/Design system' '.target_type != "MergeRequest" and .target_type != "Epic" and .project.path != "gitlab" and .project.path != "gitlab-ce" and .project.path != "gitlab-ee" and .project.path != "design.gitlab.com" and .project.path != "gitlab-design" and .project.path != "gitlab-ui" and .project.path != "gitlab-svgs"'
@@ -116,7 +112,13 @@ filter 'Design system' '.project.path == "design.gitlab.com" or .project.path ==
 filter 'Capstone' '.author.username == "rogerslaria"'
 filter 'Manager' '.author.username == "'$managerusername'"'
 filter 'Director' '.author.username == "'$directorusername'"'
-filter 'PM' '.author.username == "'$productmanager'"'
+filter 'Jason' '.author.username == "jyavorska"'
+filter 'Thao' '.author.username == "thaoyeager"'
+filter 'Mark' '.author.username == "markpundsack"'
+
+filter 'ci::active' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "ci::active"'
+filter 'ci::planning' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "ci::active"'
+filter 'ci::triage' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "ci::triage"'
 
 filter 'Assigned issues' '.target_type == "Issue" and .target.assignees[].username == "'$username'"'
 
