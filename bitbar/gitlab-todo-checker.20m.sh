@@ -88,7 +88,7 @@ echo "Your todos on GitLab | href=https://gitlab.com/dashboard/todos";
 echo "Edit this file | bash=/usr/local/bin/code param1=--add param2=/Users/dimitrie/.dotfiles/bitbar terminal=false";
 echo "$countfordays($counttotal)"
 
-# Filtered lists of todos
+# Filtered lists of todos | JQ cheatsheet https://gist.github.com/olih/f7437fb6962fb3ee9fe95bda8d2c8fa4
 filter 'Merge requests' '.target_type == "MergeRequest"'
 
 filter 'workflow::problem validation' '.target.labels[]? == "group::continuous integration" and .target.labels[]? == "workflow::problem validation"'
@@ -127,3 +127,7 @@ filter 'Created by yourself' '.target.author.username == "'$username'"'
 # Filtered lists of todos for most 10 recent ones
 cat /tmp/gitlab-todos.json | jq '.[:10]' > /tmp/gitlab-todos-10.json # Create todos file with 10 items
 filter 'Most recent 10 todos' '.' '/tmp/gitlab-todos-10.json'
+
+# Filtered lists of todos for oldest 10
+cat /tmp/gitlab-todos.json | jq '.[-10:]' > /tmp/gitlab-todos-last10.json # Create todos file with 10 items
+filter 'Oldest 10 todos' '.' '/tmp/gitlab-todos-last10.json'
