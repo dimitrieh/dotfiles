@@ -97,7 +97,7 @@ filter 'workflow::problem validation' '.target.labels[]? == "workflow::problem v
 filter 'workflow::design' '.target.labels[]? == "workflow::design"'
 filter 'workflow::solution validation' '.target.labels[]? == "workflow::solution validation"'
 filter 'workflow::planning breakdown' '.target.labels[]? == "workflow::planning breakdown"'
-filter 'workflow::scheduling' '.target.labels[]? == ".target.labels[]? == "workflow::scheduling"'
+filter 'workflow::scheduling' '.target.labels[]? == "workflow::scheduling"'
 
 filter 'Orit' '.author.username == "ogolowinski"'
 filter 'Manager' '.author.username == "'$managerusername'"'
@@ -109,7 +109,7 @@ filter 'Milestone 12.9' '.target.milestone.title == "12.9"'
 filter 'Milestone 12.10' '.target.milestone.title == "12.10"'
 filter 'Milestone 13.0' '.target.milestone.title == "13.0"'
 
-filter 'workflow::validation backlog' '.target.labels[]? == ".target.labels[]? == "workflow::validation backlog"'
+filter 'workflow::validation backlog' '.target.labels[]? == "workflow::validation backlog"'
 
 filter 'Epics' '.target_type == "Epic"'
 filter 'Outside CE/EE/Design system' '.target_type != "MergeRequest" and .target_type != "Epic" and .project.path != "gitlab" and .project.path != "gitlab-ce" and .project.path != "gitlab-ee" and .project.path != "design.gitlab.com" and .project.path != "gitlab-design" and .project.path != "gitlab-ui" and .project.path != "gitlab-svgs"'
