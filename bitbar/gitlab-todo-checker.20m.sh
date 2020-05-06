@@ -93,6 +93,13 @@ filter 'Merge requests' '.target_type == "MergeRequest"'
 
 filter 'Assigned issues' '.target_type == "Issue" and .target.assignees[].username == "'$username'"'
 
+filter 'Dimi::In progress' '.target.labels[]? == "Dimi::In Progress"'
+filter 'Dimi::Review' '.target.labels[]? == "Dimi::Review"'
+filter 'Dimi::Standby' '.target.labels[]? == "Dimi::Standby"'
+filter 'Dimi::Ready' '.target.labels[]? == "Dimi::Ready"'
+filter 'Dimi::Up next' '.target.labels[]? == "Dimi::Up next"'
+filter 'Dimi::Interest' '.target.labels[]? == "Dimi::Interest"'
+
 filter 'workflow::problem validation' '.target.labels[]? == "workflow::problem validation"'
 filter 'workflow::design' '.target.labels[]? == "workflow::design"'
 filter 'workflow::solution validation' '.target.labels[]? == "workflow::solution validation"'
@@ -103,11 +110,9 @@ filter 'Orit' '.author.username == "ogolowinski"'
 filter 'Manager' '.author.username == "'$managerusername'"'
 filter 'Director' '.author.username == "'$directorusername'"'
 
-filter 'Milestone 12.7' '.target.milestone.title == "12.7"'
-filter 'Milestone 12.8' '.target.milestone.title == "12.8"'
-filter 'Milestone 12.9' '.target.milestone.title == "12.9"'
-filter 'Milestone 12.10' '.target.milestone.title == "12.10"'
 filter 'Milestone 13.0' '.target.milestone.title == "13.0"'
+filter 'Milestone 13.1' '.target.milestone.title == "13.1"'
+filter 'Milestone 13.2' '.target.milestone.title == "13.2"'
 
 filter 'workflow::validation backlog' '.target.labels[]? == "workflow::validation backlog"'
 
