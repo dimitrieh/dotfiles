@@ -110,6 +110,8 @@ filter 'Orit' '.author.username == "ogolowinski"'
 filter 'Manager' '.author.username == "'$managerusername'"'
 filter 'Director' '.author.username == "'$directorusername'"'
 
+filter 'Marcel' '.author.username == "mvanremmerden"'
+
 filter 'Milestone 13.0' '.target.milestone.title == "13.0"'
 filter 'Milestone 13.1' '.target.milestone.title == "13.1"'
 filter 'Milestone 13.2' '.target.milestone.title == "13.2"'
