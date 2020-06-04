@@ -92,11 +92,14 @@ echo "$countfordays($counttotal)"
 filter 'Merge requests' '.target_type == "MergeRequest"'
 
 filter 'Dimi::In progress' '.target.labels[]? == "Dimi::In Progress"'
+filter 'Dimi::UX Exploration' '.target.labels[]? == "Dimi::UX Exploration"'
 filter 'Dimi::Review' '.target.labels[]? == "Dimi::Review"'
 filter 'Dimi::Standby' '.target.labels[]? == "Dimi::Standby"'
 filter 'Dimi::Ready' '.target.labels[]? == "Dimi::Ready"'
 filter 'Dimi::Up next' '.target.labels[]? == "Dimi::Up next"'
 filter 'Dimi::Interest' '.target.labels[]? == "Dimi::Interest"'
+
+filter 'Verify & Release team' '.target.labels[]? == "UX Verify & Release Team" and .target.labels[]? == "needs team input"'
 
 filter 'Assigned issues' '.target_type == "Issue" and .target.assignees[].username == "'$username'"'
 
