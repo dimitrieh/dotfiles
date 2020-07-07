@@ -1,9 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Global keyboard shortcuts</title>
     <style type="text/css">
         h2 {
@@ -16,7 +14,7 @@
         body {
             /*background: #f5f6f7;*/
             font-size: 12px;
-            transform: scale(1.35);
+            transform: scale(1.35) translateY(100px);
             background-color: #333;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Cantarell, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
@@ -215,6 +213,13 @@
             height: 20px;
         }
         
+        .l_up .second,
+        .l_down .second,
+        .l_left .second,
+        .l_right .second {
+            top: 0px;
+        }
+        
         .l_down,
         .l_left,
         .l_right {
@@ -225,13 +230,13 @@
         .l_down {
             left: 629px;
         }
-
+        
         .l_up {
-             border-radius: 4px 4px 0 0;
+            border-radius: 4px 4px 0 0;
         }
-
+        
         .l_down {
-             border-radius: 0 0 4px 4px;
+            border-radius: 0 0 4px 4px;
         }
         
         .l_left {
@@ -663,13 +668,13 @@
         <div class="a_5 anjian lan_2"><span class="first">$</span><span class="second">4</span></div>
         <div class="a_6 anjian lan_2"><span class="first">%</span><span class="second">5</span></div>
         <div class="a_7 anjian lan_2"><span class="first">^</span><span class="second">6</span></div>
-        <div class="a_8 anjian lan_2"><span class="first">&</span><span class="second">7</span></div>
+        <div class="a_8 anjian lan_2"><span class="first">&amp;</span><span class="second">7</span></div>
         <div class="a_9 anjian lan_2"><span class="first">*</span><span class="second">8</span></div>
         <div class="a_10 anjian lan_2"><span class="first">(</span><span class="second">9</span></div>
         <div class="a_11 anjian lan_2"><span class="first">)</span><span class="second">0</span></div>
-        <div class="a_12 anjian lan_2"><span class="first">_</span><span class="second">-</span></div>
-        <div class="a_13 anjian lan_2"><span class="first">+</span><span class="second">=</span></div>
-        <div class="a_14 anjian lan_2"><span class="first">←Backspace</span></div>
+        <div class="a_12 anjian lan_2 lightblue"><span class="first">_</span><span class="second">Wd mng<br> Smaller</span></div>
+        <div class="a_13 anjian lan_2 lightblue"><span class="first">+</span><span class="second">Wd mng<br> Larger</span></div>
+        <div class="a_14 anjian lan_2 lightblue"><span class="first">←Backspace</span><span class="second">Wd mng<br> Restore</span></div>
 
         <!--
         <div class="insert anjian lan_2"><span class="first">Slow Bright Up</span></div>
@@ -680,10 +685,10 @@
 
         <div class="tap anjian lan_3"><span class="first">Tab</span></div>
         <div class="q anjian lan_3"><span class="first">Q</span></div>
-        <div class="w anjian lan_3"><span class="first">W</span></div>
-        <div class="e anjian lan_3"><span class="first">E</span></div>
-        <div class="r anjian lan_3"><span class="first">R</span></div>
-        <div class="t anjian lan_3"><span class="first">T</span></div>
+        <div class="w anjian lan_3 lightblue"><span class="first">W</span><span class="second">Wd mng<br> Top 1/2</span></div>
+        <div class="e anjian lan_3 lightblue"><span class="first">E</span><span class="second">Wd mng<br> Left Top</span></div>
+        <div class="r anjian lan_3 lightblue"><span class="first">R</span><span class="second">Wd mng<br> Rght Top</span></div>
+        <div class="t anjian lan_3 red"><span class="first">T</span><span class="second">Measure<br> Screen</span></div>
         <div class="y anjian lan_3"><span class="first">Y</span></div>
         <div class="u anjian lan_3"><span class="first">U</span></div>
         <div class="i anjian lan_3"><span class="first">I</span></div>
@@ -700,33 +705,32 @@
         -->
 
 
-        <div class="caps anjian lan_4"><span class="first">Caps Lock</span></div>
-        <div class="a anjian lan_4"><span class="first">A</span></span>
-        </div>
-        <div class="s anjian lan_4"><span class="first">S</span></div>
-        <div class="d anjian lan_4"><span class="first">D</span></div>
-        <div class="f anjian lan_4"><span class="first">F</span></div>
-        <div class="g anjian lan_4"><span class="first">G</span></div>
+        <div class="caps anjian lan_4 blue"><span class="first">Caps Lock</span><span class="second">Hyper</span></div>
+        <div class="a anjian lan_4 lightblue"><span class="first">A</span><span class="second">Wd mng<br> Left 1/2</span></div>
+        <div class="s anjian lan_4 lightblue"><span class="first">S</span><span class="second">Wd mng<br> Bot 1/2</span></div>
+        <div class="d anjian lan_4 lightblue"><span class="first">D</span><span class="second">Wd mng<br> Right 1/2</span></div>
+        <div class="f anjian lan_4 lightblue"><span class="first">F</span><span class="second">Wd mng<br> Full Scr</span></div>
+        <div class="g anjian lan_4 lightblue"><span class="first">G</span><span class="second">Wd mng<br> Max Scr</span></div>
         <div class="h anjian lan_4"><span class="first">H</span></div>
         <div class="j anjian lan_4"><span class="first">J</span></div>
         <div class="k anjian lan_4"><span class="first">K</span></div>
-        <div class="l anjian lan_4"><span class="first">L</span></div>
-        <div class="b_1 anjian lan_4"><span class="first">:</span><span class="second">;</span></div>
-        <div class="b_2 anjian lan_4"><span class="first">"</span><span class="second">'</span></div>
-        <div class="b_3 anjian lan_4"><span class="first">|</span><span class="second">\</span></div>
+        <div class="l anjian lan_4 yellow"><span class="first">L</span><span class="second">Text rpl<br> Search</span></div>
+        <div class="b_1 anjian lan_4 yellow"><span class="first">:</span><span class="second">Text rpl<br> Disable</span></div>
+        <div class="b_2 anjian lan_4 yellow"><span class="first">"</span><span class="second">1Passw<br> Direct</span></div>
+        <div class="b_3 anjian lan_4 yellow"><span class="first">|</span><span class="second">1Passw<br> Search</span></div>
 
 
         <div class="shift anjian lan_5"><span class="first">Shift</span></div>
-        <div class="backtick anjian lan_5"><span class="first">~</span><span class="second">`</span></div>
-        <div class="z anjian lan_5"><span class="first">Z</span></div>
-        <div class="x anjian lan_5"><span class="first">X</span></div>
-        <div class="c anjian lan_5"><span class="first">C</span></div>
-        <div class="v anjian lan_5"><span class="first">V</span></div>
-        <div class="b anjian lan_5"><span class="first">B</span></div>
+        <div class="backtick anjian lan_5 red"><span class="first">~</span><span class="second">Measure<br> Color</span></div>
+        <div class="z anjian lan_5 lightblue"><span class="first">Z</span><span class="second">Wd mng<br> Left Bot</span></div>
+        <div class="x anjian lan_5 lightblue"><span class="first">X</span><span class="second">Wd mng<br> Right Bot</span></div>
+        <div class="c anjian lan_5 lightblue"><span class="first">C</span><span class="second">Wd mng<br> Center</span></div>
+        <div class="v anjian lan_5 lightblue"><span class="first">V</span><span class="second">Wd mng<br> Ins Scr</span></div>
+        <div class="b anjian lan_5 blue"><span class="first">B</span><span class="second">Keyb<br> CheatSh</span></div>
         <div class="n anjian lan_5"><span class="first">N</span></div>
         <div class="m anjian lan_5"><span class="first">M</span></div>
-        <div class="m_1 anjian lan_5"><span class="first">></span><span class="second">,</span></div>
-        <div class="m_2 anjian lan_5"><span class="first">></span><span class="second">.</span></div>
+        <div class="m_1 anjian lan_5"><span class="first">&gt;</span><span class="second">,</span></div>
+        <div class="m_2 anjian lan_5"><span class="first">&gt;</span><span class="second">.</span></div>
         <div class="m_3 anjian lan_5"><span class="first">?</span><span class="second">/</span></div>
         <div class="m_4 anjian lan_5"><span class="first">Shift</span></div>
 
@@ -760,10 +764,14 @@
         <div class="cmd_1 anjian lan_6"><span class="first">Cmd</span></div>
         <div class="opt_1 anjian lan_6"><span class="first">Opt</span></div>
 
-        <div class="l_left anjian lan_6"><span class="first">←</span></div>
-        <div class="l_down anjian lan_6"><span class="first">↓</span></div>
-        <div class="l_up anjian lan_6"><span class="first">↑</span></div>
-        <div class="l_right anjian lan_6"><span class="first">→</span></div>
+        <div class="l_left anjian lan_6 lightblue">
+            <!--<span class="first">←</span>--><span class="second">Wd mng<br> Mv Left</span></div>
+        <div class="l_down anjian lan_6 lightblue">
+            <!--<span class="first">↓</span>--><span class="second">Wd mng<br> Next Scr</span></div>
+        <div class="l_up anjian lan_6 lightblue">
+            <!--<span class="first">↑</span>--><span class="second">Wd mng<br> Max Hgt</span></div>
+        <div class="l_right anjian lan_6 lightblue">
+            <!--<span class="first">→</span>--><span class="second">Wd mng<br> Mv Right</span></div>
 
         <!--
         <div class="l_left anjian lan_6"><span class="second">←</span></div>
@@ -772,6 +780,8 @@
         -->
 
     </div>
+
+
 </body>
 
 </html>

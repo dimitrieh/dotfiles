@@ -12,6 +12,10 @@ script/bootstrap
 This will symlink the appropriate files in `.dotfiles` to your home directory.
 Everything is configured and tweaked within `~/.dotfiles`.
 
+## Keyboard shortcuts
+
+Keyboard shortcuts are configured with a Hyper key. The layout can be found [here](keyboard.html)
+
 ## Thanks
 
 I forked from [Zach Holman](https://github.com/holman/dotfiles), which again forked from [Ryan Bates](http://github.com/ryanb)' excellent
