@@ -14,7 +14,7 @@ Everything is configured and tweaked within `~/.dotfiles`.
 
 ## Keyboard shortcuts
 
-Keyboard shortcuts are configured with a Hyper key. The layout can be found [here](keyboard.html)
+Keyboard shortcuts are configured with a Hyper key. The layout can be found [here](https://dimitrieh.gitlab.io/dotfiles)
 
 ## Thanks
 
