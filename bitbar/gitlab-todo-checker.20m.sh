@@ -91,13 +91,11 @@ echo "$countfordays($counttotal)"
 # Filtered lists of todos | JQ cheatsheet https://gist.github.com/olih/f7437fb6962fb3ee9fe95bda8d2c8fa4
 filter 'Merge requests' '.target_type == "MergeRequest"'
 
-filter 'Dimi::In progress' '.target.labels[]? == "Dimi::In Progress"'
-filter 'Dimi::UX Exploration' '.target.labels[]? == "Dimi::UX Exploration"'
-filter 'Dimi::Review' '.target.labels[]? == "Dimi::Review"'
+filter 'Dimi::In Progress P1' '.target.labels[]? == "Dimi::In Progress P1"'
+filter 'Dimi::In Progress P2' '.target.labels[]? == "Dimi::In Progress P2"'
 filter 'Dimi::Standby' '.target.labels[]? == "Dimi::Standby"'
-filter 'Dimi::Ready' '.target.labels[]? == "Dimi::Ready"'
 filter 'Dimi::Up next' '.target.labels[]? == "Dimi::Up next"'
-filter 'Dimi::Interest' '.target.labels[]? == "Dimi::Interest"'
+filter 'Dimi::Backlog' '.target.labels[]? == "Dimi::Backlog"'
 
 filter 'Verify & Release team' '.target.labels[]? == "UX Verify & Release Team" and .target.labels[]? == "needs team input"'
 
@@ -110,26 +108,30 @@ filter 'workflow::planning breakdown' '.target.labels[]? == "workflow::planning 
 filter 'workflow::scheduling' '.target.labels[]? == "workflow::scheduling"'
 
 filter 'Orit' '.author.username == "ogolowinski"'
-filter 'Manager' '.author.username == "'$managerusername'"'
+filter 'Nadia' '.author.username == "'$managerusername'"'
 filter 'Director' '.author.username == "'$directorusername'"'
 
 filter 'Marcel' '.author.username == "mvanremmerden"'
-
+filter 'Jacki Bauer' '.author.username == "jackib"'
 filter 'Retrospectives' '.project.path_with_namespace | startswith("gl-retrospectives")'
 
-filter 'Milestone 13.0' '.target.milestone.title == "13.0"'
-filter 'Milestone 13.1' '.target.milestone.title == "13.1"'
-filter 'Milestone 13.2' '.target.milestone.title == "13.2"'
 
-filter 'workflow::validation backlog' '.target.labels[]? == "workflow::validation backlog"'
+filter 'group::continuous integration' '.target.labels[]? == "group::continuous integration"'
 
-filter 'Epics' '.target_type == "Epic"'
-filter 'Outside CE/EE/Design system' '.target_type != "MergeRequest" and .target_type != "Epic" and .project.path != "gitlab" and .project.path != "gitlab-ce" and .project.path != "gitlab-ee" and .project.path != "design.gitlab.com" and .project.path != "gitlab-design" and .project.path != "gitlab-ui" and .project.path != "gitlab-svgs"'
-filter 'Design system' '.project.path == "design.gitlab.com" or .project.path == "gitlab-design" or .project.path == "gitlab-ui" or .project.path == "gitlab-svgs"'
 
-filter 'Capstone' '.author.username == "rogerslaria"'
+# filter 'Milestone 13.0' '.target.milestone.title == "13.0"'
+# filter 'Milestone 13.1' '.target.milestone.title == "13.1"'
+# filter 'Milestone 13.2' '.target.milestone.title == "13.2"'
 
-filter 'Created by yourself' '.target.author.username == "'$username'"'
+# filter 'workflow::validation backlog' '.target.labels[]? == "workflow::validation backlog"'
+
+# filter 'Epics' '.target_type == "Epic"'
+# filter 'Outside CE/EE/Design system' '.target_type != "MergeRequest" and .target_type != "Epic" and .project.path != "gitlab" and .project.path != "gitlab-ce" and .project.path != "gitlab-ee" and .project.path != "design.gitlab.com" and .project.path != "gitlab-design" and .project.path != "gitlab-ui" and .project.path != "gitlab-svgs"'
+# filter 'Design system' '.project.path == "design.gitlab.com" or .project.path == "gitlab-design" or .project.path == "gitlab-ui" or .project.path == "gitlab-svgs"'
+
+# filter 'Capstone' '.author.username == "rogerslaria"'
+
+# filter 'Created by yourself' '.target.author.username == "'$username'"'
 
 # Filtered lists of todos for most 10 recent ones
 cat /tmp/gitlab-todos.json | jq '.[:10]' > /tmp/gitlab-todos-10.json # Create todos file with 10 items
