@@ -116,7 +116,7 @@ filter 'Jacki Bauer' '.author.username == "jackib"'
 filter 'Retrospectives' '.project.path_with_namespace | startswith("gl-retrospectives")'
 
 
-filter 'group::continuous integration' '.target.labels[]? == "group::continuous integration"'
+# filter 'group::continuous integration' '.target.labels[]? == "group::continuous integration"'
 
 
 # filter 'Milestone 13.0' '.target.milestone.title == "13.0"'
