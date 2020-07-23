@@ -113,6 +113,7 @@ filter 'Director' '.author.username == "'$directorusername'"'
 
 filter 'Marcel' '.author.username == "mvanremmerden"'
 filter 'Jacki Bauer' '.author.username == "jackib"'
+filter 'Lagelanden' '.author.username == "@toon" or .author.username == "@zj-gitlab" or .author.username == "@reprazent"'
 filter 'Retrospectives' '.project.path_with_namespace | startswith("gl-retrospectives")'
 
 
