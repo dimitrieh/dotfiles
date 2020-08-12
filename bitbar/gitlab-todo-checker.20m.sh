@@ -91,6 +91,8 @@ echo "$countfordays($counttotal)"
 # Filtered lists of todos | JQ cheatsheet https://gist.github.com/olih/f7437fb6962fb3ee9fe95bda8d2c8fa4
 filter 'Merge requests' '.target_type == "MergeRequest"'
 
+filter 'PD leadership' '.author.username == "ogolowinski" or .author.username == "nicolewilliams" or .author.username == "csouthard"'
+
 filter 'Dimi::In Progress P1' '.target.labels[]? == "Dimi::In Progress P1"'
 filter 'Dimi::In Progress P2' '.target.labels[]? == "Dimi::In Progress P2"'
 filter 'Dimi::Standby' '.target.labels[]? == "Dimi::Standby"'
@@ -107,7 +109,6 @@ filter 'workflow::solution validation' '.target.labels[]? == "workflow::solution
 filter 'workflow::planning breakdown' '.target.labels[]? == "workflow::planning breakdown"'
 filter 'workflow::scheduling' '.target.labels[]? == "workflow::scheduling"'
 
-filter 'Orit' '.author.username == "ogolowinski"'
 filter 'Nadia' '.author.username == "'$managerusername'"'
 filter 'Director' '.author.username == "'$directorusername'"'
 
