@@ -117,6 +117,7 @@ filter 'Jacki Bauer' '.author.username == "jackib"'
 filter 'Lagelanden' '.author.username == "@toon" or .author.username == "@zj-gitlab" or .author.username == "@reprazent"'
 filter 'Retrospectives' '.project.path_with_namespace | startswith("gl-retrospectives")'
 
+filter 'PD' '.target.labels[]? == "group::progressive delivery"'
 
 # filter 'group::continuous integration' '.target.labels[]? == "group::continuous integration"'
 
@@ -140,5 +141,5 @@ cat /tmp/gitlab-todos.json | jq '.[:10]' > /tmp/gitlab-todos-10.json # Create to
 filter 'Most recent 10 todos' '.' '/tmp/gitlab-todos-10.json'
 
 # Filtered lists of todos for oldest 10
-cat /tmp/gitlab-todos.json | jq '.[-10:]' > /tmp/gitlab-todos-last10.json # Create todos file with 10 items
-filter 'Oldest 10 todos' '.' '/tmp/gitlab-todos-last10.json'
+# cat /tmp/gitlab-todos.json | jq '.[-10:]' > /tmp/gitlab-todos-last10.json # Create todos file with 10 items
+# filter 'Oldest 10 todos' '.' '/tmp/gitlab-todos-last10.json'
