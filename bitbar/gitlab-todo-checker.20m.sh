@@ -55,7 +55,7 @@ counttotal=$(jq -s '.[] | length' $todos);
 # Count of todos for configureddays
 countfordays=$(cat $todos | jq -rc '.[] | select(.created_at > '$timeago') | .target_url' | wc -l | tr -d ' ');
 
-countmrandspeciallabel=$(($(cat $todos | jq -rc '.[] | select(.created_at > '$timeago') | select(.target_type == "MergeRequest") | .target_url' | wc -l) + $(cat $todos | jq -rc '.[] | select(.created_at > '$timeago') | select(.target_type == "Issue") | select(.target.assignees[].username == "'$username'") | select(.target.labels[]? == "'$speciallabel'") | .target_url' | wc -l)));
+# countmrandspeciallabel=$(($(cat $todos | jq -rc '.[] | select(.created_at > '$timeago') | select(.target_type == "MergeRequest") | .target_url' | wc -l) + $(cat $todos | jq -rc '.[] | select(.created_at > '$timeago') | select(.target_type == "Issue") | select(.target.assignees[].username == "'$username'") | select(.target.labels[]? == "'$speciallabel'") | .target_url' | wc -l)));
 
 # Function to create filtered lists of todos
 filter () {
@@ -80,7 +80,7 @@ $(printf %-75.75s "$([[ $state == *'opened'* ]] && echo '' || echo "("$state") "
 }
 
 # Set text and icon for BitBar
-echo " T $countmrandspeciallabel | templateImage=$gitlabicon";
+echo " T $countfordays | templateImage=$gitlabicon";
 
 echo "---";
 echo "Refresh | refresh=true"
