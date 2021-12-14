@@ -21,12 +21,13 @@ alias gac="git add . && git commit -m"
 alias gco='git checkout'
 alias gb='git branch'
 alias gcb='git checkout -b'
-alias gcrb='git-checkout-remote-branch'
+alias gcrb='git-checkout-remote-branch' # Quicker way to checkout a branch that doesn't yet exist locally
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias gl="git pull"
 alias glo="git pull origin"
 alias glr='git pull --rebase'
+alias gfob='git-pull-other-branch'
 alias gtrack="git-track" # Sets up your branch to track a remote branch. Assumes you mean `origin/$branch-name` | Function in bin
 alias gi="git init && gac 'Initial commit'"
 

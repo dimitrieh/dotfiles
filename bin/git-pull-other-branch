@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Allows you to pull update another branch while being checkout in to another
+#
+# $1 - Branch name.
+
+git fetch origin $1:$1
