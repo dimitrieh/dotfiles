@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Transform currently copied clipboard todos from Things 3 to simple Markdown list format
+
+pbpaste > /tmp/ttodos.txt;
+cut -c 1-2,18- /tmp/ttodos.txt | pbcopy
