@@ -3,7 +3,7 @@
     "almostMaximizeWidth" : {
       "float" : 0
     },
-    "centerHalfCycles" : {
+    "curtainChangeSize" : {
       "int" : 0
     },
     "allowAnyShortcut" : {
@@ -12,7 +12,7 @@
     "ignoredSnapAreas" : {
       "int" : 0
     },
-    "curtainChangeSize" : {
+    "centerHalfCycles" : {
       "int" : 0
     },
     "screenEdgeGapBottom" : {
@@ -22,13 +22,10 @@
       "int" : 0
     },
     "todoMode" : {
-      "bool" : false
+      "bool" : true
     },
     "screenEdgeGapTop" : {
       "float" : 0
-    },
-    "SUEnableAutomaticChecks" : {
-      "bool" : true
     },
     "todoSidebarWidth" : {
       "float" : 400
@@ -39,17 +36,20 @@
     "specifiedHeight" : {
       "float" : 1050
     },
-    "todoApplication" : {
-
-    },
     "disabledApps" : {
 
+    },
+    "todoApplication" : {
+      "string" : "us.zoom.xos"
     },
     "fullIgnoreBundleIds" : {
 
     },
-    "centeredDirectionalMove" : {
-      "int" : 0
+    "SUEnableAutomaticChecks" : {
+      "bool" : true
+    },
+    "unsnapRestore" : {
+      "int" : 2
     },
     "applyGapsToMaximize" : {
       "int" : 0
@@ -63,7 +63,7 @@
     "snapModifiers" : {
       "int" : 0
     },
-    "unsnapRestore" : {
+    "centeredDirectionalMove" : {
       "int" : 0
     },
     "moveCursorAcrossDisplays" : {
@@ -76,42 +76,42 @@
       "int" : 0
     },
     "launchOnLogin" : {
-      "bool" : false
+      "bool" : true
     },
     "hideMenubarIcon" : {
       "bool" : false
     },
-    "footprintFade" : {
+    "traverseSingleScreen" : {
       "int" : 0
-    },
-    "snapEdgeMarginBottom" : {
-      "float" : 5
-    },
-    "specifiedWidth" : {
-      "float" : 1680
     },
     "minimumWindowHeight" : {
       "float" : 0
     },
-    "traverseSingleScreen" : {
+    "specifiedWidth" : {
+      "float" : 1680
+    },
+    "snapEdgeMarginBottom" : {
+      "float" : 5
+    },
+    "footprintFade" : {
       "int" : 0
     },
     "screenEdgeGapRight" : {
       "float" : 0
     },
+    "screenEdgeGapLeft" : {
+      "float" : 0
+    },
     "notifiedOfProblemApps" : {
       "bool" : false
     },
-    "screenEdgeGapLeft" : {
-      "float" : 0
+    "showAllActionsInMenu" : {
+      "int" : 0
     },
     "alternateDefaultShortcuts" : {
       "bool" : false
     },
     "subsequentExecutionMode" : {
-      "int" : 0
-    },
-    "showAllActionsInMenu" : {
       "int" : 0
     },
     "footprintBorderWidth" : {
@@ -123,23 +123,23 @@
     "windowSnapping" : {
       "int" : 0
     },
+    "todo" : {
+      "int" : 1
+    },
     "snapEdgeMarginLeft" : {
       "float" : 5
-    },
-    "todo" : {
-      "int" : 0
-    },
-    "obtainWindowOnClick" : {
-      "int" : 0
     },
     "snapEdgeMarginRight" : {
       "float" : 5
     },
-    "footprintColor" : {
-
+    "obtainWindowOnClick" : {
+      "int" : 0
     },
     "footprintAlpha" : {
       "float" : 0.30000001192092896
+    },
+    "footprintColor" : {
+
     },
     "attemptMatchOnNextPrevDisplay" : {
       "int" : 0
@@ -159,68 +159,68 @@
   },
   "shortcuts" : {
     "leftHalf" : {
-      "keyCode" : 123,
-      "modifierFlags" : 1572864
+      "keyCode" : 0,
+      "modifierFlags" : 1966080
     },
     "bottomRight" : {
-      "keyCode" : 124,
-      "modifierFlags" : 1441792
+      "keyCode" : 7,
+      "modifierFlags" : 1966080
     },
     "nextDisplay" : {
-      "keyCode" : 124,
-      "modifierFlags" : 1835008
+      "keyCode" : 126,
+      "modifierFlags" : 1966080
     },
     "maximize" : {
-      "keyCode" : 3,
-      "modifierFlags" : 1572864
+      "keyCode" : 5,
+      "modifierFlags" : 1966080
     },
     "previousDisplay" : {
-      "keyCode" : 123,
-      "modifierFlags" : 1835008
-    },
-    "restore" : {
-      "keyCode" : 51,
-      "modifierFlags" : 786432
+      "keyCode" : 125,
+      "modifierFlags" : 1966080
     },
     "topRight" : {
-      "keyCode" : 124,
-      "modifierFlags" : 1310720
+      "keyCode" : 15,
+      "modifierFlags" : 1966080
     },
     "smaller" : {
-      "keyCode" : 123,
-      "modifierFlags" : 917504
+      "keyCode" : 27,
+      "modifierFlags" : 1966080
     },
     "rightHalf" : {
-      "keyCode" : 124,
-      "modifierFlags" : 1572864
-    },
-    "topLeft" : {
-      "keyCode" : 123,
-      "modifierFlags" : 1310720
+      "keyCode" : 2,
+      "modifierFlags" : 1966080
     },
     "bottomHalf" : {
-      "keyCode" : 125,
-      "modifierFlags" : 1572864
+      "keyCode" : 1,
+      "modifierFlags" : 1966080
     },
-    "bottomLeft" : {
-      "keyCode" : 123,
-      "modifierFlags" : 1441792
+    "topLeft" : {
+      "keyCode" : 14,
+      "modifierFlags" : 1966080
+    },
+    "larger" : {
+      "keyCode" : 24,
+      "modifierFlags" : 1966080
     },
     "center" : {
       "keyCode" : 8,
-      "modifierFlags" : 1572864
+      "modifierFlags" : 1966080
     },
-    "larger" : {
-      "keyCode" : 124,
-      "modifierFlags" : 917504
+    "bottomLeft" : {
+      "keyCode" : 6,
+      "modifierFlags" : 1966080
     },
-    "maximizeHeight" : {
-      "keyCode" : 126,
-      "modifierFlags" : 917504
+    "almostMaximize" : {
+      "keyCode" : 9,
+      "modifierFlags" : 1966080
     },
     "topHalf" : {
-      "keyCode" : 126,
-      "modifierFlags" : 1572864
+      "keyCode" : 13,
+      "modifierFlags" : 1966080
+    },
+    "maximizeHeight" : {
+      "keyCode" : 4,
+      "modifierFlags" : 1966080
     }
   },
   "bundleId" : "com.knollsoft.Rectangle",
