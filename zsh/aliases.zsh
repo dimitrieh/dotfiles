@@ -47,7 +47,7 @@ function o() {
 }
 
 # List Files & Folders better
-alias list='ls -ilha'
+alias list='exa --long --header --git -a' # Uses exa which also lists git
 alias la="ls -aF"
 alias ld="ls -ld"
 alias ll="ls -l"
