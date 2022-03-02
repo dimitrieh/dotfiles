@@ -21,6 +21,7 @@ alias gac="git add . && git commit -m"
 alias gco='git checkout'
 alias gb='git branch'
 alias gcb='git checkout -b'
+alias gbd='git branch -D' # More easily delete a branch
 alias gcrb='git-checkout-remote-branch' # Quicker way to checkout a branch that doesn't yet exist locally
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
