@@ -6,6 +6,9 @@ alias cat=ccat
 # Edit dotfiles
 alias dotf="atom ~/.dotfiles"
 
+# Show all environment variables (also from .localrc)
+alias senv="printenv"
+
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
 alias ...="cd ../.."
