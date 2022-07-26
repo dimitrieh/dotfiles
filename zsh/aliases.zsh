@@ -149,3 +149,6 @@ alias lorem="python ~/.dotfiles/zsh/functions/lorem "
 # Hide show desktop icons
 alias hidedesk='defaults write com.apple.finder CreateDesktop -bool false; killall Finder;'
 alias showdesk='defaults write com.apple.finder CreateDesktop -bool true; killall Finder;'
+
+# Chrome
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
