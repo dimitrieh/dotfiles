@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+# Resize images using ffmpeg to any resolution horizontally or vertically while retaining aspect ratio
+
+for i in *.$1; do ffmpeg -i "$i" -vf scale=w=$2:h=$2:force_original_aspect_ratio=decrease "${i}-$2.$1"; done
