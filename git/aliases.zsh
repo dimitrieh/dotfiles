@@ -33,7 +33,7 @@ alias gtrack="git-track" # Sets up your branch to track a remote branch. Assumes
 alias gi="git init && gac 'Initial commit'"
 
 alias gdels="git checkout ." # Delete all changes in the Git repository, but leave unstaged things
-alias gdelh="git clean -f" # Delete all changes in the Git repository, including untracked files
+alias gdelh="git clean -fd" # Delete all changes in the Git repository, including untracked files & directories
 alias gdell="git reset HEAD^" # Delete last commit
 alias gundo="git reset --soft HEAD^" # Undo your last commit, but don't throw away your changes
 alias gresettoremote="git-reset-to-remote" # Resets local branch to be identical to the remote branch | Function in bin
