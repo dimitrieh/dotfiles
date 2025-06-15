@@ -5,6 +5,8 @@ alias ga="git add"
 alias gstash= "git stash save --include-untracked"
 alias gprune="git fetch --prune"
 
+alias gremotes = git remote -v # List all remotes with their URLs
+
 # Git logs (you can also -n to see the amount of commits)
 alias glog="git log --all --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue) <%an>%Creset' --abbrev-commit"
 alias glo="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
