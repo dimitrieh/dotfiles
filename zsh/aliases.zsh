@@ -152,3 +152,6 @@ alias showdesk='defaults write com.apple.finder CreateDesktop -bool true; killal
 
 # Chrome
 alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+
+# Tailscale
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"

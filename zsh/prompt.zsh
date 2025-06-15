@@ -119,6 +119,8 @@ export PROMPT=$'\n  $(directory_name) $(git_dirty)$(need_push)\$(git-radar --zsh
 
 set_prompt () {
   export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
+  # Set cursor to steady bar (non-blinking)
+  printf '\033[6 q'
 }
 #
 #
@@ -130,5 +132,3 @@ precmd() {
 
 # Activate for profiling and run in terminal
 # zprof
-
- 
