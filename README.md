@@ -5,7 +5,6 @@
 Run this:
 
 ```sh
-cd ~/.dotfiles
 script/bootstrap
 ```
 
