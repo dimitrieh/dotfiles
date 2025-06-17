@@ -1,1 +1,1 @@
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/local/Cellar/zsh-autosuggestions/0.7.0/share/zsh-autosuggestions/zsh-autosuggestions.zsh
