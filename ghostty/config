@@ -1,1 +1,27 @@
-/Users/dimitrie/Library/Application Support/com.mitchellh.ghostty/config
+# Theme
+window-padding-color = background
+theme = dark:GruvboxDarkHard,light:GruvboxLight
+
+# Font
+font-family = "Geist Mono"
+font-size = 18
+font-feature = -liga
+
+# Correct non blinking clear cursor
+cursor-style = bar
+cursor-style-blink = false
+adjust-cursor-thickness = 200%
+cursor-opacity = 1.0
+shell-integration-features = no-cursor
+
+# Quick Terminal Config
+quick-terminal-position = right
+quick-terminal-autohide = true
+# quick-terminal-size = 30%, 80% # for when https://github.com/ghostty-org/ghostty/pull/7576 merges
+
+# Keybindings
+keybind = super+shift+d=new_split:right
+keybind = super+shift+d=new_split:down
+keybind = alt+left=esc:B
+keybind = alt+right=esc:F
+keybind = global:super+shift+ctrl+alt+1=toggle_quick_terminal
