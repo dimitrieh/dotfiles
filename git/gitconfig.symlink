@@ -54,6 +54,6 @@
         program = gpg1
 [user]
 	name = Dimitrie Hoekstra
-	email = dimitriehoekstra@gmail.com
+	email = hi@dimitr.ie
 [commit]
 	template = /Users/dimitrie/.git-commit-template
