@@ -11,5 +11,9 @@
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /Users/dimitrie/.claude/statusline-command.sh"
   }
 }
