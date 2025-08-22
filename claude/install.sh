@@ -22,12 +22,13 @@ mkdir -p "$HOME/.claude"
 ln -sf "$DOTFILES_ROOT/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 ln -sf "$DOTFILES_ROOT/claude/commands" "$HOME/.claude/commands"
 ln -sf "$DOTFILES_ROOT/claude/hooks" "$HOME/.claude/hooks"
+ln -sf "$DOTFILES_ROOT/claude/mcp.json" "$HOME/.claude/mcp.json"
 ln -sf "$DOTFILES_ROOT/claude/settings.json" "$HOME/.claude/settings.json"
 ln -sf "$DOTFILES_ROOT/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
 
 # Validate the symlinks were created correctly
 validation_failed=false
-for file in CLAUDE.md commands hooks settings.json statusline-command.sh; do
+for file in CLAUDE.md commands hooks mcp.json settings.json statusline-command.sh; do
   if [ "$(readlink "$HOME/.claude/$file")" != "$DOTFILES_ROOT/claude/$file" ]; then
     echo "  ✗ Claude Code $file link failed"
     validation_failed=true
