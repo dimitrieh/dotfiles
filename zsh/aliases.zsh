@@ -3,8 +3,6 @@ alias reload!='. ~/.zshrc'
 # Improved cat command https://github.com/jingweno/ccat
 alias cat=ccat
 
-# Edit dotfiles
-alias dotf="atom ~/.dotfiles"
 
 # Show all environment variables (also from .localrc)
 alias senv="printenv"
@@ -25,17 +23,6 @@ alias c='clear'
 alias cls='clear;ls'
 alias h="history"
 alias v="vim"
-alias atom="atom --add " # confine every projectfolder to the same atom window
-alias a="atom ."
-# `a` with no arguments opens the current directory, otherwise opens the given
-# location
-function a() {
-	if [ $# -eq 0 ]; then
-		atom .;
-	else
-		atom "$@";
-	fi;
-}
 
 alias e="$EDITOR"
 
