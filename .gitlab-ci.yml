@@ -4,7 +4,7 @@ pages:
   stage: deploy
   script:
   - mkdir public
-  - mv keyboard.html public/index.html
+  - mv keyboard/keyboard.html public/index.html
   artifacts:
     paths:
     - public
