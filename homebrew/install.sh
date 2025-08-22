@@ -21,9 +21,13 @@ then
 
 fi
 
+# Get dotfiles root directory
+cd "$(dirname "$0")/.."
+DOTFILES_ROOT=$(pwd -P)
+
 # Run Homebrew through the Brewfile
 echo "› brew bundle"
-brew bundle
+brew bundle --file="$DOTFILES_ROOT/homebrew/Brewfile"
 
 brew update && brew upgrade --all && brew cleanup && brew prune && brew doctor
 
