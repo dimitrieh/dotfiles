@@ -13,6 +13,9 @@ atom.symlink/recovery
 
 git/gitconfig.local.symlink
 
+# Raycast symlinks (managed by keyboard/install.sh)
+raycast/show-keyboard-shortcuts.sh
+
 .vscode/
 
 karabiner/automatic_backups/

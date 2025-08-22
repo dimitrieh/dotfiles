@@ -3,9 +3,6 @@
 # Navigate to the root of the git repository
 cd "$(git rev-parse --show-toplevel)"
 
-# Create a screenshot of keyboard.html
+# Create a screenshot of keyboard.html (for local use only - not committed)
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --headless --force-device-scale-factor=1 --disable-gpu --screenshot=keyboard/keyboard.png --window-size=2200,1032 keyboard/keyboard.html 2>/dev/null
 magick -units PixelsPerInch keyboard/keyboard.png -density 144 keyboard/keyboard.png
-
-# Stage the updated screenshot for commit
-git add keyboard/keyboard.png
