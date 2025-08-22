@@ -7,6 +7,9 @@ export ZSH=$HOME/.dotfiles
 # Bash and Zsh shell history suggest box, Zsh Config | https://github.com/dvorka/hstr
 export HISTFILE=~/.zsh_history
 
+export EDITOR="zed"
+export VISUAL="zed"
+
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
@@ -55,3 +58,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="/usr/local/opt/postgresql@11/bin:/usr/local/opt/node@12/bin:$PATH"
 export PKG_CONFIG_PATH="/usr/local/opt/icu4c/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+
+alias claude="/Users/dimitrie/.claude/local/claude"
+export PATH="$HOME/.local/bin:$PATH"
