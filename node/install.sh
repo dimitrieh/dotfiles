@@ -9,20 +9,16 @@
 # Check for Nodejs
 if test ! $(which node)
 then
-  echo "  x You should probably install Nodejs first:"
-  echo "    brew install node --without-npm"
-  echo "    echo prefix=~/.npm-packages >> ~/.npmrc"
+  echo "  x Node.js not found. Install it first:"
+  echo "    brew install node"
   exit
 fi
 
-# Check for npm
+# Check for npm (should be installed with node)
 if test ! $(which npm)
 then
-  echo "  x You should probably install npm like this:"
-  echo "    curl -L https://www.npmjs.com/install.sh | sh"
-  echo "    if Nodejs is installed like this:"
-  echo "    brew install node --without-npm"
-  echo "    echo prefix=~/.npm-packages >> ~/.npmrc"
+  echo "  x npm not found. It should come with Node.js"
+  echo "    brew install node"
   exit
 fi
 
