@@ -1,0 +1,52 @@
+{
+  "mcpServers": {
+    "exa": {
+      "command": "sh",
+      "args": [
+        "-c",
+        "export EXA_API_KEY=\"$(op read 'op://CLI/EXA_TOKEN/credential')\" && npx -y mcp-remote https://mcp.exa.ai/mcp?exaApiKey=${EXA_API_KEY}"
+      ]
+    },
+    "posthog": {
+      "command": "sh",
+      "args": [
+        "-c",
+        "export POSTHOG_AUTH_HEADER=\"Bearer $(op read 'op://CLI/POSTHOG/credential')\" && export POSTHOG_BASE_URL='https://eu.posthog.com' && npx -y mcp-remote@latest https://mcp.posthog.com/mcp --header \"Authorization:${POSTHOG_AUTH_HEADER}\""
+      ]
+    },
+    "ragie": {
+      "command": "npx",
+      "args": ["-y", "@ragieai/mcp-server", "--partition", "user-journey"],
+      "env": {
+        "RAGIE_API_KEY": "op://CLI/RAGIE/credential"
+      }
+    },
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "deepwiki": {
+      "type": "http",
+      "url": "https://mcp.deepwiki.com/mcp"
+    },
+    "dovetail": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["/Users/dimitrie/projects/dovetail-mcp/dist/index.js"],
+      "env": {
+        "DOVETAIL_API_TOKEN": "op://CLI/DOVETAIL/credential"
+      }
+    },
+    "github": {
+      "command": "sh",
+      "args": [
+        "-c",
+        "docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN=\"$(op read 'op://CLI/GITHUB/credential')\" ghcr.io/github/github-mcp-server"
+      ]
+    },
+    "notion": {
+      "type": "http",
+      "url": "https://mcp.notion.com/mcp"
+    }
+  }
+}

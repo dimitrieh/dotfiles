@@ -3,7 +3,8 @@
     "allow": [
       "WebFetch(domain:github.com)",
       "Bash(git add:*)",
-      "Bash(brew search:*)"
+      "Bash(brew search:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
