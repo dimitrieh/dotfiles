@@ -16,17 +16,42 @@ git_branch() {
   echo $($git symbolic-ref HEAD 2>/dev/null | awk -F/ {'print $NF'})
 }
 
+# Async git status with caching
+typeset -g _git_status_cache=""
+typeset -g _git_status_cache_dir=""
+typeset -g _git_status_cache_time=0
+
 git_dirty() {
-  st=$($git status 2>&1)
-  if [[ "$st" =~ "not a git repository" ]] ; then
-    echo ""
-  else
-    if [[ "$st" =~ "nothing to commit" ]] ; then
-      echo "on %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
-    else
-      echo "on %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%}"
-    fi
+  # Return cached result if in same directory and recent
+  local current_time=$(date +%s)
+  if [[ "$PWD" == "$_git_status_cache_dir" && $(($current_time - $_git_status_cache_time)) -lt 5 ]]; then
+    echo "$_git_status_cache"
+    return
   fi
+
+  # Check if in git repo quickly
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    _git_status_cache=""
+    _git_status_cache_dir="$PWD"
+    _git_status_cache_time=$current_time
+    echo ""
+    return
+  fi
+
+  # Use porcelain format for faster status check
+  local status_output
+  status_output=$(git status --porcelain 2>/dev/null)
+  local branch_name=$(git_prompt_info)
+  
+  if [[ -z "$status_output" ]]; then
+    _git_status_cache="on %{$fg_bold[green]%}${branch_name}%{$reset_color%}"
+  else
+    _git_status_cache="on %{$fg_bold[red]%}${branch_name}%{$reset_color%}"
+  fi
+  
+  _git_status_cache_dir="$PWD"
+  _git_status_cache_time=$current_time
+  echo "$_git_status_cache"
 }
 
 git_prompt_info () {
@@ -34,17 +59,45 @@ git_prompt_info () {
  echo "${ref#refs/heads/}"
 }
 
+# Cached unpushed status check
+typeset -g _unpushed_cache=""
+typeset -g _unpushed_cache_dir=""
+typeset -g _unpushed_cache_time=0
+
 unpushed () {
   $git cherry -v @{upstream} 2>/dev/null
 }
 
 need_push () {
-  if [[ $(unpushed) == "" ]]
-  then
-    echo " "
-  else
-    echo " with %{$fg_bold[magenta]%}unpushed%{$reset_color%} "
+  # Return cached result if in same directory and recent
+  local current_time=$(date +%s)
+  if [[ "$PWD" == "$_unpushed_cache_dir" && $(($current_time - $_unpushed_cache_time)) -lt 10 ]]; then
+    echo "$_unpushed_cache"
+    return
   fi
+
+  # Quick check if we have an upstream
+  if ! git rev-parse @{upstream} >/dev/null 2>&1; then
+    _unpushed_cache=" "
+    _unpushed_cache_dir="$PWD"
+    _unpushed_cache_time=$current_time
+    echo " "
+    return
+  fi
+
+  # Check for unpushed commits
+  local unpushed_output
+  unpushed_output=$(git cherry -v @{upstream} 2>/dev/null)
+  
+  if [[ -z "$unpushed_output" ]]; then
+    _unpushed_cache=" "
+  else
+    _unpushed_cache=" with %{$fg_bold[magenta]%}unpushed%{$reset_color%} "
+  fi
+  
+  _unpushed_cache_dir="$PWD"
+  _unpushed_cache_time=$current_time
+  echo "$_unpushed_cache"
 }
 
 # This takes care of displaying the dir structure you're currently in up to

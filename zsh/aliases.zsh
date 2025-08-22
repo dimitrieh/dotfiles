@@ -37,7 +37,11 @@ function o() {
 }
 
 # List Files & Folders better
-alias list='exa --long --header --git -a' # Uses exa which also lists git
+if command -v eza > /dev/null 2>&1; then
+  alias list='eza --long --header --git -a' # Uses eza which also lists git
+else
+  alias list='ls -la'
+fi
 alias la="ls -aF"
 alias ld="ls -ld"
 alias ll="ls -l"

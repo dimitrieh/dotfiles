@@ -1,1 +1,2 @@
-source /usr/local/Cellar/zsh-autosuggestions/0.7.0/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# Autosuggestions now handled by Zinit in zinit.zsh
+# Keeping this file for reference, but plugin loading moved to zinit.zsh
