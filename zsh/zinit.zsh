@@ -1,6 +1,15 @@
 # Zinit plugin manager configuration
-# Initialize Zinit
-source /usr/local/opt/zinit/zinit.zsh
+# Initialize Zinit with fallback paths
+if [[ -f /usr/local/opt/zinit/zinit.zsh ]]; then
+  source /usr/local/opt/zinit/zinit.zsh
+elif [[ -f /opt/homebrew/share/zinit/zinit.zsh ]]; then
+  source /opt/homebrew/share/zinit/zinit.zsh
+elif [[ -f ~/.zinit/zinit.zsh ]]; then
+  source ~/.zinit/zinit.zsh
+else
+  echo "Warning: Zinit not found. Please install zinit or update the path."
+  return
+fi
 
 # Load modern plugins
 zinit light zsh-users/zsh-syntax-highlighting

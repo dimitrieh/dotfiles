@@ -1,7 +1,9 @@
 alias reload!='. ~/.zshrc'
 
 # Improved cat command https://github.com/jingweno/ccat
-alias cat=ccat
+if command -v ccat > /dev/null 2>&1; then
+  alias cat=ccat
+fi
 
 
 # Show all environment variables (also from .localrc)
@@ -100,7 +102,7 @@ alias showf="defaults write com.apple.finder AppleShowAllFiles -bool true && kil
 alias hidef="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 
 # URL-encode strings
-alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]))"'
 
 # Imgur uploader | https://github.com/kevva/imgur-uploader-cli
 alias imgur="imgur-uploader"

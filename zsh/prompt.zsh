@@ -168,7 +168,11 @@ add-zsh-hook preexec prompt_pure_preexec
 export RANGER_LOAD_DEFAULT_RC="false"
 export GIT_RADAR_FORMAT="%{changes: }%{remote: }%{local: }%{stash}"
 
-export PROMPT=$'\n  $(directory_name) $(git_dirty)$(need_push)\$(git-radar --zsh --fetch) \n%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%}❯)%{$fg_bold[green]%}❯%{$reset_color%} '
+if command -v git-radar > /dev/null 2>&1; then
+  export PROMPT=$'\n  $(directory_name) $(git_dirty)$(need_push)\$(git-radar --zsh --fetch) \n%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%}❯)%{$fg_bold[green]%}❯%{$reset_color%} '
+else
+  export PROMPT=$'\n  $(directory_name) $(git_dirty)$(need_push) \n%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%}❯)%{$fg_bold[green]%}❯%{$reset_color%} '
+fi
 
 set_prompt () {
   export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
