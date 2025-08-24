@@ -3,12 +3,8 @@
 # Reduce startup time by deferring some expensive operations
 autoload -Uz add-zsh-hook
 
-# Removed nvm and rbenv lazy loading - not in use
-
 # Optimize path cleanup (remove duplicates)
 typeset -aU path
-
-# Removed unused git dirty checking function
 
 # Cache expensive operations
 typeset -A _zsh_cache_store
@@ -73,7 +69,6 @@ _optimize_history() {
 }
 
 # History optimization can be run manually with: _optimize_history
-# Removed automatic random execution to avoid unexpected delays
 
 # Set conservative completion cache times
 zstyle ':completion:*' cache-policy _zsh_cache_policy
