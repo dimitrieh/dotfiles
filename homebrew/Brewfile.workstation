@@ -17,7 +17,6 @@ cask "google-chrome"
 cask "firefox"
 cask "vivaldi"
 cask "arc"
-cask "chromium"
 
 # IDEs & Code Editors
 cask "cursor"
@@ -36,7 +35,6 @@ cask "discord"
 cask "whatsapp"
 cask "signal"
 cask "zoom"
-cask "skype"
 cask "loom"
 
 # Productivity & Notes
@@ -83,7 +81,6 @@ cask "numi"
 cask "1password-cli"
 
 # QuickLook Plugins
-cask "qlimagesize"
 cask "qlprettypatch"
 cask "quicklook-csv"
 cask "quicklook-json"

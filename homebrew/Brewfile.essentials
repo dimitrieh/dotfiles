@@ -2,8 +2,6 @@
 # These are needed for development work on servers or minimal setups
 
 # Taps
-tap "homebrew/bundle"
-tap "homebrew/services"
 tap "michaeldfallen/formula/git-radar"
 tap "minio/stable"
 tap "zyedidia/micro"
@@ -20,7 +18,7 @@ brew "gitlab-runner"
 
 # Programming Languages & Runtimes
 brew "node"
-brew "python@3.12"
+brew "python3"
 brew "go"
 
 # Build Tools & Compilers
@@ -93,9 +91,8 @@ brew "ffmpeg"
 brew "imagemagick"
 brew "graphicsmagick"
 brew "exiftool"
-brew "webkit2png"
 brew "jp2a"
-brew "youtube-dl"
+brew "yt-dlp"
 brew "streamlink"
 brew "lame"
 brew "x264"
