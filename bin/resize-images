@@ -1,5 +1,87 @@
 #!/bin/bash
 #
-# Resize images using ffmpeg to any resolution horizontally or vertically while retaining aspect ratio
+# Resize images using ffmpeg while retaining aspect ratio
 
-for i in *.$1; do ffmpeg -i "$i" -vf scale=w=$2:h=$2:force_original_aspect_ratio=decrease "${i}-$2.$1"; done
+show_usage() {
+  echo "Usage: $0 <extension> <dimensions>"
+  echo ""
+  echo "Dimensions can be:"
+  echo "  - Single number (max size): 800"
+  echo "  - Width x Height: 1920x1080"
+  echo "  - Width only: 1920x"
+  echo "  - Height only: x1080"
+  echo ""
+  echo "Examples:"
+  echo "  $0 jpg 800        # Max 800px (square fit)"
+  echo "  $0 png 1920x1080  # Max 1920x1080"
+  echo "  $0 jpg 1200x      # Max width 1200px"
+  echo "  $0 png x800       # Max height 800px"
+}
+
+if [[ $# -ne 2 ]]; then
+  show_usage
+  exit 1
+fi
+
+command -v ffmpeg >/dev/null || { echo "Error: ffmpeg required but not found"; exit 1; }
+
+EXT="$1"
+DIMENSIONS="$2"
+
+# Parse dimensions
+if [[ "$DIMENSIONS" =~ ^([0-9]+)$ ]]; then
+  # Single number - square fit
+  WIDTH="${BASH_REMATCH[1]}"
+  HEIGHT="${BASH_REMATCH[1]}"
+  SCALE="scale=w=${WIDTH}:h=${HEIGHT}:force_original_aspect_ratio=decrease"
+  SUFFIX="$WIDTH"
+elif [[ "$DIMENSIONS" =~ ^([0-9]+)x([0-9]+)$ ]]; then
+  # Width x Height
+  WIDTH="${BASH_REMATCH[1]}"
+  HEIGHT="${BASH_REMATCH[2]}"
+  SCALE="scale=w=${WIDTH}:h=${HEIGHT}:force_original_aspect_ratio=decrease"
+  SUFFIX="${WIDTH}x${HEIGHT}"
+elif [[ "$DIMENSIONS" =~ ^([0-9]+)x$ ]]; then
+  # Width only
+  WIDTH="${BASH_REMATCH[1]}"
+  SCALE="scale=w=${WIDTH}:h=-1"
+  SUFFIX="w${WIDTH}"
+elif [[ "$DIMENSIONS" =~ ^x([0-9]+)$ ]]; then
+  # Height only
+  HEIGHT="${BASH_REMATCH[1]}"
+  SCALE="scale=w=-1:h=${HEIGHT}"
+  SUFFIX="h${HEIGHT}"
+else
+  echo "Error: Invalid dimensions format"
+  show_usage
+  exit 1
+fi
+
+# Check if any files match
+shopt -s nullglob
+files=(*.${EXT})
+[[ ${#files[@]} -eq 0 ]] && { echo "No *.${EXT} files found"; exit 1; }
+
+echo "Found ${#files[@]} *.${EXT} files"
+echo "Using scale: $SCALE"
+echo ""
+
+for file in "${files[@]}"; do
+  output="${file%.*}-${SUFFIX}.${EXT}"
+  
+  if [[ -e "$output" ]]; then
+    read -p "Overwrite existing '$output'? (y/N) " -n 1 -r
+    echo
+    [[ $REPLY =~ ^[Yy]$ ]] || continue
+  fi
+  
+  echo -n "Processing: $file → $output ... "
+  if ffmpeg -i "$file" -vf "$SCALE" "$output" -y 2>/dev/null; then
+    echo "✅"
+  else
+    echo "❌"
+  fi
+done
+
+echo ""
+echo "Done."

@@ -2,5 +2,44 @@
 #
 # Transform currently copied clipboard todos from Things 3 to simple Markdown list format
 
-pbpaste > /tmp/ttodos.txt;
-cut -c 1-2,18- /tmp/ttodos.txt | pbcopy
+# Check if clipboard has content
+if ! pbpaste | grep -q .; then
+    echo "Error: Clipboard is empty"
+    exit 1
+fi
+
+# Create unique temp file
+tmpfile=$(mktemp /tmp/ttodos.XXXXXX) || {
+    echo "Error: Could not create temporary file"
+    exit 1
+}
+
+# Cleanup function
+cleanup() {
+    rm -f "$tmpfile"
+}
+trap cleanup EXIT INT TERM
+
+# Process clipboard content
+pbpaste > "$tmpfile"
+
+# Check if temp file has content
+if [ ! -s "$tmpfile" ]; then
+    echo "Error: No content to process"
+    exit 1
+fi
+
+# Transform format (adjust character positions as needed)
+if cut -c 1-2,18- "$tmpfile" | pbcopy; then
+    echo "✅ Converted Things 3 todos to Markdown format"
+    echo "📋 Result copied to clipboard"
+    
+    # Show preview of first few lines
+    echo ""
+    echo "Preview:"
+    pbpaste | head -3
+    [ $(pbpaste | wc -l) -gt 3 ] && echo "..."
+else
+    echo "Error: Failed to process todos"
+    exit 1
+fi

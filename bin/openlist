@@ -1,5 +1,39 @@
 #!/bin/bash
 #
-#   This opens all urls/files from a list within a file
+# This opens all urls/files from a list within a file
 
-open $(cat $1)
+if [[ $# -eq 0 ]]; then
+  echo "Usage: $0 <file-with-urls>"
+  exit 1
+fi
+
+if [[ ! -f "$1" ]]; then
+  echo "Error: File '$1' not found"
+  exit 1
+fi
+
+if [[ ! -r "$1" ]]; then
+  echo "Error: Cannot read file '$1'"
+  exit 1
+fi
+
+# Show what will be opened (skip empty lines and comments)
+echo "Items to open from '$1':"
+grep -v '^#' "$1" | grep -v '^$' | nl
+
+# Ask for confirmation
+read -p "Open all items? (y/N) " -n 1 -r
+echo
+[[ $REPLY =~ ^[Yy]$ ]] || { echo "Cancelled."; exit 0; }
+
+# Open items safely
+echo "Opening items..."
+while IFS= read -r line; do
+  # Skip empty lines and comments
+  [[ -n "$line" && "$line" != \#* ]] || continue
+  
+  echo "Opening: $line"
+  open "$line"
+done < "$1"
+
+echo "Done."

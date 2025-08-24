@@ -1,5 +1,48 @@
 #!/bin/bash
 #
-#   This opens up a chromeless chrome window with a url
+# This opens up a chromeless Chrome window with a URL
 
-open -n -a 'Google Chrome' --args "--app=$1"
+if [[ $# -eq 0 ]]; then
+  echo "Usage: $0 <URL>"
+  echo "Opens URL in chromeless Chrome window (app mode)"
+  echo ""
+  echo "Examples:"
+  echo "  $0 https://example.com"
+  echo "  $0 http://localhost:3000"
+  exit 1
+fi
+
+# Check for Chrome (try different variants)
+CHROME=""
+for app in "Google Chrome" "Chromium" "Google Chrome Canary"; do
+  if [[ -d "/Applications/$app.app" ]]; then
+    CHROME="$app"
+    break
+  fi
+done
+
+if [[ -z "$CHROME" ]]; then
+  echo "Error: No Chrome browser found"
+  echo "Please install Google Chrome, Chromium, or Chrome Canary"
+  exit 1
+fi
+
+URL="$1"
+
+# Basic URL validation
+if [[ ! "$URL" =~ ^https?:// ]] && [[ ! "$URL" =~ ^file:// ]] && [[ ! "$URL" =~ ^localhost ]] && [[ ! "$URL" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+  # Try to add http:// if it looks like a domain
+  if [[ "$URL" =~ \. ]] || [[ "$URL" =~ ^localhost ]]; then
+    URL="http://$URL"
+  else
+    echo "Warning: URL may not be valid: $URL"
+  fi
+fi
+
+echo "Opening $URL in chromeless $CHROME window..."
+if open -n -a "$CHROME" --args "--app=$URL"; then
+  echo "✅ Success"
+else
+  echo "❌ Failed to open Chrome"
+  exit 1
+fi

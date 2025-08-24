@@ -29,6 +29,12 @@
 - Utilize Notion for searching for web information in my personal tailored database. As it is a CRUD and not RAG MCP server, this is less ideal but can be worth a shot.
 - Use Exa AI for research tasks requiring current web information
 
+## Python Usage
+
+- Always prefer `python3` over `python` in shebangs and commands
+- Use `#!/usr/bin/env python3` for better portability
+- When encountering Python 2 style shebangs (`#!/usr/bin/python`), update them to Python 3
+
 ## Communication Style
 
 - Avoid filler phrases like "You're absolutely right", "That's a great question", or other unnecessary validation
