@@ -141,9 +141,22 @@ setup_git_signing () {
           echo "" >> "$HOME/.localrc"
           echo "# 1Password SSH Agent for Git Signing (Local)" >> "$HOME/.localrc"
           echo 'export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"' >> "$HOME/.localrc"
-          success "configured for local 1Password signing"
+          success "configured SSH_AUTH_SOCK for local 1Password signing"
         else
-          success "local 1Password signing already configured"
+          success "SSH_AUTH_SOCK already configured for local 1Password"
+        fi
+
+        # Configure allowed signers file for signature verification
+        git_email=$(git config user.email)
+        git_signingkey=$(git config user.signingkey)
+        
+        if [ -n "$git_email" ] && [ -n "$git_signingkey" ]; then
+          mkdir -p "$HOME/.config/git"
+          echo "$git_email $git_signingkey" > "$HOME/.config/git/allowed_signers"
+          git config --global gpg.ssh.allowedSignersFile "$HOME/.config/git/allowed_signers"
+          success "configured SSH signature verification"
+        else
+          user "git email or signing key not set - signature verification not configured"
         fi
         ;;
         
