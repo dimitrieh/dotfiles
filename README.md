@@ -63,9 +63,6 @@ script/bootstrap  # Interactive setup with prompts
 ## Maintenance
 
 ```sh
-# Health check
-dot health
-
 # Update packages
 brewup
 
