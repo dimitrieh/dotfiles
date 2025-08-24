@@ -41,6 +41,22 @@ script/bootstrap  # Interactive setup with prompts
 - `rg pattern` - Fast grep (ripgrep)
 - `bat file` - Syntax-highlighted cat
 
+### Project Management
+- `pj project-name` - Jump to project in ~/Projects
+- `pj open project-name` - Open project in editor
+- `shd project-name` - Jump to self-hosted project in ~/self-hosted
+- `shd open project-name` - Open self-hosted project in editor
+
+### Advanced Git Tools (bin/)
+- `git-all` - Stage all unstaged files
+- `git-amend` - Amend last commit with current changes
+- `git-copy-branch-name` - Copy current branch name to clipboard
+- `git-delete-local-merged` - Delete local branches that are merged
+- `git-nuke` - Hard reset and clean repository
+- `git-unpushed` - Show unpushed commits
+- `git-up` - Smart pull with rebase
+- `git-wtf` - Show repository status summary
+
 ## Key Features
 
 - **Smart Shell**: Auto-suggestions, syntax highlighting, fast completions
