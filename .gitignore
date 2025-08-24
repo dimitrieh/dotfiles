@@ -21,3 +21,6 @@ raycast/show-keyboard-shortcuts.sh
 karabiner/automatic_backups/
 
 keyboard.png
+
+# Compiled zsh files
+*.zwc
