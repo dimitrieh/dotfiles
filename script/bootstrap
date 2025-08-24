@@ -76,6 +76,59 @@ setup_installation_type () {
   esac
 }
 
+# Parse command line arguments
+INSTALL_TYPE=""
+OVERWRITE_ALL=false
+SKIP_ALL=false
+BACKUP_ALL=false
+INSTALL_TYPE_SET_BY_FLAG=false
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --essential)
+      INSTALL_TYPE=""
+      INSTALL_TYPE_SET_BY_FLAG=true
+      info "essential setup selected (CLI tools only)"
+      shift
+      ;;
+    --workstation)
+      INSTALL_TYPE="--workstation"
+      INSTALL_TYPE_SET_BY_FLAG=true
+      info "workstation setup selected (essentials + GUI applications)"
+      shift
+      ;;
+    --overwrite-all)
+      OVERWRITE_ALL=true
+      shift
+      ;;
+    --skip-all)
+      SKIP_ALL=true
+      shift
+      ;;
+    --backup-all)
+      BACKUP_ALL=true
+      shift
+      ;;
+    --help|-h)
+      echo "Usage: $0 [OPTIONS]"
+      echo ""
+      echo "Options:"
+      echo "  --essential       Essential setup (CLI tools only)"
+      echo "  --workstation     Workstation setup (essentials + GUI apps)"
+      echo "  --overwrite-all   Overwrite all existing files without prompting"
+      echo "  --skip-all        Skip all existing files without prompting"
+      echo "  --backup-all      Backup all existing files without prompting"
+      echo "  --help, -h        Show this help message"
+      exit 0
+      ;;
+    *)
+      echo "Unknown option: $1"
+      echo "Use --help for usage information"
+      exit 1
+      ;;
+  esac
+done
+
 
 link_file () {
   local src=$1 dst=$2
@@ -86,7 +139,14 @@ link_file () {
   if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]
   then
 
-    if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
+    # Use command-line flags if provided
+    if [ "$OVERWRITE_ALL" == "true" ]; then
+      overwrite=true
+    elif [ "$SKIP_ALL" == "true" ]; then
+      skip=true
+    elif [ "$BACKUP_ALL" == "true" ]; then
+      backup=true
+    elif [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
     then
 
       local currentSrc="$(readlink $dst)"
@@ -164,8 +224,12 @@ install_dotfiles () {
   done
 }
 
+# Only prompt for installation type if not set by flag
+if [ "$INSTALL_TYPE_SET_BY_FLAG" == "false" ]; then
+  setup_installation_type
+fi
+
 setup_gitconfig
-setup_installation_type
 install_dotfiles
 
 # If we're on a Mac, let's install and setup homebrew.

@@ -1,9 +1,9 @@
 # Zinit plugin manager configuration
-# Initialize Zinit with fallback paths
-if [[ -f /usr/local/opt/zinit/zinit.zsh ]]; then
-  source /usr/local/opt/zinit/zinit.zsh
-elif [[ -f /opt/homebrew/share/zinit/zinit.zsh ]]; then
-  source /opt/homebrew/share/zinit/zinit.zsh
+# Initialize Zinit using HOMEBREW_PREFIX (set in system/path.zsh)
+if [[ -f "${HOMEBREW_PREFIX}/opt/zinit/zinit.zsh" ]]; then
+  source "${HOMEBREW_PREFIX}/opt/zinit/zinit.zsh"
+elif [[ -f "${HOMEBREW_PREFIX}/share/zinit/zinit.zsh" ]]; then
+  source "${HOMEBREW_PREFIX}/share/zinit/zinit.zsh"
 elif [[ -f ~/.zinit/zinit.zsh ]]; then
   source ~/.zinit/zinit.zsh
 else

@@ -53,17 +53,27 @@ ask_installation_type () {
 
 # Parse command line arguments
 INSTALL_TYPE=""
+INSTALL_TYPE_SET_BY_FLAG=false
+
 if [[ "$1" == "--workstation" ]]; then
   INSTALL_TYPE="--workstation"
+  INSTALL_TYPE_SET_BY_FLAG=true
   echo "Installing in workstation mode (includes GUI applications)..."
+elif [[ "$1" == "--essential" ]]; then
+  INSTALL_TYPE=""
+  INSTALL_TYPE_SET_BY_FLAG=true
+  echo "Installing in essential mode (CLI tools only)..."
 elif [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
   echo "Usage:"
   echo "  script/install            # Interactive - asks for installation type"
+  echo "  script/install --essential    # Essential setup (CLI tools only)"
   echo "  script/install --workstation  # Full workstation setup (essentials + GUI apps)"
   exit 0
 else
   # If no arguments provided, ask the user what they want
-  ask_installation_type
+  if [ "$INSTALL_TYPE_SET_BY_FLAG" == "false" ]; then
+    ask_installation_type
+  fi
 fi
 
 # Run homebrew installer first to ensure all dependencies are installed
@@ -73,4 +83,4 @@ if [ -f ./homebrew/install.sh ]; then
 fi
 
 # Find and run all other installers (excluding homebrew since we already ran it)
-find . -name install.sh -not -path "./homebrew/install.sh" | while read installer ; do sh -c "${installer}" ; done
+find . -name install.sh -not -path "./homebrew/install.sh" | while read installer ; do sh -c "./${installer}" ; done
