@@ -172,9 +172,9 @@ install_dotfiles
 if [ "$(uname -s)" == "Darwin" ]
 then
   info "installing dependencies"
-  # Export INSTALL_TYPE so it can be used by bin/dot
+  # Export INSTALL_TYPE so it can be used by script/install
   export INSTALL_TYPE
-  if source bin/dot | tee /tmp/dotfiles-dot
+  if source script/install $INSTALL_TYPE | tee /tmp/dotfiles-dot
   then
     success "dependencies installed, log at /tmp/dotfiles-dot"
   else
