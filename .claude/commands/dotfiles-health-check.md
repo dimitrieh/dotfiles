@@ -35,6 +35,14 @@ Analyze and report on:
 - **Performance**: Analyze zsh startup time and identify bottlenecks
 - **Duplicate Detection**: Check for duplicate aliases or PATH entries
 
+## 3.5. Alias and Function Conflict Analysis
+- **Extract All Aliases**: Find all `alias` definitions in dotfiles
+- **Extract All Functions**: Find all custom functions (pj, shd, etc.)
+- **System Command Conflicts**: Check against common system commands (sh, ls, cd, cp, mv, rm, cat, vi, etc.)
+- **Single Letter Conflicts**: Verify no dangerous single-letter overrides (especially w, which exists in system)
+- **Short Name Analysis**: Review 1-3 character aliases for potential conflicts
+- **Best Practice Validation**: Ensure git aliases use `g*` pattern and follow safe conventions
+
 ## 4. Installation Script Consistency
 - **Missing Scripts**: Identify directories missing install.sh scripts
 - **Script Standards**: Verify install.sh scripts follow patterns (DOTFILES_ROOT, dependencies, error handling)
@@ -65,3 +73,66 @@ For each issue found, provide:
 Prioritize findings by severity: **Critical** → **Important** → **Optimization**
 
 End with a summary of overall dotfiles health and recommended actions.
+
+## Implementation Commands for Conflict Analysis
+
+### Extract All Aliases
+```bash
+grep -h "^alias " ~/.dotfiles/**/*.zsh 2>/dev/null | sort | uniq
+```
+
+### Extract All Functions  
+```bash
+# Functions with () syntax
+grep -h "^[a-zA-Z][a-zA-Z0-9_]* ()" ~/.dotfiles/**/*.zsh ~/.dotfiles/**/*.sh 2>/dev/null | sort | uniq
+
+# Functions with 'function' keyword
+grep -h "^function " ~/.dotfiles/**/*.zsh ~/.dotfiles/**/*.sh 2>/dev/null | sort | uniq
+```
+
+### Check Short Aliases (1-3 characters)
+```bash
+short_aliases=$(grep "^alias " ~/.dotfiles/**/*.zsh 2>/dev/null | grep -E "alias [a-z]{1,3}=" | cut -d'=' -f1 | cut -d' ' -f2)
+echo "$short_aliases" | sort
+```
+
+### Check System Command Conflicts
+```bash
+# Check against critical system commands
+critical_cmds="sh bash zsh ls cd cp mv rm cat less more grep find sort cut awk sed vi vim git ssh scp man ps top du df tar zip who id su go run cc gcc pip npm gem"
+
+# Check single letter system commands
+for letter in a b c d e f g h i j k l m n o p q r s t u v w x y z; do
+    sys_cmd=$(command -v $letter 2>/dev/null | grep -E "^(/bin/|/usr/bin/|/usr/sbin/|/sbin/)")
+    if [ -n "$sys_cmd" ]; then
+        echo "$letter: $sys_cmd"
+        # Check if we override it
+        our_alias=$(alias $letter 2>/dev/null || echo "")
+        if [ -n "$our_alias" ]; then
+            echo "  ⚠️  WE OVERRIDE: $our_alias"
+        fi
+    fi
+done
+```
+
+### Validate Function Safety
+```bash
+# Check if functions conflict with system commands
+funcs="pj shd o title"  # Update this list as functions are added
+echo "$funcs" | tr ' ' '\n' | while read func; do
+    echo -n "$func: "
+    system_path=$(PATH="/usr/bin:/bin:/usr/sbin:/sbin" command -v $func 2>/dev/null)
+    if [ -n "$system_path" ]; then
+        echo "⚠️  conflicts with system command at $system_path"
+    else
+        echo "✅ no conflict"
+    fi
+done
+```
+
+### Safe Naming Guidelines
+When adding new aliases/functions, avoid:
+- **Single letters**: Especially `w` (system command), `c`, `d`, `f`, `h`, `i`, `j`, `k`, `l`, `m`, `n`, `p`, `r`, `s`, `t`, `x`  
+- **Core commands**: `sh`, `ls`, `cd`, `cp`, `mv`, `rm`, `cat`, `grep`, `find`, `sort`, `cut`
+- **Development tools**: `go`, `cc`, `gcc`, `npm`, `pip`, `gem`
+- **Follow patterns**: Git aliases should use `g*` prefix, use descriptive short names like `dl`, `dt`

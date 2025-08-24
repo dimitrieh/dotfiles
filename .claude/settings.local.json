@@ -8,9 +8,7 @@
       "Bash(brew info:*)",
       "mcp__github__search_code",
       "mcp__github__get_file_contents",
-      "WebSearch",
-      "Bash(zsh:*)",
-      "Bash(echo $PATH)"
+      "WebSearch"
     ],
     "deny": [],
     "ask": []

@@ -3,6 +3,9 @@
 
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
+export DOTFILES=$HOME/.dotfiles
+export PROJECTS=$HOME/projects
+export SELF_HOSTED=$HOME/self-hosted
 
 # Bash and Zsh shell history suggest box, Zsh Config | https://github.com/dvorka/hstr
 export HISTFILE=~/.zsh_history

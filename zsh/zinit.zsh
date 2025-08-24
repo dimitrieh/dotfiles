@@ -19,6 +19,13 @@ zinit light zsh-users/zsh-completions
 # Load existing autosuggestions via Zinit instead of manual sourcing
 zinit light zsh-users/zsh-autosuggestions
 
+# Load productivity plugins
+zinit light MichaelAquilina/zsh-you-should-use
+zinit light paulirish/git-open
+
+# Load zoxide (smart cd replacement)
+zinit from"gh-r" as"program" mv"zoxide* -> zoxide" pick"zoxide" load"ajeetdsouza/zoxide"
+
 # Key bindings for history substring search
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -36,6 +43,9 @@ ZSH_AUTOSUGGEST_MANUAL_REBIND=true
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
 HISTORY_SUBSTRING_SEARCH_FUZZY=1
+
+# Initialize zoxide at the end
+eval "$(zoxide init zsh)"
 
 # Enhanced syntax highlighting configuration
 ZSH_HIGHLIGHT_STYLES[default]='none'
