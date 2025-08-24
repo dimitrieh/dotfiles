@@ -92,6 +92,75 @@ setup_gitconfig () {
   fi
 }
 
+setup_git_signing () {
+  if [ "$(uname -s)" == "Darwin" ]; then
+    info 'setup git signing'
+    
+    local signing_mode="$GIT_SIGNING_MODE"
+    
+    # If not set by flag, prompt user
+    if [ -z "$signing_mode" ]; then
+      echo ''
+      echo '  How do you want to configure Git signing?'
+      echo '  [1] Local 1Password (1Password installed on this machine)'
+      echo '  [2] Remote 1Password (SSH into a machine with 1Password)'
+      echo '  [3] Skip git signing setup'
+      echo ''
+      user ' - Choose signing method [1-3]: '
+      read -n 1 -r signing_choice
+      echo
+
+      case "$signing_choice" in
+        1) signing_mode="local" ;;
+        2) signing_mode="remote" ;;
+        3) signing_mode="skip" ;;
+        *) signing_mode="skip"; info "invalid choice, skipping git signing setup" ;;
+      esac
+    fi
+
+    case "$signing_mode" in
+      local)
+        # Local 1Password setup
+        if [ ! -d "/Applications/1Password.app" ]; then
+          user "1Password not found locally. Install 1Password first, then run bootstrap again."
+          return
+        fi
+
+        if [ ! -S "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" ]; then
+          user "Enable SSH agent in 1Password: Developer Settings → SSH Agent → Use the SSH agent"
+          user "Then restart your terminal and run bootstrap again."
+          return
+        fi
+
+        # Add SSH_AUTH_SOCK to ~/.localrc
+        if [ ! -f "$HOME/.localrc" ]; then
+          touch "$HOME/.localrc"
+        fi
+        
+        if ! grep -q "SSH_AUTH_SOCK.*1password" "$HOME/.localrc"; then
+          echo "" >> "$HOME/.localrc"
+          echo "# 1Password SSH Agent for Git Signing (Local)" >> "$HOME/.localrc"
+          echo 'export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"' >> "$HOME/.localrc"
+          success "configured for local 1Password signing"
+        else
+          success "local 1Password signing already configured"
+        fi
+        ;;
+        
+      remote)
+        # Remote 1Password setup - no local config needed
+        success "configured for remote 1Password signing"
+        info "use 'ssh -A user@host' to forward SSH agent for signing"
+        info "ensure the remote machine has 1Password SSH agent configured"
+        ;;
+        
+      skip)
+        info "skipping git signing setup"
+        ;;
+    esac
+  fi
+}
+
 setup_installation_type () {
   echo ''
   info 'setup installation type'
@@ -129,6 +198,7 @@ AUTO_MOVE=false
 SKIP_MOVE=false
 GIT_AUTHOR_NAME=""
 GIT_AUTHOR_EMAIL=""
+GIT_SIGNING_MODE=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -172,20 +242,35 @@ while [[ $# -gt 0 ]]; do
       GIT_AUTHOR_EMAIL="$2"
       shift 2
       ;;
+    --git-signing-local)
+      GIT_SIGNING_MODE="local"
+      shift
+      ;;
+    --git-signing-remote)
+      GIT_SIGNING_MODE="remote"
+      shift
+      ;;
+    --git-signing-skip)
+      GIT_SIGNING_MODE="skip"
+      shift
+      ;;
     --help|-h)
       echo "Usage: $0 [OPTIONS]"
       echo ""
       echo "Options:"
-      echo "  --essential       Essential setup (CLI tools only)"
-      echo "  --workstation     Workstation setup (essentials + GUI apps)"
-      echo "  --overwrite-all   Overwrite all existing files without prompting"
-      echo "  --skip-all        Skip all existing files without prompting"
-      echo "  --backup-all      Backup all existing files without prompting"
-      echo "  --auto-move       Automatically move repo to ~/.dotfiles if needed"
-      echo "  --skip-move       Skip repository location check entirely"
-      echo "  --git-name NAME   Set git author name (skips prompt)"
-      echo "  --git-email EMAIL Set git author email (skips prompt)"
-      echo "  --help, -h        Show this help message"
+      echo "  --essential            Essential setup (CLI tools only)"
+      echo "  --workstation          Workstation setup (essentials + GUI apps)"
+      echo "  --overwrite-all        Overwrite all existing files without prompting"
+      echo "  --skip-all             Skip all existing files without prompting"
+      echo "  --backup-all           Backup all existing files without prompting"
+      echo "  --auto-move            Automatically move repo to ~/.dotfiles if needed"
+      echo "  --skip-move            Skip repository location check entirely"
+      echo "  --git-name NAME        Set git author name (skips prompt)"
+      echo "  --git-email EMAIL      Set git author email (skips prompt)"
+      echo "  --git-signing-local    Configure for local 1Password signing"
+      echo "  --git-signing-remote   Configure for remote 1Password signing"
+      echo "  --git-signing-skip     Skip git signing setup"
+      echo "  --help, -h             Show this help message"
       exit 0
       ;;
     *)
@@ -297,6 +382,7 @@ if [ "$INSTALL_TYPE_SET_BY_FLAG" == "false" ]; then
 fi
 
 setup_gitconfig
+setup_git_signing
 install_dotfiles
 
 # If we're on a Mac, let's install and setup homebrew.
