@@ -1,134 +1,78 @@
 # Dotfiles
 
-## Install
+Personal development environment configuration with modern zsh, enhanced completions, and productivity tools.
 
-### Quick Setup (Recommended)
-
-Run this for interactive setup:
+## Quick Setup
 
 ```sh
-script/bootstrap  # Interactive setup - prompts for installation type and creates symlinks
+script/bootstrap  # Interactive setup with prompts
 ```
 
-The bootstrap script will:
-1. Set up git configuration (if needed)
-2. Ask whether you want essential or workstation setup
-3. Create symlinks for dotfiles
-4. Install packages based on your choice
+**Setup Types:**
+- **Essential**: CLI tools, git, programming languages (servers, remote dev)
+- **Workstation**: Essential + GUI apps, browsers, IDEs (local development)
 
-### Manual Installation Options
+## Daily Use Tips
 
-If you prefer to choose manually:
+### Shell & Navigation
+- `↑/↓` - Smart history search (searches as you type)
+- `Tab` - Enhanced completions with menu navigation
+- `..`, `...`, `....` - Navigate up directories quickly
+- `mkd dirname` - Create directory and cd into it
+- `extract file.zip` - Universal archive extractor
+
+### Git Shortcuts
+- `gs` - Git status
+- `ga` - Git add all
+- `gc` - Git commit
+- `gco` - Git checkout
+- `gp` - Git push
+- `gl` - Pretty git log
+
+### Productivity
+- `reload` - Reload shell configuration
+- `brewup` - Update Homebrew and packages
+- `finder` - Open current directory in Finder
+- `timer` - Simple command-line timer
+
+### File Operations
+- `ll` - Detailed file listing
+- `ff pattern` - Fast file finder (uses fd/find)
+- `rg pattern` - Fast grep (ripgrep)
+- `bat file` - Syntax-highlighted cat
+
+## Key Features
+
+- **Smart Shell**: Auto-suggestions, syntax highlighting, fast completions
+- **Git Integration**: Status in prompt, cached for performance
+- **Modern Tools**: fd, rg, bat, exa with smart fallbacks
+- **Keyboard Shortcuts**: [Custom layout](https://dimitrieh.gitlab.io/dotfiles) with Hyper key
+
+## How It Works
+
+**File Conventions:**
+- `*.symlink` → Linked to home directory (e.g., `git/gitconfig.symlink` → `~/.gitconfig`)
+- `install.sh` → App-specific setup scripts
+- `*.zsh` → Shell configs (aliases, paths, completions)
+
+**Adding Apps:**
+1. Create app directory
+2. Add config files (`.symlink` or `install.sh`)
+3. Run `script/install`
+
+## Maintenance
 
 ```sh
-# Essential setup (CLI tools only) - for servers, remote machines
-script/install
+# Health check
+dot health
 
-# Workstation setup (essentials + GUI apps) - for local development
-script/install --workstation
+# Update packages
+brewup
+
+# Reload configuration
+reload
 ```
-
-## Installation Types
-
-**Essential Setup:**
-- CLI development tools, version control, programming languages
-- Text processing, terminal utilities, build tools
-- Perfect for servers, remote development, or minimal setups
-- Focused on command-line productivity
-
-**Workstation Setup:**
-- Everything from Essential setup PLUS
-- GUI applications: browsers, IDEs, communication apps
-- Desktop productivity tools, media applications
-- Perfect for local development machines with displays
-
-## How it works
-
-### Installation Process
-
-1. **Bootstrap** (`script/bootstrap`)
-   - Prompts for git author name/email if not configured
-   - Creates symlinks for all `*.symlink` files to your home directory
-   - Installs homebrew dependencies on macOS
-
-2. **Install Scripts** (`script/install`)
-   - Automatically finds and runs all `install.sh` scripts in any subdirectory
-   - Each application's `install.sh` handles its specific setup (creating directories, symlinks, etc.)
-
-### Conventions
-
-- **`*.symlink`** - Any file ending in `.symlink` gets automatically symlinked to `~` during bootstrap
-  - Example: `git/gitconfig.symlink` → `~/.gitconfig`
-
-- **`install.sh`** - Scripts that handle application-specific setup
-  - Automatically discovered and executed by `script/install`
-  - Should check for dependencies, create necessary symlinks, and validate setup
-
-- **`*.zsh`** - Shell configuration files that get automatically sourced by zsh
-  - `aliases.zsh` - Command aliases specific to that tool (e.g., docker aliases, git shortcuts)
-  - `path.zsh` - PATH modifications for that tool
-  - `completion.zsh` - Shell completions
-  - All `.zsh` files are loaded automatically by the zsh configuration
-
-### Adding New Applications
-
-To add configuration for a new application:
-
-1. Create a directory with the application name
-2. Add your configuration files
-3. Either:
-   - Name files with `.symlink` suffix for automatic linking to home directory
-   - Create an `install.sh` script for custom setup logic
-4. Run `script/install` to execute your new install script
-
-## Zsh Configuration
-
-Modern zsh setup with enhanced completions, async prompt, and plugin management.
-
-### Features
-
-- **Enhanced Completions**: Menu selection, fuzzy matching, colored output
-- **Performance Optimized Prompt**: Cached git status for faster directory changes
-- **Modern Plugin Management**: Zinit for fast plugin loading
-- **Smart Aliases**: Conditional fallbacks for better portability
-
-### Setup for New Machine
-
-1. **Install dependencies:**
-   ```bash
-   brew bundle --file=~/.dotfiles/Brewfile
-   ```
-
-2. **Reload shell:**
-   ```bash
-   source ~/.zshrc
-   ```
-
-### New Plugins Added
-
-- **zsh-syntax-highlighting**: Real-time command syntax highlighting
-- **zsh-history-substring-search**: Better up/down arrow history navigation
-- **zsh-completions**: Extended completions for hundreds of commands
-- **zsh-autosuggestions**: Intelligent command suggestions
-
-### Performance Improvements
-
-- Git status cached for 5 seconds
-- Unpushed commits cached for 10 seconds
-- Completion results cached
-- Faster git status checks using porcelain format
-
-### Key Bindings
-
-- `↑/↓`: History substring search
-- `Tab`: Enhanced completion with menu selection
-- `Ctrl+P/N`: Alternative history substring search
-
-## Keyboard shortcuts
-
-Keyboard shortcuts are configured with a Hyper key. The layout can be found [here](https://dimitrieh.gitlab.io/dotfiles)
 
 ## Thanks
 
-I forked from [Zach Holman](https://github.com/holman/dotfiles), which again forked from [Ryan Bates](http://github.com/ryanb)' excellent
-[dotfiles](https://github.com/ryanb/dotfiles)
+Forked from [Zach Holman](https://github.com/holman/dotfiles) → [Ryan Bates](https://github.com/ryanb/dotfiles)
