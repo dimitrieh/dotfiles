@@ -2,6 +2,41 @@
 #
 # xbar menu bar app configuration
 #
+# Usage:
+#   xbar/install.sh              # Interactive mode
+#   xbar/install.sh --auto-install  # Automatically install if missing
+#   xbar/install.sh --skip-install  # Skip installation if missing
+
+# Parse command line arguments
+AUTO_INSTALL=false
+SKIP_INSTALL=false
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --auto-install)
+      AUTO_INSTALL=true
+      shift
+      ;;
+    --skip-install)
+      SKIP_INSTALL=true
+      shift
+      ;;
+    --help|-h)
+      echo "Usage: $0 [OPTIONS]"
+      echo ""
+      echo "Options:"
+      echo "  --auto-install   Automatically install xbar if missing"
+      echo "  --skip-install   Skip installation if xbar is missing"
+      echo "  --help, -h       Show this help message"
+      exit 0
+      ;;
+    *)
+      echo "Unknown option: $1"
+      echo "Use --help for usage information"
+      exit 1
+      ;;
+  esac
+done
 
 # Get dotfiles root directory
 cd "$(dirname "$0")/.."
@@ -11,8 +46,18 @@ DOTFILES_ROOT=$(pwd -P)
 if ! brew list xbar &>/dev/null
 then
   echo "  x xbar not found."
-  read -p "  Install xbar now? [y/N] " -n 1 -r
-  echo
+  
+  if [ "$SKIP_INSTALL" == "true" ]; then
+    echo "  Skipping xbar configuration (--skip-install flag provided)"
+    exit 0
+  elif [ "$AUTO_INSTALL" == "true" ]; then
+    echo "  Installing xbar automatically..."
+    REPLY="y"
+  else
+    read -p "  Install xbar now? [y/N] " -n 1 -r
+    echo
+  fi
+  
   if [[ $REPLY =~ ^[Yy]$ ]]
   then
     echo "  Installing xbar..."

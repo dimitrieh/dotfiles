@@ -10,7 +10,8 @@
       "mcp__github__get_file_contents",
       "WebSearch",
       "Bash(zsh:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(brew tap:*)"
     ],
     "deny": [],
     "ask": []

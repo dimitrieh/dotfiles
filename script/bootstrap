@@ -7,6 +7,37 @@ DOTFILES_ROOT=$(pwd -P)
 
 set -e
 
+# Check if dotfiles repo is in the expected location
+EXPECTED_LOCATION="$HOME/.dotfiles"
+if [ "$DOTFILES_ROOT" != "$EXPECTED_LOCATION" ] && [ "$SKIP_MOVE" != "true" ]; then
+  echo ''
+  user "dotfiles repository detected at: $DOTFILES_ROOT"
+  user "expected location: $EXPECTED_LOCATION"
+  echo ''
+  
+  if [ "$AUTO_MOVE" == "true" ]; then
+    info "automatically moving repository to ~/.dotfiles"
+    move_choice="y"
+  else
+    user "Would you like to move the repository to ~/.dotfiles? [y/N]: "
+    read -r move_choice
+  fi
+  
+  if [[ "$move_choice" =~ ^[Yy]$ ]]; then
+    if [ -e "$EXPECTED_LOCATION" ]; then
+      fail "directory ~/.dotfiles already exists, please resolve manually"
+    fi
+    info "moving repository to ~/.dotfiles"
+    mv "$DOTFILES_ROOT" "$EXPECTED_LOCATION"
+    cd "$EXPECTED_LOCATION"
+    DOTFILES_ROOT=$(pwd -P)
+    success "repository moved to ~/.dotfiles"
+  else
+    user "continuing with current location: $DOTFILES_ROOT"
+  fi
+  echo ''
+fi
+
 echo ''
 
 info () {
@@ -38,10 +69,22 @@ setup_gitconfig () {
       git_credential='osxkeychain'
     fi
 
-    user ' - What is your github author name?'
-    read -e git_authorname
-    user ' - What is your github author email?'
-    read -e git_authoremail
+    # Use provided flags or prompt for git author info
+    if [ -n "$GIT_AUTHOR_NAME" ]; then
+      git_authorname="$GIT_AUTHOR_NAME"
+      info "using provided git author name: $git_authorname"
+    else
+      user ' - What is your github author name?'
+      read -e git_authorname
+    fi
+    
+    if [ -n "$GIT_AUTHOR_EMAIL" ]; then
+      git_authoremail="$GIT_AUTHOR_EMAIL"
+      info "using provided git author email: $git_authoremail"
+    else
+      user ' - What is your github author email?'
+      read -e git_authoremail
+    fi
 
     sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.local.symlink.example > git/gitconfig.local.symlink
 
@@ -82,6 +125,10 @@ OVERWRITE_ALL=false
 SKIP_ALL=false
 BACKUP_ALL=false
 INSTALL_TYPE_SET_BY_FLAG=false
+AUTO_MOVE=false
+SKIP_MOVE=false
+GIT_AUTHOR_NAME=""
+GIT_AUTHOR_EMAIL=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -109,6 +156,22 @@ while [[ $# -gt 0 ]]; do
       BACKUP_ALL=true
       shift
       ;;
+    --auto-move)
+      AUTO_MOVE=true
+      shift
+      ;;
+    --skip-move)
+      SKIP_MOVE=true
+      shift
+      ;;
+    --git-name)
+      GIT_AUTHOR_NAME="$2"
+      shift 2
+      ;;
+    --git-email)
+      GIT_AUTHOR_EMAIL="$2"
+      shift 2
+      ;;
     --help|-h)
       echo "Usage: $0 [OPTIONS]"
       echo ""
@@ -118,6 +181,10 @@ while [[ $# -gt 0 ]]; do
       echo "  --overwrite-all   Overwrite all existing files without prompting"
       echo "  --skip-all        Skip all existing files without prompting"
       echo "  --backup-all      Backup all existing files without prompting"
+      echo "  --auto-move       Automatically move repo to ~/.dotfiles if needed"
+      echo "  --skip-move       Skip repository location check entirely"
+      echo "  --git-name NAME   Set git author name (skips prompt)"
+      echo "  --git-email EMAIL Set git author email (skips prompt)"
       echo "  --help, -h        Show this help message"
       exit 0
       ;;

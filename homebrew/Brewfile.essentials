@@ -2,7 +2,7 @@
 # These are needed for development work on servers or minimal setups
 
 # Taps
-tap "michaeldfallen/formula/git-radar"
+tap "michaeldfallen/formula"
 tap "minio/stable"
 tap "zyedidia/micro"
 tap "cytopia/tap"
