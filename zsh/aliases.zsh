@@ -1,9 +1,9 @@
 alias reload!='. ~/.zshrc'
 
-# Improved cat command - prefer bat over ccat
-if command -v bat > /dev/null 2>&1; then
+# Improved cat command - prefer bat over ccat (only in interactive shells)
+if [[ $- == *i* ]] && command -v bat > /dev/null 2>&1; then
   alias cat=bat
-elif command -v ccat > /dev/null 2>&1; then
+elif [[ $- == *i* ]] && command -v ccat > /dev/null 2>&1; then
   alias cat=ccat
 fi
 
@@ -51,10 +51,10 @@ alias -- -="cd -"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias cdb='cd -'
-alias c='clear'
+alias cl='clear'
 alias cls='clear;ls'
-alias h="history"
-alias v="vim"
+alias hist="history"
+alias vi="vim"
 
 alias e="$EDITOR"
 
@@ -68,17 +68,32 @@ function o() {
 	fi;
 }
 
-# List Files & Folders better
+# Enhanced file listing with modern tools
 if command -v eza > /dev/null 2>&1; then
   alias list='eza --long --header --git -a' # Uses eza which also lists git
+  alias ll='eza --long --git --header'
+  alias la='eza --long --all --git --header'
+  alias lt='eza --tree --level=2'
+  alias ltr='eza --sort=modified --reverse --long --git'
+  alias lts='eza --sort=size --reverse --long --git'
 else
   alias list='ls -la'
+  alias ll='ls -l'
+  alias la='ls -aF'
+  alias ltr='ls -Art1 && echo "------Newest--"'
 fi
-alias la="ls -aF"
-alias ld="ls -ld"
-alias ll="ls -l"
-alias lt='ls -At1 && echo "------Oldest--"'
-alias ltr='ls -Art1 && echo "------Newest--"'
+
+# Enhanced directory navigation is already defined above
+
+# Directory switching with bookmarks (- is already defined above)
+alias d1='cd -1'
+alias d2='cd -2'  
+alias d3='cd -3'
+alias d4='cd -4'
+alias d5='cd -5'
+alias dirs='dirs -v'  # Show directory stack with numbers
+
+# Note: eza fallback aliases are handled in the main eza conditional above
 
 # Always enable colors for tree
 alias tree='tree -C'
@@ -114,10 +129,8 @@ alias pg='ping -c 1 google.com | tail -3'
 # Clean up LaunchServices to remove duplicates in the “Open With” menu
 alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
-# Empty the Trash on all mounted volumes and the main HDD.
-# Also, clear Apple’s System Logs to improve shell startup speed.
-# Finally, clear download history from quarantine. https://mths.be/bum
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+# Empty the Trash (with confirmation for safety)
+alias emptytrash='echo "⚠️  This will permanently delete all Trash contents and system logs. Continue? (y/N)"; read -q "REPLY?"; echo; [[ $REPLY =~ ^[Yy]$ ]] && { sudo rm -rfv /Volumes/*/.Trashes ~/.Trash /private/var/log/asl/*.asl 2>/dev/null; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "delete from LSQuarantineEvent" 2>/dev/null; echo "✅ Trash emptied successfully"; } || echo "❌ Operation cancelled"'
 
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"

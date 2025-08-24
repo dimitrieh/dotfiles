@@ -24,6 +24,8 @@ setopt APPEND_HISTORY # adds history
 setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
 setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
 setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_SPACE # don't record commands starting with space
+setopt HIST_VERIFY # show command with history expansion to user before running it
 
 # don't expand aliases _before_ completion has finished
 #   like: git comm-[tab]
@@ -34,5 +36,18 @@ bindkey '^[^[[C' forward-word
 bindkey '^[[5D' beginning-of-line
 bindkey '^[[5C' end-of-line
 bindkey '^[[3~' delete-char
-# Removed newtab binding as function was not defined
 bindkey '^?' backward-delete-char
+
+# Enhanced key bindings
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
+
+# Better completion navigation
+bindkey '^[[Z' reverse-menu-complete  # Shift-Tab
+bindkey '^I' expand-or-complete-prefix # Tab completion
+
+# Enhanced autosuggestion acceptance
+bindkey '^F' forward-char # Accept suggestion with Ctrl+F
+bindkey '^E' end-of-line  # Accept entire suggestion with Ctrl+E

@@ -24,7 +24,7 @@ typeset -g _git_status_cache_time=0
 git_dirty() {
   # Return cached result if in same directory and recent
   local current_time=$(date +%s)
-  if [[ "$PWD" == "$_git_status_cache_dir" && $(($current_time - $_git_status_cache_time)) -lt 5 ]]; then
+  if [[ "$PWD" == "$_git_status_cache_dir" && $(($current_time - $_git_status_cache_time)) -lt 10 ]]; then
     echo "$_git_status_cache"
     return
   fi
