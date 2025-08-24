@@ -70,11 +70,11 @@ script/bootstrap  # Interactive setup with prompts
 - `*.symlink` → Linked to home directory (e.g., `git/gitconfig.symlink` → `~/.gitconfig`)
 - `install.sh` → App-specific setup scripts
 - `*.zsh` → Shell configs (aliases, paths, completions)
-- `bin/` → Personal command toolkit (28 executable scripts added to PATH)
+- `bin/` → Personal command toolkit (executable scripts added to PATH)
 
 **The `bin/` Directory:**
-Contains 28 executable tools automatically available system-wide:
-- **Git Workflow**: 16 git-* scripts for advanced git operations
+Contains executable tools automatically available system-wide:
+- **Git Workflow**: git-* scripts for advanced git operations
 - **Development**: Multi-repo management, safety checks, utilities
 - **Productivity**: File transfer, image resizing, text generation
 
