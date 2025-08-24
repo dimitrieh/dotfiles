@@ -2,15 +2,45 @@
 
 ## Install
 
-Run this:
+### Quick Setup (Recommended)
+
+Run this for interactive setup:
 
 ```sh
-script/bootstrap  # Initial setup - creates symlinks for *.symlink files
-script/install    # App-specific setup - runs all install.sh scripts
+script/bootstrap  # Interactive setup - prompts for installation type and creates symlinks
 ```
 
-This will symlink the appropriate files in `.dotfiles` to your home directory.
-Everything is configured and tweaked within `~/.dotfiles`.
+The bootstrap script will:
+1. Set up git configuration (if needed)
+2. Ask whether you want essential or workstation setup
+3. Create symlinks for dotfiles
+4. Install packages based on your choice
+
+### Manual Installation Options
+
+If you prefer to choose manually:
+
+```sh
+# Essential setup (CLI tools only) - for servers, remote machines
+script/install
+
+# Workstation setup (essentials + GUI apps) - for local development
+script/install --workstation
+```
+
+## Installation Types
+
+**Essential Setup:**
+- CLI development tools, version control, programming languages
+- Text processing, terminal utilities, build tools
+- Perfect for servers, remote development, or minimal setups
+- Focused on command-line productivity
+
+**Workstation Setup:**
+- Everything from Essential setup PLUS
+- GUI applications: browsers, IDEs, communication apps
+- Desktop productivity tools, media applications
+- Perfect for local development machines with displays
 
 ## How it works
 

@@ -1,0 +1,100 @@
+# Workstation GUI applications and desktop tools
+# These are only needed on machines with a display/desktop environment
+
+# Additional taps for GUI apps
+tap "bramstein/webfonttools"
+tap "brandonyoungdev/tldx"
+tap "charmbracelet/tap"
+tap "homebrew/cask-versions"
+
+# Terminal Emulators
+cask "iterm2"
+cask "ghostty"
+cask "warp"
+
+# Web Browsers
+cask "google-chrome"
+cask "firefox"
+cask "vivaldi"
+cask "arc"
+cask "chromium"
+
+# IDEs & Code Editors
+cask "cursor"
+cask "visual-studio-code"
+cask "vscodium"
+cask "zed"
+
+# Android Development
+cask "android-file-transfer"
+cask "android-studio"
+cask "android-platform-tools"
+
+# Communication & Collaboration
+cask "slack"
+cask "discord"
+cask "whatsapp"
+cask "signal"
+cask "zoom"
+cask "skype"
+cask "loom"
+
+# Productivity & Notes
+cask "notion"
+cask "obsidian"
+cask "meetingbar"
+cask "raycast"
+
+# Media & Entertainment
+cask "spotify"
+cask "vlc"
+cask "obs"
+cask "handbrake-app"
+
+# Docker Desktop (GUI)
+cask "docker-desktop"
+
+# Design & Graphics
+cask "figma"
+
+# Screenshots & Recording
+cask "cleanshot"
+cask "keycastr"
+cask "pixelsnap"
+
+# Color & Accessibility Tools
+cask "colorsnapper"
+cask "color-oracle"
+cask "sim-daltonism"
+
+# System Utilities
+cask "dropbox"
+cask "mullvad-vpn"
+cask "tailscale-app"
+cask "keepingyouawake"
+cask "menumeters"
+cask "micro-snitch"
+cask "stats"
+cask "jordanbaird-ice"
+cask "xbar"
+cask "disk-inventory-x"
+cask "the-unarchiver"
+cask "numi"
+cask "1password-cli"
+
+# QuickLook Plugins
+cask "qlimagesize"
+cask "qlprettypatch"
+cask "quicklook-csv"
+cask "quicklook-json"
+cask "quicklookase"
+
+# AI Assistants
+cask "chatgpt"
+cask "ollama-app"
+
+# Development Tools (GUI)
+cask "imageoptim"
+
+# System Requirements
+cask "xquartz"

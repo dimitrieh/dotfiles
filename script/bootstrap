@@ -49,6 +49,33 @@ setup_gitconfig () {
   fi
 }
 
+setup_installation_type () {
+  echo ''
+  info 'setup installation type'
+  echo ''
+  echo '  [1] Essential setup (CLI tools only) - for servers, remote machines'
+  echo '  [2] Workstation setup (essentials + GUI apps) - for local development'
+  echo ''
+  user ' - Choose installation type [1-2]: '
+  read -n 1 -r install_choice
+  echo
+  
+  case "$install_choice" in
+    1)
+      INSTALL_TYPE=""
+      info "essential setup selected (CLI tools only)"
+      ;;
+    2)
+      INSTALL_TYPE="--workstation" 
+      info "workstation setup selected (essentials + GUI applications)"
+      ;;
+    *)
+      info "invalid choice, defaulting to essential setup"
+      INSTALL_TYPE=""
+      ;;
+  esac
+}
+
 
 link_file () {
   local src=$1 dst=$2
@@ -138,13 +165,16 @@ install_dotfiles () {
 }
 
 setup_gitconfig
+setup_installation_type
 install_dotfiles
 
 # If we're on a Mac, let's install and setup homebrew.
 if [ "$(uname -s)" == "Darwin" ]
 then
   info "installing dependencies"
-  if source bin/dot | tee ${/tmp/dotfiles-dot}
+  # Export INSTALL_TYPE so it can be used by bin/dot
+  export INSTALL_TYPE
+  if source bin/dot | tee /tmp/dotfiles-dot
   then
     success "dependencies installed, log at /tmp/dotfiles-dot"
   else

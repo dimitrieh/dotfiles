@@ -25,10 +25,23 @@ fi
 cd "$(dirname "$0")/.."
 DOTFILES_ROOT=$(pwd -P)
 
-# Run Homebrew through the Brewfile
-echo "› brew bundle"
-brew bundle --file="$DOTFILES_ROOT/homebrew/Brewfile"
+# Check for workstation flag
+INSTALL_WORKSTATION=false
+if [[ "$1" == "--workstation" ]]; then
+  INSTALL_WORKSTATION=true
+  echo "Installing workstation packages..."
+fi
 
-brew update && brew upgrade --all && brew cleanup && brew prune && brew doctor
+# Always install essential packages
+echo "› brew bundle (essentials)"
+brew bundle --file="$DOTFILES_ROOT/homebrew/Brewfile.essentials"
+
+# Install workstation packages if requested
+if [ "$INSTALL_WORKSTATION" = true ]; then
+  echo "› brew bundle (workstation)"
+  brew bundle --file="$DOTFILES_ROOT/homebrew/Brewfile.workstation"
+fi
+
+brew update && brew upgrade && brew cleanup && brew doctor
 
 exit 0

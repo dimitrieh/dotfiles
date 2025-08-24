@@ -17,7 +17,7 @@
 [core]
         excludesfile = ~/.gitignore
         editor = zed --wait
-        pager = diff-so-fancy | less --tabs=4 -RFX
+        pager = delta
 [apply]
         whitespace = nowarn
 #[commit]
@@ -60,3 +60,12 @@
 [commit]
 	    template = /Users/dimitrie/.git-commit-template
 	    gpgsign = true
+[delta]
+        navigate = true    # use n and N to move between diff sections
+        light = false      # set to true if you're in a terminal with a light background color
+        side-by-side = true
+        line-numbers = true
+[merge]
+        conflictstyle = diff3
+[diff]
+        colorMoved = default

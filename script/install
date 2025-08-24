@@ -1,15 +1,75 @@
 #!/usr/bin/env bash
 #
 # Run all dotfiles installers.
+#
+# Usage:
+#   script/install            # Essential setup (CLI tools only)
+#   script/install --workstation  # Full workstation setup (essentials + GUI apps)
 
 set -e
 
 cd "$(dirname $0)"/..
 
+# Helper functions for user interaction
+info () {
+  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+}
+
+user () {
+  printf "\r  [ \033[0;33m??\033[0m ] $1\n"
+}
+
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+
+# Function to ask user for installation type
+ask_installation_type () {
+  echo ''
+  info 'Choose installation type'
+  echo ''
+  echo '  [1] Essential setup (CLI tools only) - for servers, remote machines'
+  echo '  [2] Workstation setup (essentials + GUI apps) - for local development'
+  echo ''
+  user 'Choose installation type [1-2]: '
+  read -n 1 -r install_choice
+  echo
+  
+  case "$install_choice" in
+    1)
+      INSTALL_TYPE=""
+      info "essential setup selected (CLI tools only)"
+      ;;
+    2)
+      INSTALL_TYPE="--workstation"
+      info "workstation setup selected (essentials + GUI applications)"
+      ;;
+    *)
+      info "invalid choice, defaulting to essential setup"
+      INSTALL_TYPE=""
+      ;;
+  esac
+}
+
+# Parse command line arguments
+INSTALL_TYPE=""
+if [[ "$1" == "--workstation" ]]; then
+  INSTALL_TYPE="--workstation"
+  echo "Installing in workstation mode (includes GUI applications)..."
+elif [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
+  echo "Usage:"
+  echo "  script/install            # Interactive - asks for installation type"
+  echo "  script/install --workstation  # Full workstation setup (essentials + GUI apps)"
+  exit 0
+else
+  # If no arguments provided, ask the user what they want
+  ask_installation_type
+fi
+
 # Run homebrew installer first to ensure all dependencies are installed
 if [ -f ./homebrew/install.sh ]; then
   echo "Installing Homebrew packages first..."
-  sh -c "./homebrew/install.sh"
+  sh -c "./homebrew/install.sh $INSTALL_TYPE"
 fi
 
 # Find and run all other installers (excluding homebrew since we already ran it)

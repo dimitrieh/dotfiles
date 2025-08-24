@@ -10,8 +10,8 @@ export ZSH=$HOME/.dotfiles
 $ZSH/macos/set-defaults.sh
 
 # Install software
-echo "› $ZSH/script/install"
-$ZSH/script/install
+echo "› $ZSH/script/install $INSTALL_TYPE"
+$ZSH/script/install $INSTALL_TYPE
 
 # echo "Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, pip and their installed packages"
 # echo "---"

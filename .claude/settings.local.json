@@ -4,7 +4,13 @@
       "WebFetch(domain:github.com)",
       "Bash(git add:*)",
       "Bash(brew search:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(brew info:*)",
+      "mcp__github__search_code",
+      "mcp__github__get_file_contents",
+      "WebSearch",
+      "WebSearch",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []

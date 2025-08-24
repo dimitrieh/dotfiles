@@ -1,8 +1,38 @@
 alias reload!='. ~/.zshrc'
 
-# Improved cat command https://github.com/jingweno/ccat
-if command -v ccat > /dev/null 2>&1; then
+# Improved cat command - prefer bat over ccat
+if command -v bat > /dev/null 2>&1; then
+  alias cat=bat
+elif command -v ccat > /dev/null 2>&1; then
   alias cat=ccat
+fi
+
+# Improved find command - use fd when available
+if command -v fd > /dev/null 2>&1; then
+  # Fast file search
+  alias ff='fd'
+  # Find by filename pattern (case insensitive)
+  alias ffi='fd -i'
+  # Find files only (no directories)
+  alias ffile='fd -t f'
+  # Find directories only
+  alias fdir='fd -t d'
+fi
+
+# Improved grep command - use ripgrep when available
+if command -v rg > /dev/null 2>&1; then
+  # Fast grep replacement
+  alias rgg='rg'
+  # Case insensitive search
+  alias rggi='rg -i'
+  # Search with line numbers (default for rg)
+  alias rggn='rg -n'
+  # Search in specific file types
+  alias rgjs='rg -t js'
+  alias rgpy='rg -t py'
+  alias rgmd='rg -t md'
+  # Search with context (3 lines before/after)
+  alias rggc='rg -C 3'
 fi
 
 

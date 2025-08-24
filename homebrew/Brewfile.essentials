@@ -1,0 +1,141 @@
+# Essential development tools and CLI utilities
+# These are needed for development work on servers or minimal setups
+
+# Taps
+tap "homebrew/bundle"
+tap "homebrew/services"
+tap "michaeldfallen/formula/git-radar"
+tap "minio/stable"
+tap "zyedidia/micro"
+tap "cytopia/tap"
+tap "homebrew-ffmpeg/ffmpeg"
+
+# Version Control
+brew "git"
+brew "git-lfs"
+brew "git-radar"
+brew "gh"
+brew "git-delta"
+brew "gitlab-runner"
+
+# Programming Languages & Runtimes
+brew "node"
+brew "python@3.12"
+brew "go"
+
+# Build Tools & Compilers
+brew "cmake"
+brew "autoconf"
+brew "automake"
+brew "llvm"
+brew "swig"
+brew "doxygen"
+
+# Package Managers & Orchestration
+brew "yarn"
+brew "pnpm"
+brew "helm"
+
+# Network & Web Tools
+brew "curl"
+brew "libssh2"
+brew "wget"
+brew "httpie"
+brew "nginx"
+brew "openssh"
+brew "nmap"
+brew "nghttp2"
+brew "ldns"
+brew "lynx"
+brew "speedtest-cli"
+brew "ssh-copy-id"
+
+# Text Processing & Search
+brew "jq"
+brew "oniguruma"
+brew "ack"
+brew "grep"
+brew "ripgrep"
+brew "findutils"
+brew "fd"
+brew "icdiff"
+brew "highlight"
+brew "bat"
+brew "grc"
+
+# Terminal & Shell
+brew "bash"
+brew "bash-completion@2"
+brew "zsh"
+brew "zsh-autosuggestions"
+brew "zinit"
+brew "tmux"
+brew "screen"
+
+# File Management & Navigation
+brew "tree"
+brew "eza"
+brew "ranger"
+brew "micro"
+brew "nano"
+brew "rename"
+
+# Compression & Archives
+brew "p7zip"
+brew "zstd"
+brew "xz"
+brew "zopfli"
+brew "pigz"
+brew "zlib"
+
+# Media Processing (CLI)
+brew "ffmpeg"
+brew "imagemagick"
+brew "graphicsmagick"
+brew "exiftool"
+brew "webkit2png"
+brew "jp2a"
+brew "youtube-dl"
+brew "streamlink"
+brew "lame"
+brew "x264"
+brew "xvid"
+brew "mpv"
+
+# Security & Encryption
+brew "gnupg"
+brew "gnupg@1.4"
+brew "libfido2"
+brew "libsodium"
+
+# System Libraries & Dependencies
+brew "boost"
+brew "fontconfig"
+brew "glib"
+brew "pixman"
+brew "cairo"
+brew "little-cms2"
+brew "webp"
+brew "fribidi"
+brew "harfbuzz"
+brew "libass"
+brew "srt"
+brew "libiconv"
+brew "libxml2"
+brew "libyaml"
+brew "unixodbc"
+brew "wxwidgets"
+brew "re2"
+
+# Development Utilities
+brew "minio"
+brew "moreutils"
+brew "pv"
+brew "rlwrap"
+brew "spark"
+brew "hstr"
+brew "noti"
+brew "thefuck"
+
+# Dark mode CLI (macOS specific but CLI)
+brew "dark-mode"
