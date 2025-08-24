@@ -1,16 +1,16 @@
+---
+description: Comprehensive audit of dotfiles system health and configuration
+allowed-tools: Bash, Read, LS, Grep, Glob
+argument-hint: <optional: specific area to focus on (symlinks, packages, shell, etc.)>
+---
+
 # Dotfiles Health Check
 
-## Usage
-```bash
-claude dotfiles-health-check
-```
+Perform a comprehensive audit of my dotfiles system health located at `~/.dotfiles`. 
 
-## Description
-Performs a comprehensive audit of your dotfiles system health, comparing the current system state against the expected dotfiles configuration and identifying any discrepancies, missing configurations, or potential issues.
+Focus areas: $ARGUMENTS (if not specified, analyze all areas)
 
-## Command
-
-Perform a comprehensive audit of my dotfiles system health located at `~/.dotfiles`. Please analyze and report on:
+Analyze and report on:
 
 ## 1. Symlink Integrity Analysis
 - **Core Symlinks**: Check if all `*.symlink` files in git/, ruby/, zsh/ directories are properly linked to home directory with correct targets
@@ -26,60 +26,47 @@ Perform a comprehensive audit of my dotfiles system health located at `~/.dotfil
 - **Broken Links**: Identify any broken symlinks, circular references, or missing target files
 
 ## 2. Package Management Verification  
-- **Homebrew Packages**: Compare `~/.dotfiles/homebrew/Brewfile` against actually installed packages (`brew list`)
-- **Missing Dependencies**: Check which packages in Brewfile aren't installed and which installed packages aren't in Brewfile
-- **Install Script Dependencies**: For each install.sh script in (claude, ghostty, micro, vscode, vscodium, xbar, keyboard), verify:
-  - Required applications are installed and accessible via PATH
-  - Dependency checks would pass (imagemagick, chrome, raycast, cleanshot, etc.)
-  - Scripts follow consistent patterns (DOTFILES_ROOT setup, validation, error handling)
+- **Homebrew Packages**: Compare `~/.dotfiles/homebrew/Brewfile` against installed packages (`brew list`)
+- **Missing Dependencies**: Check packages in Brewfile vs installed packages
+- **Install Script Dependencies**: For each install.sh script, verify required applications are installed and accessible
 
 ## 3. Shell Configuration Health
-- **Zsh Loading**: Verify all `*.zsh` files are being loaded correctly from:
-  - Tool-specific aliases: docker/aliases.zsh, git/aliases.zsh, ruby/aliases.zsh, etc.
-  - Path configurations: go/path.zsh, node/path.zsh, ruby/path.zsh, etc.  
-  - Completions: git/completion.zsh, ruby/completion.zsh, zsh/completion.zsh
-- **Claude Aliases**: Check if claude/aliases.zsh is loaded and `claude` command works with MCP config
-- **Performance**: Analyze zsh startup time and identify any slow-loading configurations
-- **Conflicts**: Check for duplicate aliases or PATH entries across different .zsh files
+- **Zsh Loading**: Verify all `*.zsh` files are loaded (aliases, paths, completions)
+- **Claude Aliases**: Check if claude/aliases.zsh is loaded and `claude` command works
+- **Alias Safety**: Verify aliases don't override critical system commands (ls, cd, rm, cp, mv, etc.)
+- **Tool Conflicts**: Check aliases don't interfere with common CLI tools (git, docker, npm, etc.)
+- **Command Validity**: Test that aliases point to existing commands and valid paths
+- **Version Conflicts**: Identify aliases that might cause issues with old/new tool versions
+- **Performance**: Analyze zsh startup time and identify slow configurations
+- **Duplicate Detection**: Check for duplicate aliases or conflicting PATH entries
 
 ## 4. Installation Script Consistency
-- **Missing Scripts**: Identify directories that should have install.sh but don't (check for config files that need symlinking)
-- **Script Standards**: Verify each install.sh follows the established pattern:
-  - Sets `DOTFILES_ROOT` variable correctly
-  - Checks for required dependencies  
-  - Uses proper symlink validation
-  - Has appropriate error handling and user feedback
-- **Executable Permissions**: Check all install.sh and hook scripts are executable
+- **Missing Scripts**: Identify directories missing install.sh scripts
+- **Script Standards**: Verify install.sh scripts follow patterns (DOTFILES_ROOT, dependencies, error handling)
+- **Executable Permissions**: Check install.sh and hook scripts are executable
 
 ## 5. Git Repository Health
-- **Repository Status**: Check for uncommitted changes, untracked files that should be tracked, or tracked files that should be ignored
-- **Gitignore Effectiveness**: Verify .gitignore is properly excluding generated files (keyboard.png, etc.) and local configs
-- **Hook Functionality**: Test if pre-commit hook runs correctly and generates keyboard.png from keyboard.html
-- **Sensitive Data**: Scan for accidentally committed secrets, API keys, or personal information
+- **Repository Status**: Check for uncommitted changes and proper .gitignore usage
+- **Hook Functionality**: Test pre-commit hook runs and generates keyboard.png
+- **Sensitive Data**: Scan for accidentally committed secrets or personal information
 
 ## 6. macOS-Specific Configuration
-- **Application Paths**: Verify expected macOS application paths exist for:
-  - Google Chrome (for keyboard screenshot generation)
-  - Ghostty, VS Code, VSCodium, Raycast, CleanShot X, xbar
+- **Application Paths**: Verify expected macOS application paths exist (Chrome, Ghostty, VS Code, etc.)
 - **Library Directories**: Check proper creation of app support directories
-- **Permissions**: Verify file permissions are appropriate for macOS security model
+- **Permissions**: Verify appropriate file permissions for macOS security
 
-## 7. System Integration Issues
-- **PATH Conflicts**: Check for PATH pollution or missing entries
-- **Environment Variables**: Verify essential env vars are set (EDITOR, DOTFILES paths, etc.)
-- **Service Dependencies**: Check if background services (gitlab-runner, postgresql, etc.) are properly configured
-- **File System**: Check for adequate disk space and proper file system permissions
+## 7. System Integration
+- **PATH**: Check for PATH conflicts or missing entries
+- **Environment Variables**: Verify essential env vars are set (EDITOR, DOTFILES paths)
+- **Services**: Check background services are properly configured
+- **File System**: Check disk space and file system permissions
 
-## Output Requirements
+## Output Format
 For each issue found, provide:
-1. **Specific Description**: What exactly is wrong
-2. **Impact Assessment**: How this affects functionality  
-3. **Fix Command**: Exact command(s) to resolve the issue
-4. **Prevention**: How to avoid this issue in the future
+1. **Issue**: What exactly is wrong
+2. **Impact**: How this affects functionality  
+3. **Fix**: Exact command(s) to resolve the issue
 
-Prioritize findings by:
-- **Critical**: Breaks core functionality (broken symlinks, missing essential tools)
-- **Important**: Reduces functionality (missing packages, slow performance)  
-- **Optimization**: Improvements and best practices
+Prioritize findings by severity: **Critical** → **Important** → **Optimization**
 
-End with a summary of overall dotfiles health and next recommended actions.
+End with a summary of overall dotfiles health and recommended actions.
