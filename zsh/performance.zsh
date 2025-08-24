@@ -3,39 +3,12 @@
 # Reduce startup time by deferring some expensive operations
 autoload -Uz add-zsh-hook
 
-# Lazy load nvm if present (major performance improvement)
-if [[ -f "$HOME/.nvm/nvm.sh" ]]; then
-  export NVM_DIR="$HOME/.nvm"
-  nvm() {
-    unfunction nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-    nvm "$@"
-  }
-fi
-
-# Lazy load rbenv if present
-if command -v rbenv >/dev/null 2>&1; then
-  rbenv() {
-    eval "$(command rbenv init -)"
-    rbenv "$@"
-  }
-fi
+# Removed nvm and rbenv lazy loading - not in use
 
 # Optimize path cleanup (remove duplicates)
 typeset -aU path
 
-# Better prompt updates - only when needed
-_zsh_check_git_dirty() {
-  local git_dir
-  if git_dir=$(git rev-parse --git-dir 2>/dev/null); then
-    if [[ -n $(git status --porcelain 2>/dev/null) ]]; then
-      echo "dirty"
-    else
-      echo "clean"
-    fi
-  fi
-}
+# Removed unused git dirty checking function
 
 # Cache expensive operations
 typeset -A _zsh_cache_store
@@ -66,21 +39,9 @@ _zsh_cache_set() {
   _zsh_cache_store[$key]="${current_time}:${value}"
 }
 
-# Optimize completions loading
-_defer_completion_loading() {
-  # Only load completions when needed
-  autoload -Uz compinit
-  
-  # Check if we need to regenerate completions
-  if [[ ${ZDOTDIR:-~}/.zcompdump(#qN.mh+24) ]]; then
-    compinit -d "${ZDOTDIR:-~}/.zcompdump"
-  else
-    compinit -C -d "${ZDOTDIR:-~}/.zcompdump"
-  fi
-}
-
-# Load completions after a delay
-_defer_completion_loading
+# Completion setup will be handled at the end of zsh initialization
+# This avoids early compinit calls that slow down startup
+# The actual setup is done in zinit.zsh after all plugins are loaded
 
 # Precompile zsh files for faster loading
 _precompile_zsh_files() {

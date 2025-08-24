@@ -37,15 +37,10 @@ do
   source $file
 done
 
-# initialize autocomplete here, otherwise functions won't be loaded
-autoload -U compinit
-compinit
-
-# load every completion after autocomplete loads
-for file in ${(M)config_files:#*/completion.zsh}
-do
-  source $file
-done
+# Note: All completion setup (compinit + completion files) is now handled 
+# by zsh-defer in performance.zsh for optimal startup performance.
+# Loading completion files here would cause expensive compinit rebuilds
+# and undermine the deferred loading strategy.
 
 unset config_files
 
