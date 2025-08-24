@@ -10,35 +10,30 @@ Perform a comprehensive audit of my dotfiles system health located at `~/.dotfil
 
 Focus areas: $ARGUMENTS (if not specified, analyze all areas)
 
+**IMPORTANT**: Verify all assumptions before reporting issues:
+- Check paths exist before assuming they should be linked
+- Confirm applications are installed before checking configs
+- Test commands exist before validating aliases
+
 Analyze and report on:
 
 ## 1. Symlink Integrity Analysis
-- **Core Symlinks**: Check if all `*.symlink` files in git/, ruby/, zsh/ directories are properly linked to home directory with correct targets
-- **Application Configs**: Verify symlinks for:
-  - `~/.claude/*` → `~/.dotfiles/claude/*` (CLAUDE.md, commands, hooks, settings.json)  
-  - `~/.config/ghostty/config` → `~/.dotfiles/ghostty/config`
-  - `~/Library/Application Support/Code/User/settings.json` → `~/.dotfiles/vscode/settings.json`
-  - `~/Library/Application Support/VSCodium/User/settings.json` → `~/.dotfiles/vscodium/settings.json`
-  - `~/Library/Application Support/xbar/plugins` → `~/.dotfiles/xbar/plugins`
-  - `~/.config/micro/colorschemes/pcs-tc.micro` → `~/.dotfiles/micro/pcs-tc.micro`
-- **Git Hooks**: Verify `~/.dotfiles/.git/hooks/pre-commit` → `~/.dotfiles/keyboard/hooks/pre-commit` and is executable
-- **Raycast Integration**: Check `~/.dotfiles/raycast/show-keyboard-shortcuts.sh` → `~/.dotfiles/keyboard/show-keyboard-shortcuts.sh`
-- **Broken Links**: Identify any broken symlinks, circular references, or missing target files
+- **Core Symlinks**: Check all `*.symlink` files are properly linked to home directory
+- **Application Configs**: Verify expected symlinks exist and point to correct targets
+- **Git Hooks**: Check hooks are properly linked and executable
+- **Broken Links**: Identify any broken symlinks, circular references, or missing targets
 
 ## 2. Package Management Verification  
-- **Homebrew Packages**: Compare `~/.dotfiles/homebrew/Brewfile` against installed packages (`brew list`)
-- **Missing Dependencies**: Check packages in Brewfile vs installed packages
-- **Install Script Dependencies**: For each install.sh script, verify required applications are installed and accessible
+- **Homebrew Packages**: Compare Brewfiles against installed packages
+- **Missing Dependencies**: Identify uninstalled packages from Brewfiles
+- **Install Scripts**: Verify dependencies for install.sh scripts
 
 ## 3. Shell Configuration Health
-- **Zsh Loading**: Verify all `*.zsh` files are loaded (aliases, paths, completions)
-- **Claude Aliases**: Check if claude/aliases.zsh is loaded and `claude` command works
-- **Alias Safety**: Verify aliases don't override critical system commands (ls, cd, rm, cp, mv, etc.)
-- **Tool Conflicts**: Check aliases don't interfere with common CLI tools (git, docker, npm, etc.)
-- **Command Validity**: Test that aliases point to existing commands and valid paths
-- **Version Conflicts**: Identify aliases that might cause issues with old/new tool versions
-- **Performance**: Analyze zsh startup time and identify slow configurations
-- **Duplicate Detection**: Check for duplicate aliases or conflicting PATH entries
+- **Zsh Loading**: Verify all `*.zsh` files are loaded properly
+- **Alias Safety**: Check aliases don't override critical system commands
+- **Command Validity**: Test aliases point to existing commands
+- **Performance**: Analyze zsh startup time and identify bottlenecks
+- **Duplicate Detection**: Check for duplicate aliases or PATH entries
 
 ## 4. Installation Script Consistency
 - **Missing Scripts**: Identify directories missing install.sh scripts
@@ -50,10 +45,10 @@ Analyze and report on:
 - **Hook Functionality**: Test pre-commit hook runs and generates keyboard.png
 - **Sensitive Data**: Scan for accidentally committed secrets or personal information
 
-## 6. macOS-Specific Configuration
-- **Application Paths**: Verify expected macOS application paths exist (Chrome, Ghostty, VS Code, etc.)
-- **Library Directories**: Check proper creation of app support directories
-- **Permissions**: Verify appropriate file permissions for macOS security
+## 6. OS-Specific Configuration
+- **Application Paths**: Verify expected application paths exist
+- **Library Directories**: Check proper directory structure
+- **Permissions**: Verify appropriate file permissions
 
 ## 7. System Integration
 - **PATH**: Check for PATH conflicts or missing entries
