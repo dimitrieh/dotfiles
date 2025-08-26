@@ -168,10 +168,17 @@ add-zsh-hook preexec prompt_pure_preexec
 export RANGER_LOAD_DEFAULT_RC="false"
 export GIT_RADAR_FORMAT="%{changes: }%{remote: }%{local: }%{stash}"
 
+# SSH detection function
+ssh_indicator() {
+    if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]] || [[ "$SSH_CONNECTION" ]]; then
+        echo "%{$fg_bold[blue]%}🌐 %{$reset_color%}"
+    fi
+}
+
 if command -v git-radar > /dev/null 2>&1; then
-  export PROMPT=$'\n  $(directory_name) $(git_dirty)$(need_push)\$(git-radar --zsh --fetch) \n%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%}❯)%{$fg_bold[green]%}❯%{$reset_color%} '
+  export PROMPT=$'\n  $(ssh_indicator)$(directory_name) $(git_dirty)$(need_push)\$(git-radar --zsh --fetch) \n%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%}❯)%{$fg_bold[green]%}❯%{$reset_color%} '
 else
-  export PROMPT=$'\n  $(directory_name) $(git_dirty)$(need_push) \n%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%}❯)%{$fg_bold[green]%}❯%{$reset_color%} '
+  export PROMPT=$'\n  $(ssh_indicator)$(directory_name) $(git_dirty)$(need_push) \n%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%}❯)%{$fg_bold[green]%}❯%{$reset_color%} '
 fi
 
 set_prompt () {
