@@ -171,7 +171,8 @@ export GIT_RADAR_FORMAT="%{changes: }%{remote: }%{local: }%{stash}"
 # SSH detection function
 ssh_indicator() {
     if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]] || [[ "$SSH_CONNECTION" ]]; then
-        echo "%{$fg_bold[blue]%}🌐 %{$reset_color%}"
+        local hostname=$(hostname -s)
+        echo "%{$fg_bold[blue]%}🌐 ${hostname}%{$reset_color%} "
     fi
 }
 
