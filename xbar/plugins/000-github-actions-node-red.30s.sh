@@ -14,6 +14,17 @@ MENU_BAR_LENGTH=20
 # State file for tracking changes
 STATE_FILE="$HOME/.xbar-gh-actions-state"
 
+# Dark mode detection and color setup
+if [ "$BitBarDarkMode" ]; then
+    # macOS Dark Mode is enabled
+    TEXT_COLOR="white"
+    HEADER_COLOR="lightgray"
+else
+    # macOS Light Mode (or BitBarDarkMode not set)
+    TEXT_COLOR=""  # Use system default color
+    HEADER_COLOR="gray"
+fi
+
 # Function to send notification
 send_notification() {
     local title="$1"
@@ -122,7 +133,11 @@ if [ -z "$RUNNING_RUNS" ]; then
     
     echo "💤"
     echo "---"
-    echo "Recent Runs:"
+    if [ -n "$TEXT_COLOR" ]; then
+        echo "Recent Runs: | color=$TEXT_COLOR"
+    else
+        echo "Recent Runs:"
+    fi
     
     echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.conclusion != "skipped" and .conclusion != null) | [(.status + "-" + (.conclusion // "null")), .name, .head_branch, (.id | tostring), .created_at] | @tsv' | head -10 | while IFS=$'\t' read -r run_status run_name run_branch run_id run_created; do
         case "$run_status" in
@@ -202,18 +217,34 @@ fi
 echo "---"
 
 # Dropdown menu
-echo "🔄 $WORKFLOW_NAME (Running $DURATION_TEXT) | color=black"
-echo "Branch: $BRANCH | color=black"
-
-if [ -n "$CURRENT_STEP" ]; then
-    echo "Current: $CURRENT_STEP | color=black"
-    echo "Progress: $COMPLETED_STEPS/$TOTAL_STEPS steps | color=black"
+if [ -n "$TEXT_COLOR" ]; then
+    echo "🔄 $WORKFLOW_NAME (Running $DURATION_TEXT) | color=$TEXT_COLOR"
+    echo "Branch: $BRANCH | color=$TEXT_COLOR"
+    
+    if [ -n "$CURRENT_STEP" ]; then
+        echo "Current: $CURRENT_STEP | color=$TEXT_COLOR"
+        echo "Progress: $COMPLETED_STEPS/$TOTAL_STEPS steps | color=$TEXT_COLOR"
+    else
+        echo "Starting up... | color=$TEXT_COLOR"
+    fi
 else
-    echo "Starting up... | color=black"
+    echo "🔄 $WORKFLOW_NAME (Running $DURATION_TEXT)"
+    echo "Branch: $BRANCH"
+    
+    if [ -n "$CURRENT_STEP" ]; then
+        echo "Current: $CURRENT_STEP"
+        echo "Progress: $COMPLETED_STEPS/$TOTAL_STEPS steps"
+    else
+        echo "Starting up..."
+    fi
 fi
 
 if [ $RUNNING_COUNT -gt 1 ]; then
-    echo "$(($RUNNING_COUNT - 1)) other jobs running"
+    if [ -n "$TEXT_COLOR" ]; then
+        echo "$(($RUNNING_COUNT - 1)) other jobs running | color=$TEXT_COLOR"
+    else
+        echo "$(($RUNNING_COUNT - 1)) other jobs running"
+    fi
 fi
 
 echo "---"
@@ -222,7 +253,11 @@ echo "View on GitHub | href=https://github.com/$REPO/actions/runs/$RUN_ID"
 # Show all running jobs if multiple
 if [ $RUNNING_COUNT -gt 1 ]; then
     echo "---"
-    echo "All Running Jobs:"
+    if [ -n "$TEXT_COLOR" ]; then
+        echo "All Running Jobs: | color=$TEXT_COLOR"
+    else
+        echo "All Running Jobs:"
+    fi
     
     echo "$RUNNING_RUNS" | jq -s '.[] | "\(.name)|\(.head_branch)|\(.id)|\(.created_at)"' | while IFS='|' read -r run_name run_branch run_id run_created; do
         run_start=$(date -d "$run_created" "+%s" 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$run_created" "+%s" 2>/dev/null || date "+%s")
@@ -243,7 +278,12 @@ if [ $RUNNING_COUNT -gt 1 ]; then
 fi
 
 echo "---"
-echo "Recent Completed:"
+if [ -n "$TEXT_COLOR" ]; then
+    echo "Recent Completed: | color=$TEXT_COLOR"
+else
+    echo "Recent Completed:"
+fi
+echo "   $(pad_string 'Status' 2) $(pad_string 'Workflow' 25) $(pad_string 'Branch' 20) $(pad_string 'Time' 8 'right') | color=$HEADER_COLOR"
 
 echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.status == "completed" and .conclusion != "skipped" and .conclusion != null) | [(.status + "-" + (.conclusion // "null")), .name, .head_branch, (.id | tostring), .created_at] | @tsv' | head -10 | while IFS=$'\t' read -r run_status run_name run_branch run_id run_created; do
     case "$run_status" in
