@@ -247,9 +247,6 @@ fi
 #     echo "$(($RUNNING_COUNT - 1)) other jobs running"
 # fi
 
-echo "---"
-echo "View on GitHub | href=https://github.com/$REPO/actions/runs/$RUN_ID"
-
 # Show all running jobs if multiple
 if [ $RUNNING_COUNT -gt 1 ]; then
     echo "---"
