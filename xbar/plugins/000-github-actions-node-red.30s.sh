@@ -211,11 +211,10 @@ fi
 echo "---"
 
 # Dropdown menu
-echo "🔄 $WORKFLOW_NAME (Running $DURATION_TEXT)"
-echo "Branch: $BRANCH"
+echo "🔄 $WORKFLOW_NAME (Running $DURATION_TEXT) | href=https://github.com/$REPO/actions/runs/$RUN_ID"
+echo "Branch: $BRANCH | href=https://github.com/$REPO/tree/$BRANCH"
 
 if [ -n "$CURRENT_STEP" ]; then
-    echo "Progress: $COMPLETED_STEPS/$TOTAL_STEPS steps"
     echo "---"
     echo "Steps:"
     
@@ -236,8 +235,8 @@ if [ -n "$CURRENT_STEP" ]; then
             step_icon="⏳"
         fi
         
-        # Format with step number, aligned text
-        printf "%s %2d. %-40s | size=12 font=Monaco\n" "$step_icon" "$step_counter" "$step_name"
+        # Format with step number, aligned text, and link to job
+        printf "%s %2d. %-40s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_icon" "$step_counter" "$step_name"
         step_counter=$((step_counter + 1))
     done
 else
