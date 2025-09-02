@@ -17,11 +17,11 @@ STATE_FILE="$HOME/.xbar-gh-actions-state"
 # Dark mode detection and color setup
 if [ "$BitBarDarkMode" ]; then
     # macOS Dark Mode is enabled
-    TEXT_COLOR=""  # Use system default color for better readability
+    TEXT_COLOR="black"  # Use black for better contrast in dark mode
     HEADER_COLOR="gray"
 else
     # macOS Light Mode (or BitBarDarkMode not set)
-    TEXT_COLOR=""  # Use system default color
+    TEXT_COLOR="black"  # Use black for better visibility
     HEADER_COLOR="gray"
 fi
 
