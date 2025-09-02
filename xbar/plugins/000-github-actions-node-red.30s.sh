@@ -17,8 +17,8 @@ STATE_FILE="$HOME/.xbar-gh-actions-state"
 # Dark mode detection and color setup
 if [ "$BitBarDarkMode" ]; then
     # macOS Dark Mode is enabled
-    TEXT_COLOR="white"
-    HEADER_COLOR="lightgray"
+    TEXT_COLOR=""  # Use system default color for better readability
+    HEADER_COLOR="gray"
 else
     # macOS Light Mode (or BitBarDarkMode not set)
     TEXT_COLOR=""  # Use system default color
@@ -57,32 +57,16 @@ get_relative_time() {
     fi
 }
 
-# Function to pad string to specified width
-pad_string() {
-    local string="$1"
-    local width="$2"
-    local align="${3:-left}"  # left, right, center
+# Function to format columns using printf (inspired by GitLab BitBar scripts)
+format_workflow_line() {
+    local icon="$1"
+    local workflow="$2" 
+    local branch="$3"
+    local time="$4"
     
-    local len=${#string}
-    if [ $len -ge $width ]; then
-        echo "$string"
-        return
-    fi
-    
-    local padding=$((width - len))
-    case "$align" in
-        "right")
-            printf "%*s%s" $padding "" "$string"
-            ;;
-        "center")
-            local left_pad=$((padding / 2))
-            local right_pad=$((padding - left_pad))
-            printf "%*s%s%*s" $left_pad "" "$string" $right_pad ""
-            ;;
-        *)  # left (default)
-            printf "%-*s" $width "$string"
-            ;;
-    esac
+    # Use printf with fixed widths and truncation like GitLab scripts
+    # Adjusted spacing: more between workflow/branch, less between branch/time
+    printf "%s %-28.28s %-17.17s %15s" "$icon" "$workflow" "($branch)" "$time"
 }
 
 # Fetch all workflow runs once and cache the data
@@ -133,11 +117,7 @@ if [ -z "$RUNNING_RUNS" ]; then
     
     echo "💤"
     echo "---"
-    if [ -n "$TEXT_COLOR" ]; then
-        echo "Recent Runs: | color=$TEXT_COLOR"
-    else
-        echo "Recent Runs:"
-    fi
+    echo "Recent Runs:"
     
     echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.conclusion != "skipped" and .conclusion != null) | [(.status + "-" + (.conclusion // "null")), .name, .head_branch, (.id | tostring), .created_at] | @tsv' | head -10 | while IFS=$'\t' read -r run_status run_name run_branch run_id run_created; do
         case "$run_status" in
@@ -148,10 +128,8 @@ if [ -z "$RUNNING_RUNS" ]; then
         esac
         
         run_time=$(get_relative_time "$run_created")
-        formatted_name=$(pad_string "$run_name" 25)
-        formatted_branch=$(pad_string "($run_branch)" 20)
-        formatted_time=$(pad_string "$run_time" 8 "right")
-        echo "$run_icon $formatted_name $formatted_branch $formatted_time | href=https://github.com/$REPO/actions/runs/$run_id size=12"
+        formatted_line=$(format_workflow_line "$run_icon" "$run_name" "$run_branch" "$run_time")
+        echo "$formatted_line | href=https://github.com/$REPO/actions/runs/$run_id size=12 font=Monaco trim=false"
     done
     
     # Clear state file when no jobs are running
@@ -217,34 +195,18 @@ fi
 echo "---"
 
 # Dropdown menu
-if [ -n "$TEXT_COLOR" ]; then
-    echo "🔄 $WORKFLOW_NAME (Running $DURATION_TEXT) | color=$TEXT_COLOR"
-    echo "Branch: $BRANCH | color=$TEXT_COLOR"
-    
-    if [ -n "$CURRENT_STEP" ]; then
-        echo "Current: $CURRENT_STEP | color=$TEXT_COLOR"
-        echo "Progress: $COMPLETED_STEPS/$TOTAL_STEPS steps | color=$TEXT_COLOR"
-    else
-        echo "Starting up... | color=$TEXT_COLOR"
-    fi
+echo "🔄 $WORKFLOW_NAME (Running $DURATION_TEXT)"
+echo "Branch: $BRANCH"
+
+if [ -n "$CURRENT_STEP" ]; then
+    echo "Current: $CURRENT_STEP"
+    echo "Progress: $COMPLETED_STEPS/$TOTAL_STEPS steps"
 else
-    echo "🔄 $WORKFLOW_NAME (Running $DURATION_TEXT)"
-    echo "Branch: $BRANCH"
-    
-    if [ -n "$CURRENT_STEP" ]; then
-        echo "Current: $CURRENT_STEP"
-        echo "Progress: $COMPLETED_STEPS/$TOTAL_STEPS steps"
-    else
-        echo "Starting up..."
-    fi
+    echo "Starting up..."
 fi
 
 if [ $RUNNING_COUNT -gt 1 ]; then
-    if [ -n "$TEXT_COLOR" ]; then
-        echo "$(($RUNNING_COUNT - 1)) other jobs running | color=$TEXT_COLOR"
-    else
-        echo "$(($RUNNING_COUNT - 1)) other jobs running"
-    fi
+    echo "$(($RUNNING_COUNT - 1)) other jobs running"
 fi
 
 echo "---"
@@ -253,11 +215,7 @@ echo "View on GitHub | href=https://github.com/$REPO/actions/runs/$RUN_ID"
 # Show all running jobs if multiple
 if [ $RUNNING_COUNT -gt 1 ]; then
     echo "---"
-    if [ -n "$TEXT_COLOR" ]; then
-        echo "All Running Jobs: | color=$TEXT_COLOR"
-    else
-        echo "All Running Jobs:"
-    fi
+    echo "All Running Jobs:"
     
     echo "$RUNNING_RUNS" | jq -s '.[] | "\(.name)|\(.head_branch)|\(.id)|\(.created_at)"' | while IFS='|' read -r run_name run_branch run_id run_created; do
         run_start=$(date -d "$run_created" "+%s" 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$run_created" "+%s" 2>/dev/null || date "+%s")
@@ -270,20 +228,14 @@ if [ $RUNNING_COUNT -gt 1 ]; then
             run_time="${run_duration}s"
         fi
         
-        formatted_name=$(pad_string "$run_name" 25)
-        formatted_branch=$(pad_string "($run_branch)" 20)
-        formatted_time=$(pad_string "$run_time" 8 "right")
-        echo "🔄 $formatted_name $formatted_branch $formatted_time | href=https://github.com/$REPO/actions/runs/$run_id size=12"
+        formatted_line=$(format_workflow_line "🔄" "$run_name" "$run_branch" "$run_time")
+        echo "$formatted_line | href=https://github.com/$REPO/actions/runs/$run_id size=12 font=Monaco trim=false"
     done
 fi
 
 echo "---"
-if [ -n "$TEXT_COLOR" ]; then
-    echo "Recent Completed: | color=$TEXT_COLOR"
-else
-    echo "Recent Completed:"
-fi
-echo "   $(pad_string 'Status' 2) $(pad_string 'Workflow' 25) $(pad_string 'Branch' 20) $(pad_string 'Time' 8 'right') | color=$HEADER_COLOR"
+echo "Recent Completed:"
+echo "   St Workflow                      Branch           Time | color=$HEADER_COLOR font=Monaco trim=false"
 
 echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.status == "completed" and .conclusion != "skipped" and .conclusion != null) | [(.status + "-" + (.conclusion // "null")), .name, .head_branch, (.id | tostring), .created_at] | @tsv' | head -10 | while IFS=$'\t' read -r run_status run_name run_branch run_id run_created; do
     case "$run_status" in
@@ -294,8 +246,6 @@ echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.status == "completed" a
     esac
     
     run_time=$(get_relative_time "$run_created")
-    formatted_name=$(pad_string "$run_name" 25)
-    formatted_branch=$(pad_string "($run_branch)" 20)
-    formatted_time=$(pad_string "$run_time" 8 "right")
-    echo "$run_icon $formatted_name $formatted_branch $formatted_time | href=https://github.com/$REPO/actions/runs/$run_id size=12"
+    formatted_line=$(format_workflow_line "$run_icon" "$run_name" "$run_branch" "$run_time")
+    echo "$formatted_line | href=https://github.com/$REPO/actions/runs/$run_id size=12 font=Monaco"
 done
