@@ -194,10 +194,18 @@ fi
 echo "$CURRENT_STATE" > "$STATE_FILE"
 
 # Menu bar display
-if [ $RUNNING_COUNT -gt 1 ]; then
-    echo "🔄 (+$((RUNNING_COUNT-1)))"
+if [ -n "$CURRENT_STEP" ] && [ "$TOTAL_STEPS" -gt 0 ]; then
+    if [ $RUNNING_COUNT -gt 1 ]; then
+        echo "🔄[$((COMPLETED_STEPS+1))/$TOTAL_STEPS] (+$((RUNNING_COUNT-1)))"
+    else
+        echo "🔄[$((COMPLETED_STEPS+1))/$TOTAL_STEPS]"
+    fi
 else
-    echo "🔄"
+    if [ $RUNNING_COUNT -gt 1 ]; then
+        echo "🔄($RUNNING_COUNT)"
+    else
+        echo "🔄"
+    fi
 fi
 
 echo "---"
