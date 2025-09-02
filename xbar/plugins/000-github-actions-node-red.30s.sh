@@ -215,8 +215,31 @@ echo "🔄 $WORKFLOW_NAME (Running $DURATION_TEXT)"
 echo "Branch: $BRANCH"
 
 if [ -n "$CURRENT_STEP" ]; then
-    echo "Current: $CURRENT_STEP"
     echo "Progress: $COMPLETED_STEPS/$TOTAL_STEPS steps"
+    echo "---"
+    echo "Steps:"
+    
+    # Display all steps with status
+    step_counter=1
+    echo "$JOB_DATA" | jq -r '.steps[] | "\(.name)|\(.status)|\(.conclusion)"' | while IFS='|' read -r step_name step_status step_conclusion; do
+        if [ "$step_conclusion" = "success" ]; then
+            step_icon="✅"
+        elif [ "$step_status" = "in_progress" ]; then
+            step_icon="🔄"
+        elif [ "$step_conclusion" = "failure" ]; then
+            step_icon="❌"
+        elif [ "$step_conclusion" = "cancelled" ]; then
+            step_icon="🚫"
+        elif [ "$step_status" = "queued" ]; then
+            step_icon="⏳"
+        else
+            step_icon="⏳"
+        fi
+        
+        # Format with step number, aligned text
+        printf "%s %2d. %-40s | size=12 font=Monaco\n" "$step_icon" "$step_counter" "$step_name"
+        step_counter=$((step_counter + 1))
+    done
 else
     echo "Starting up..."
 fi
