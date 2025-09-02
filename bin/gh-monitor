@@ -1,0 +1,149 @@
+#!/bin/bash
+
+# GitHub Actions Job Monitor with macOS Notifications
+# Usage: gh-monitor <job_url>
+# Example: gh-monitor https://github.com/owner/repo/actions/runs/12345/job/67890
+
+set -e
+
+# Default values
+CHECK_INTERVAL=10  # seconds
+
+# Parse arguments
+if [ $# -lt 1 ]; then
+    echo "Usage: gh-monitor <job_url>"
+    echo "Example: gh-monitor https://github.com/owner/repo/actions/runs/12345/job/67890"
+    exit 1
+fi
+
+JOB_URL="$1"
+
+# Extract repo, run_id, and job_id from URL
+if [[ $JOB_URL =~ https://github.com/([^/]+)/([^/]+)/actions/runs/([0-9]+)/job/([0-9]+) ]]; then
+    OWNER="${BASH_REMATCH[1]}"
+    REPO_NAME="${BASH_REMATCH[2]}"
+    RUN_ID="${BASH_REMATCH[3]}"
+    JOB_ID="${BASH_REMATCH[4]}"
+    REPO="$OWNER/$REPO_NAME"
+else
+    echo "Error: Invalid GitHub Actions job URL format"
+    echo "Expected: https://github.com/owner/repo/actions/runs/run_id/job/job_id"
+    exit 1
+fi
+
+echo "Monitoring job $JOB_ID in run $RUN_ID for repo $REPO"
+echo "Press Ctrl+C to stop monitoring"
+
+# Track previous state and step
+PREV_STATE=""
+PREV_STEP=""
+
+# Function to send notification (regular notifications disappear after a few seconds)
+send_notification() {
+    local title="$1"
+    local message="$2"
+    local sound="$3"
+    
+    osascript -e "display notification \"$message\" with title \"$title\" sound name \"$sound\""
+}
+
+# Function to send notification with subtitle for more info
+send_detailed_notification() {
+    local title="$1"
+    local message="$2"
+    local subtitle="$3"
+    local sound="$4"
+    
+    osascript -e "display notification \"$message\" with title \"$title\" subtitle \"$subtitle\" sound name \"$sound\""
+}
+
+# Function to show persistent alert modal (for final results)
+show_persistent_alert() {
+    local title="$1"
+    local message="$2"
+    local buttons="$3"
+    
+    osascript -e "display alert \"$title\" message \"$message\" buttons {\"$buttons\"} default button \"$buttons\""
+}
+
+# Function to get job status
+get_job_status() {
+    gh api "repos/$REPO/actions/runs/$RUN_ID/jobs" \
+        --jq ".jobs[] | select(.id == $JOB_ID) | {conclusion: .conclusion, status: .status, name: .name, steps: [.steps[] | {name: .name, status: .status, conclusion: .conclusion}]}"
+}
+
+# Main monitoring loop
+while true; do
+    # Get current job status
+    JOB_DATA=$(get_job_status 2>/dev/null)
+    
+    if [ -z "$JOB_DATA" ]; then
+        echo "Failed to get job status, retrying..."
+        sleep $CHECK_INTERVAL
+        continue
+    fi
+    
+    STATUS=$(echo "$JOB_DATA" | jq -r '.status')
+    CONCLUSION=$(echo "$JOB_DATA" | jq -r '.conclusion')
+    JOB_NAME=$(echo "$JOB_DATA" | jq -r '.name')
+    
+    # Determine current state
+    if [ "$STATUS" = "completed" ]; then
+        if [ "$CONCLUSION" = "success" ]; then
+            CURRENT_STATE="succeeded"
+        else
+            CURRENT_STATE="failed"
+        fi
+    else
+        CURRENT_STATE="running"
+    fi
+    
+    # Get current step info
+    CURRENT_STEP=$(echo "$JOB_DATA" | jq -r '.steps[] | select(.status == "in_progress") | .name' | head -1)
+    COMPLETED_STEPS=$(echo "$JOB_DATA" | jq -r '.steps[] | select(.conclusion == "success") | .name' | wc -l | tr -d ' ')
+    TOTAL_STEPS=$(echo "$JOB_DATA" | jq -r '.steps | length')
+    
+    # Check for state change OR step change
+    if [ "$CURRENT_STATE" != "$PREV_STATE" ] || [ "$CURRENT_STEP" != "$PREV_STEP" ]; then
+        case "$CURRENT_STATE" in
+            "running")
+                if [ -n "$CURRENT_STEP" ]; then
+                    send_detailed_notification "GitHub Actions Running 🔄" "$CURRENT_STEP" "Job: $JOB_NAME ($COMPLETED_STEPS/$TOTAL_STEPS steps)" "Glass"
+                    echo "[$(date)] Now running: $CURRENT_STEP ($COMPLETED_STEPS/$TOTAL_STEPS steps completed)"
+                else
+                    send_detailed_notification "GitHub Actions Running 🔄" "Job is running" "$JOB_NAME" "Glass"
+                    echo "[$(date)] Job is running"
+                fi
+                ;;
+            "succeeded")
+                send_notification "GitHub Actions ✅" "Job '$JOB_NAME' succeeded" "Hero"
+                show_persistent_alert "GitHub Actions Success ✅" "Job '$JOB_NAME' completed successfully!" "OK"
+                echo "[$(date)] Job succeeded"
+                # Exit after success
+                exit 0
+                ;;
+            "failed")
+                send_notification "GitHub Actions ❌" "Job '$JOB_NAME' failed" "Basso"
+                show_persistent_alert "GitHub Actions Failed ❌" "Job '$JOB_NAME' failed. Check the logs for details." "OK"
+                echo "[$(date)] Job failed"
+                # Exit after failure
+                exit 1
+                ;;
+        esac
+        PREV_STATE="$CURRENT_STATE"
+        PREV_STEP="$CURRENT_STEP"
+    fi
+    
+    # Show step progress for running jobs
+    if [ "$CURRENT_STATE" = "running" ]; then
+        RUNNING_STEP=$(echo "$JOB_DATA" | jq -r '.steps[] | select(.status == "in_progress") | .name' | head -1)
+        COMPLETED_STEPS=$(echo "$JOB_DATA" | jq -r '.steps[] | select(.conclusion == "success") | .name' | wc -l | tr -d ' ')
+        TOTAL_STEPS=$(echo "$JOB_DATA" | jq -r '.steps | length')
+        
+        if [ -n "$RUNNING_STEP" ]; then
+            echo "[$(date)] Currently running: $RUNNING_STEP ($COMPLETED_STEPS/$TOTAL_STEPS steps completed)"
+        fi
+    fi
+    
+    sleep $CHECK_INTERVAL
+done
