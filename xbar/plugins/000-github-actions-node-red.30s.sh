@@ -64,9 +64,17 @@ format_workflow_line() {
     local branch="$3"
     local time="$4"
     
+    # Add ellipses if text is truncated
+    if [ ${#workflow} -gt 28 ]; then
+        workflow="${workflow:0:25}..."
+    fi
+    if [ ${#branch} -gt 25 ]; then
+        branch="${branch:0:22}..."
+    fi
+    
     # Use printf with fixed widths and truncation like GitLab scripts
     # Adjusted spacing: more between workflow/branch, less between branch/time
-    printf "%s %-28.28s %-17.17s %15s" "$icon" "$workflow" "($branch)" "$time"
+    printf "%s %-28.28s %-25.25s %15s" "$icon" "$workflow" "$branch" "$time"
 }
 
 # Fetch all workflow runs once and cache the data
@@ -235,7 +243,6 @@ fi
 
 echo "---"
 echo "Recent Completed:"
-echo "   St Workflow                      Branch           Time | color=$HEADER_COLOR font=Monaco trim=false"
 
 echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.status == "completed" and .conclusion != "skipped" and .conclusion != null) | [(.status + "-" + (.conclusion // "null")), .name, .head_branch, (.id | tostring), .created_at] | @tsv' | head -10 | while IFS=$'\t' read -r run_status run_name run_branch run_id run_created; do
     case "$run_status" in
