@@ -220,7 +220,7 @@ if [ -n "$CURRENT_STEP" ]; then
     
     # Display all steps with status
     step_counter=1
-    echo "$JOB_DATA" | jq -r '.steps[] | "\(.name)|\(.status)|\(.conclusion)"' | while IFS='|' read -r step_name step_status step_conclusion; do
+    echo "$JOB_DATA" | jq -r '.steps[] | "\(.name)|\(.status)|\(.conclusion)|\(.started_at // "")|\(.completed_at // "")"' | while IFS='|' read -r step_name step_status step_conclusion step_started step_completed; do
         if [ "$step_conclusion" = "success" ]; then
             step_icon="✅"
         elif [ "$step_status" = "in_progress" ]; then
@@ -235,8 +235,39 @@ if [ -n "$CURRENT_STEP" ]; then
             step_icon="⏳"
         fi
         
-        # Format with step number, aligned text, and link to job
-        printf "%s %2d. %-40s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_icon" "$step_counter" "$step_name"
+        # Calculate step duration
+        step_duration=""
+        if [ -n "$step_started" ] && [ "$step_started" != "null" ]; then
+            step_start_time=$(date -d "$step_started" "+%s" 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$step_started" "+%s" 2>/dev/null || echo "")
+            if [ -n "$step_completed" ] && [ "$step_completed" != "null" ]; then
+                # Completed step - show actual duration
+                step_end_time=$(date -d "$step_completed" "+%s" 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$step_completed" "+%s" 2>/dev/null || echo "")
+                if [ -n "$step_start_time" ] && [ -n "$step_end_time" ]; then
+                    step_diff=$((step_end_time - step_start_time))
+                    if [ $step_diff -lt 60 ]; then
+                        step_duration=" (${step_diff}s)"
+                    else
+                        step_min=$((step_diff / 60))
+                        step_sec=$((step_diff % 60))
+                        step_duration=" (${step_min}m${step_sec}s)"
+                    fi
+                fi
+            elif [ "$step_status" = "in_progress" ] && [ -n "$step_start_time" ]; then
+                # Running step - show current duration
+                current_time=$(date "+%s")
+                step_diff=$((current_time - step_start_time))
+                if [ $step_diff -lt 60 ]; then
+                    step_duration=" (${step_diff}s)"
+                else
+                    step_min=$((step_diff / 60))
+                    step_sec=$((step_diff % 60))
+                    step_duration=" (${step_min}m${step_sec}s)"
+                fi
+            fi
+        fi
+        
+        # Format with step number, aligned text, duration, and link to job
+        printf "%s %2d. %-40s%s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_icon" "$step_counter" "$step_name" "$step_duration"
         step_counter=$((step_counter + 1))
     done
 else
