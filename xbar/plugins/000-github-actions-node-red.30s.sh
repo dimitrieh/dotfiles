@@ -39,11 +39,27 @@ send_notification() {
     fi
 }
 
+# Function to parse ISO 8601 timestamp to Unix timestamp
+parse_timestamp() {
+    local timestamp="$1"
+    # Handle both with and without fractional seconds, with or without Z
+    if [[ "$timestamp" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?Z?$ ]]; then
+        # Remove Z suffix and fractional seconds, keep only YYYY-MM-DDTHH:MM:SS
+        local clean_time=$(echo "$timestamp" | sed -E 's/\.[0-9]+Z?$//' | sed 's/Z$//')
+        date -d "$clean_time" "+%s" 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S" "$clean_time" "+%s" 2>/dev/null || echo ""
+    else
+        echo ""
+    fi
+}
+
 # Function to convert timestamp to relative time
 get_relative_time() {
     local timestamp="$1"
     local current_time=$(date "+%s")
-    local run_time=$(date -d "$timestamp" "+%s" 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$timestamp" "+%s" 2>/dev/null || echo "$current_time")
+    local run_time=$(parse_timestamp "$timestamp")
+    if [ -z "$run_time" ]; then
+        run_time="$current_time"
+    fi
     local diff=$((current_time - run_time))
     
     if [ $diff -lt 60 ]; then
@@ -155,7 +171,10 @@ BRANCH=$(echo "$FIRST_RUN" | jq -r '.head_branch')
 CREATED_AT=$(echo "$FIRST_RUN" | jq -r '.created_at')
 
 # Calculate duration
-START_TIME=$(date -d "$CREATED_AT" "+%s" 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$CREATED_AT" "+%s" 2>/dev/null || date "+%s")
+START_TIME=$(parse_timestamp "$CREATED_AT")
+if [ -z "$START_TIME" ]; then
+    START_TIME=$(date "+%s")
+fi
 CURRENT_TIME=$(date "+%s")
 DURATION=$((CURRENT_TIME - START_TIME))
 DURATION_MIN=$((DURATION / 60))
@@ -238,10 +257,10 @@ if [ -n "$CURRENT_STEP" ]; then
         # Calculate step duration
         step_duration=""
         if [ -n "$step_started" ] && [ "$step_started" != "null" ]; then
-            step_start_time=$(date -d "$step_started" "+%s" 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$step_started" "+%s" 2>/dev/null || echo "")
+            step_start_time=$(parse_timestamp "$step_started")
             if [ -n "$step_completed" ] && [ "$step_completed" != "null" ]; then
                 # Completed step - show actual duration
-                step_end_time=$(date -d "$step_completed" "+%s" 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$step_completed" "+%s" 2>/dev/null || echo "")
+                step_end_time=$(parse_timestamp "$step_completed")
                 if [ -n "$step_start_time" ] && [ -n "$step_end_time" ]; then
                     step_diff=$((step_end_time - step_start_time))
                     if [ $step_diff -lt 60 ]; then
@@ -267,7 +286,9 @@ if [ -n "$CURRENT_STEP" ]; then
         fi
         
         # Format with step number, aligned text, duration, and link to job
-        printf "%s %2d. %-40s%s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_icon" "$step_counter" "$step_name" "$step_duration"
+        # Account for icon (2 chars), space, step number (4 chars), period+space - total ~7 chars prefix
+        # Leave 15 chars for duration like recent completed section, so step name gets remaining space
+        printf "%s %2d. %-50s%15s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_icon" "$step_counter" "$step_name" "$step_duration"
         step_counter=$((step_counter + 1))
     done
 else
@@ -284,7 +305,10 @@ if [ $RUNNING_COUNT -gt 1 ]; then
     echo "All Running Jobs:"
     
     echo "$RUNNING_RUNS" | jq -s '.[] | "\(.name)|\(.head_branch)|\(.id)|\(.created_at)"' | while IFS='|' read -r run_name run_branch run_id run_created; do
-        run_start=$(date -d "$run_created" "+%s" 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$run_created" "+%s" 2>/dev/null || date "+%s")
+        run_start=$(parse_timestamp "$run_created")
+        if [ -z "$run_start" ]; then
+            run_start=$(date "+%s")
+        fi
         run_duration=$((CURRENT_TIME - run_start))
         run_min=$((run_duration / 60))
         
