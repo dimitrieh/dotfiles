@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Ensure GNU date is used if available (for correct UTC timestamp parsing)
+if [ -d "/usr/local/opt/coreutils/libexec/gnubin" ]; then
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+fi
+
 # <xbar.title>GitHub Actions - Node-RED</xbar.title>
 # <xbar.version>v2.0</xbar.version>
 # <xbar.author>dimitrie</xbar.author>
@@ -49,8 +54,12 @@ parse_timestamp() {
         if [[ ! "$clean_time" =~ Z$ ]]; then
             clean_time="${clean_time}Z"
         fi
-        # Parse as UTC timestamp
-        date -d "$clean_time" "+%s" 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$clean_time" "+%s" 2>/dev/null || echo ""
+        # Try GNU date first (if available), then BSD date with UTC timezone
+        # GNU date: use -d flag
+        # BSD date: use TZ=UTC to ensure UTC interpretation
+        date -d "$clean_time" "+%s" 2>/dev/null || \
+        TZ=UTC date -j -f "%Y-%m-%dT%H:%M:%SZ" "$clean_time" "+%s" 2>/dev/null || \
+        echo ""
     else
         echo ""
     fi
@@ -93,12 +102,12 @@ format_workflow_line() {
     fi
     
     # Use printf with fixed widths and truncation like GitLab scripts
-    # Adjusted spacing: more between workflow/branch, less between branch/time
+    # Add space after icon to align with step list (matches "1.  ✅ " or "10. ✅ ")
     printf "%s %-28.28s %-25.25s %15s" "$icon" "$workflow" "$branch" "$time"
 }
 
 # Fetch all workflow runs once and cache the data
-ALL_RUNS_RAW=$(gh api "repos/$REPO/actions/runs")
+ALL_RUNS_RAW=$(gh api "repos/$REPO/actions/runs?per_page=50")
 
 if [ -z "$ALL_RUNS_RAW" ]; then
     echo "🚫 No runs"
@@ -126,7 +135,7 @@ if [ -z "$RUNNING_RUNS" ]; then
     
     STATUS=$(echo "$LATEST_RUN" | jq -r '.status')
     CONCLUSION=$(echo "$LATEST_RUN" | jq -r '.conclusion')
-    WORKFLOW_NAME=$(echo "$LATEST_RUN" | jq -r '.name')
+    WORKFLOW_NAME=$(echo "$LATEST_RUN" | jq -r '.display_title')
     
     case "$STATUS-$CONCLUSION" in
         "completed-success")
@@ -147,7 +156,7 @@ if [ -z "$RUNNING_RUNS" ]; then
     echo "---"
     echo "Recent Runs:"
     
-    echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.conclusion != "skipped" and .conclusion != null) | [(.status + "-" + (.conclusion // "null")), .name, .head_branch, (.id | tostring), .created_at] | @tsv' | head -10 | while IFS=$'\t' read -r run_status run_name run_branch run_id run_created; do
+    echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.conclusion != "skipped" and .conclusion != null) | [(.status + "-" + (.conclusion // "null")), .display_title, .head_branch, (.id | tostring), .updated_at] | @tsv' | head -10 | while IFS=$'\t' read -r run_status run_name run_branch run_id run_updated; do
         case "$run_status" in
             "completed-success") run_icon="✅" ;;
             "completed-failure") run_icon="❌" ;;
@@ -155,7 +164,7 @@ if [ -z "$RUNNING_RUNS" ]; then
             *) run_icon="❓" ;;
         esac
         
-        run_time=$(get_relative_time "$run_created")
+        run_time=$(get_relative_time "$run_updated")
         formatted_line=$(format_workflow_line "$run_icon" "$run_name" "$run_branch" "$run_time")
         echo "$formatted_line | href=https://github.com/$REPO/actions/runs/$run_id size=12 font=Monaco trim=false"
     done
@@ -170,7 +179,7 @@ RUNNING_COUNT=$(echo "$RUNNING_RUNS" | jq -s 'length')
 FIRST_RUN=$(echo "$RUNNING_RUNS" | jq -s 'sort_by(.created_at) | reverse | .[0]')
 
 RUN_ID=$(echo "$FIRST_RUN" | jq -r '.id')
-WORKFLOW_NAME=$(echo "$FIRST_RUN" | jq -r '.name')
+WORKFLOW_NAME=$(echo "$FIRST_RUN" | jq -r '.display_title')
 BRANCH=$(echo "$FIRST_RUN" | jq -r '.head_branch')
 CREATED_AT=$(echo "$FIRST_RUN" | jq -r '.created_at')
 
@@ -218,10 +227,11 @@ echo "$CURRENT_STATE" > "$STATE_FILE"
 
 # Menu bar display
 if [ -n "$CURRENT_STEP" ] && [ "$TOTAL_STEPS" -gt 0 ]; then
+    PERCENTAGE=$((COMPLETED_STEPS * 100 / TOTAL_STEPS))
     if [ $RUNNING_COUNT -gt 1 ]; then
-        echo "🔄[$((COMPLETED_STEPS+1))/$TOTAL_STEPS] (+$((RUNNING_COUNT-1)))"
+        echo "🔄 ${PERCENTAGE}% (+$((RUNNING_COUNT-1)))"
     else
-        echo "🔄[$((COMPLETED_STEPS+1))/$TOTAL_STEPS]"
+        echo "🔄 ${PERCENTAGE}%"
     fi
 else
     if [ $RUNNING_COUNT -gt 1 ]; then
@@ -233,15 +243,21 @@ fi
 
 echo "---"
 
-# Dropdown menu
-echo "🔄 $WORKFLOW_NAME (Running $DURATION_TEXT) | href=https://github.com/$REPO/actions/runs/$RUN_ID"
-echo "Branch: $BRANCH | href=https://github.com/$REPO/tree/$BRANCH"
+# Dropdown menu - show the primary run first with step counter
+if [ -n "$CURRENT_STEP" ] && [ "$TOTAL_STEPS" -gt 0 ]; then
+    WORKFLOW_WITH_STEPS="$WORKFLOW_NAME [$((COMPLETED_STEPS+1))/$TOTAL_STEPS]"
+else
+    WORKFLOW_WITH_STEPS="$WORKFLOW_NAME"
+fi
+# Format similar to steps with duration aligned on the right
+if [ $DURATION_MIN -gt 0 ]; then
+    DURATION_FORMATTED="(${DURATION_MIN}m${DURATION_SEC}s)"
+else
+    DURATION_FORMATTED="(${DURATION_SEC}s)"
+fi
+printf "🔄  %-28.28s %-25.25s %15s | href=https://github.com/$REPO/actions/runs/$RUN_ID size=12 font=Monaco trim=false\n" "$WORKFLOW_WITH_STEPS" "$BRANCH" "$DURATION_FORMATTED"
 
 if [ -n "$CURRENT_STEP" ]; then
-    echo "---"
-    echo "Steps:"
-    
-    
     # Display all steps with status
     step_counter=1
     while IFS='|' read -r step_name step_status step_conclusion step_started step_completed; do
@@ -292,9 +308,13 @@ if [ -n "$CURRENT_STEP" ]; then
         fi
         
         # Format with step number, aligned text, duration, and link to job
-        # Account for icon (2 chars), space, step number (4 chars), period+space - total ~7 chars prefix
+        # Add extra space after single-digit numbers to align emojis
         # Leave 15 chars for duration like recent completed section, so step name gets remaining space
-        printf "%s %2d. %-50s%15s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_icon" "$step_counter" "$step_name" "$step_duration"
+        if [ $step_counter -lt 10 ]; then
+            printf "%d.  %s %-50s%15s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_counter" "$step_icon" "$step_name" "$step_duration"
+        else
+            printf "%d. %s %-50s%15s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_counter" "$step_icon" "$step_name" "$step_duration"
+        fi
         step_counter=$((step_counter + 1))
     done <<< "$(echo "$JOB_DATA" | jq -r '.steps[] | "\(.name)|\(.status)|\(.conclusion)|\(.started_at // "")|\(.completed_at // "")"')"
 else
@@ -305,21 +325,22 @@ fi
 #     echo "$(($RUNNING_COUNT - 1)) other jobs running"
 # fi
 
-# Show all running jobs if multiple
+# Show other running jobs if multiple
 if [ $RUNNING_COUNT -gt 1 ]; then
     echo "---"
-    echo "All Running Jobs:"
+    echo "Other Running Jobs:"
     
-    echo "$RUNNING_RUNS" | jq -s '.[] | "\(.name)|\(.head_branch)|\(.id)|\(.created_at)"' | while IFS='|' read -r run_name run_branch run_id run_created; do
+    echo "$RUNNING_RUNS" | jq -rs --arg exclude_id "$RUN_ID" '.[] | select(.id != ($exclude_id | tonumber)) | [.display_title, .head_branch, .id, .created_at] | @tsv' | while IFS=$'\t' read -r run_name run_branch run_id run_created; do
         run_start=$(parse_timestamp "$run_created")
         if [ -z "$run_start" ]; then
             run_start=$(date "+%s")
         fi
         run_duration=$((CURRENT_TIME - run_start))
         run_min=$((run_duration / 60))
+        run_sec=$((run_duration % 60))
         
         if [ $run_min -gt 0 ]; then
-            run_time="${run_min}m"
+            run_time="${run_min}m${run_sec}s"
         else
             run_time="${run_duration}s"
         fi
@@ -332,7 +353,7 @@ fi
 echo "---"
 echo "Recent Completed:"
 
-echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.status == "completed" and .conclusion != "skipped" and .conclusion != null) | [(.status + "-" + (.conclusion // "null")), .name, .head_branch, (.id | tostring), .created_at] | @tsv' | head -10 | while IFS=$'\t' read -r run_status run_name run_branch run_id run_created; do
+echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.status == "completed" and .conclusion != "skipped" and .conclusion != null) | [(.status + "-" + (.conclusion // "null")), .display_title, .head_branch, (.id | tostring), .updated_at] | @tsv' | head -10 | while IFS=$'\t' read -r run_status run_name run_branch run_id run_updated; do
     case "$run_status" in
         "completed-success") run_icon="✅" ;;
         "completed-failure") run_icon="❌" ;;
@@ -340,7 +361,7 @@ echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.status == "completed" a
         *) run_icon="❓" ;;
     esac
     
-    run_time=$(get_relative_time "$run_created")
+    run_time=$(get_relative_time "$run_updated")
     formatted_line=$(format_workflow_line "$run_icon" "$run_name" "$run_branch" "$run_time")
     echo "$formatted_line | href=https://github.com/$REPO/actions/runs/$run_id size=12 font=Monaco"
 done
