@@ -44,9 +44,13 @@ parse_timestamp() {
     local timestamp="$1"
     # Handle both with and without fractional seconds, with or without Z
     if [[ "$timestamp" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?Z?$ ]]; then
-        # Remove Z suffix and fractional seconds, keep only YYYY-MM-DDTHH:MM:SS
-        local clean_time=$(echo "$timestamp" | sed -E 's/\.[0-9]+Z?$//' | sed 's/Z$//')
-        date -d "$clean_time" "+%s" 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S" "$clean_time" "+%s" 2>/dev/null || echo ""
+        # Remove fractional seconds but keep Z for UTC, or add Z if missing
+        local clean_time=$(echo "$timestamp" | sed -E 's/\.[0-9]+//')
+        if [[ ! "$clean_time" =~ Z$ ]]; then
+            clean_time="${clean_time}Z"
+        fi
+        # Parse as UTC timestamp
+        date -d "$clean_time" "+%s" 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$clean_time" "+%s" 2>/dev/null || echo ""
     else
         echo ""
     fi
@@ -237,9 +241,10 @@ if [ -n "$CURRENT_STEP" ]; then
     echo "---"
     echo "Steps:"
     
+    
     # Display all steps with status
     step_counter=1
-    echo "$JOB_DATA" | jq -r '.steps[] | "\(.name)|\(.status)|\(.conclusion)|\(.started_at // "")|\(.completed_at // "")"' | while IFS='|' read -r step_name step_status step_conclusion step_started step_completed; do
+    while IFS='|' read -r step_name step_status step_conclusion step_started step_completed; do
         if [ "$step_conclusion" = "success" ]; then
             step_icon="✅"
         elif [ "$step_status" = "in_progress" ]; then
@@ -271,16 +276,17 @@ if [ -n "$CURRENT_STEP" ]; then
                         step_duration=" (${step_min}m${step_sec}s)"
                     fi
                 fi
-            elif [ "$step_status" = "in_progress" ] && [ -n "$step_start_time" ]; then
-                # Running step - show current duration
-                current_time=$(date "+%s")
-                step_diff=$((current_time - step_start_time))
-                if [ $step_diff -lt 60 ]; then
-                    step_duration=" (${step_diff}s)"
-                else
-                    step_min=$((step_diff / 60))
-                    step_sec=$((step_diff % 60))
-                    step_duration=" (${step_min}m${step_sec}s)"
+            elif [ "$step_status" = "in_progress" ]; then
+                # Running step - calculate duration from actual start time
+                if [ -n "$step_start_time" ]; then
+                    step_diff=$((CURRENT_TIME - step_start_time))
+                    if [ $step_diff -lt 60 ]; then
+                        step_duration=" (${step_diff}s)"
+                    else
+                        step_min=$((step_diff / 60))
+                        step_sec=$((step_diff % 60))
+                        step_duration=" (${step_min}m${step_sec}s)"
+                    fi
                 fi
             fi
         fi
@@ -290,7 +296,7 @@ if [ -n "$CURRENT_STEP" ]; then
         # Leave 15 chars for duration like recent completed section, so step name gets remaining space
         printf "%s %2d. %-50s%15s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_icon" "$step_counter" "$step_name" "$step_duration"
         step_counter=$((step_counter + 1))
-    done
+    done <<< "$(echo "$JOB_DATA" | jq -r '.steps[] | "\(.name)|\(.status)|\(.conclusion)|\(.started_at // "")|\(.completed_at // "")"')"
 else
     echo "Starting up..."
 fi
