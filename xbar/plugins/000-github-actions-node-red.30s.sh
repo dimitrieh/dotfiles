@@ -251,11 +251,11 @@ else
 fi
 # Format similar to steps with duration aligned on the right
 if [ $DURATION_MIN -gt 0 ]; then
-    DURATION_FORMATTED="(${DURATION_MIN}m${DURATION_SEC}s)"
+    DURATION_FORMATTED="${DURATION_MIN}m${DURATION_SEC}s"
 else
-    DURATION_FORMATTED="(${DURATION_SEC}s)"
+    DURATION_FORMATTED="${DURATION_SEC}s"
 fi
-printf "🔄  %-28.28s %-25.25s %15s | href=https://github.com/$REPO/actions/runs/$RUN_ID size=12 font=Monaco trim=false\n" "$WORKFLOW_WITH_STEPS" "$BRANCH" "$DURATION_FORMATTED"
+printf "🔄  %-28.28s %-25.25s %17s | href=https://github.com/$REPO/actions/runs/$RUN_ID size=12 font=Monaco trim=false\n" "$WORKFLOW_WITH_STEPS" "$BRANCH" "$DURATION_FORMATTED"
 
 if [ -n "$CURRENT_STEP" ]; then
     # Display all steps with status
@@ -285,11 +285,11 @@ if [ -n "$CURRENT_STEP" ]; then
                 if [ -n "$step_start_time" ] && [ -n "$step_end_time" ]; then
                     step_diff=$((step_end_time - step_start_time))
                     if [ $step_diff -lt 60 ]; then
-                        step_duration=" (${step_diff}s)"
+                        step_duration="${step_diff}s"
                     else
                         step_min=$((step_diff / 60))
                         step_sec=$((step_diff % 60))
-                        step_duration=" (${step_min}m${step_sec}s)"
+                        step_duration="${step_min}m${step_sec}s"
                     fi
                 fi
             elif [ "$step_status" = "in_progress" ]; then
@@ -297,11 +297,11 @@ if [ -n "$CURRENT_STEP" ]; then
                 if [ -n "$step_start_time" ]; then
                     step_diff=$((CURRENT_TIME - step_start_time))
                     if [ $step_diff -lt 60 ]; then
-                        step_duration=" (${step_diff}s)"
+                        step_duration="${step_diff}s"
                     else
                         step_min=$((step_diff / 60))
                         step_sec=$((step_diff % 60))
-                        step_duration=" (${step_min}m${step_sec}s)"
+                        step_duration="${step_min}m${step_sec}s"
                     fi
                 fi
             fi
@@ -309,11 +309,11 @@ if [ -n "$CURRENT_STEP" ]; then
         
         # Format with step number, aligned text, duration, and link to job
         # Add extra space after single-digit numbers to align emojis
-        # Use same alignment as primary run and recent completed (total ~54 chars for content, 15 for duration)
+        # Use same alignment as primary run and recent completed (total ~54 chars for content, 17 for duration)
         if [ $step_counter -lt 10 ]; then
-            printf "%d.  %s %-54s %15s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_counter" "$step_icon" "$step_name" "$step_duration"
+            printf "%d.  %s %-54s %17s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_counter" "$step_icon" "$step_name" "$step_duration"
         else
-            printf "%d. %s %-54s %15s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_counter" "$step_icon" "$step_name" "$step_duration"
+            printf "%d. %s %-54s %17s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_counter" "$step_icon" "$step_name" "$step_duration"
         fi
         step_counter=$((step_counter + 1))
     done <<< "$(echo "$JOB_DATA" | jq -r '.steps[] | "\(.name)|\(.status)|\(.conclusion)|\(.started_at // "")|\(.completed_at // "")"')"
