@@ -309,11 +309,11 @@ if [ -n "$CURRENT_STEP" ]; then
         
         # Format with step number, aligned text, duration, and link to job
         # Add extra space after single-digit numbers to align emojis
-        # Use same alignment as primary run and recent completed (total ~54 chars for content, 15 for duration)
+        # Use same alignment as primary run and recent completed (total ~52 chars for content, 15 for duration)
         if [ $step_counter -lt 10 ]; then
-            printf "%d.  %s %-54s %15s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_counter" "$step_icon" "$step_name" "$step_duration"
+            printf "%d.  %s %-52s %15s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_counter" "$step_icon" "$step_name" "$step_duration"
         else
-            printf "%d. %s %-54s %15s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_counter" "$step_icon" "$step_name" "$step_duration"
+            printf "%d. %s %-52s %15s | size=12 font=Monaco href=https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID\n" "$step_counter" "$step_icon" "$step_name" "$step_duration"
         fi
         step_counter=$((step_counter + 1))
     done <<< "$(echo "$JOB_DATA" | jq -r '.steps[] | "\(.name)|\(.status)|\(.conclusion)|\(.started_at // "")|\(.completed_at // "")"')"
