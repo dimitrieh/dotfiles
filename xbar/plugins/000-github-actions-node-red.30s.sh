@@ -110,7 +110,7 @@ format_workflow_line() {
 ALL_RUNS_RAW=$(gh api "repos/$REPO/actions/runs?per_page=50")
 
 if [ -z "$ALL_RUNS_RAW" ]; then
-    echo "🚫 No runs"
+    echo "No runs"
     echo "---"
     echo "Failed to fetch GitHub Actions data"
     exit 0
@@ -127,7 +127,7 @@ if [ -z "$RUNNING_RUNS" ]; then
     LATEST_RUN=$(echo "$ALL_RUNS" | jq -s '[.[] | select(.conclusion != "skipped" and .conclusion != null)] | .[0]')
     
     if [ -z "$LATEST_RUN" ] || [ "$LATEST_RUN" = "null" ]; then
-        echo "🚫 No runs"
+        echo "No runs"
         echo "---"
         echo "Failed to fetch GitHub Actions data"
         exit 0
