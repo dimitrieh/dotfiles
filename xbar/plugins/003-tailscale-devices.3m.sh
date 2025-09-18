@@ -46,8 +46,37 @@ if [ -z "$ONLINE_COUNT" ]; then
     ONLINE_COUNT=0
 fi
 
-# Display count in menu bar
-echo "${ONLINE_COUNT}"
+# Try to get CPU metrics from Mac mini if available
+PROMETHEUS_HOST="100.86.115.50"
+PROMETHEUS_PORT="9090"
+
+# Check if Prometheus is reachable - using simple query endpoint instead of range
+PROMETHEUS_QUERY_ENCODED="100%20-%20%28avg%20by%20%28instance%29%20%28rate%28node_cpu_seconds_total%7Bmode%3D%22idle%22%7D%5B5m%5D%29%29%20%2A%20100%29"
+PROMETHEUS_QUERY_URL="http://${PROMETHEUS_HOST}:${PROMETHEUS_PORT}/api/v1/query?query=${PROMETHEUS_QUERY_ENCODED}"
+
+CPU_UTIL_JSON=$(curl -s --max-time 3 "${PROMETHEUS_QUERY_URL}" 2>/dev/null)
+CPU_DISPLAY=""
+
+if [ $? -eq 0 ]; then
+    # Extract CPU percentage - using .value[1] for simple query endpoint
+    CPU_PERCENTAGE=$(echo "${CPU_UTIL_JSON}" | jq -r '.data.result[0].value[1]' 2>/dev/null)
+    if [[ -n "${CPU_PERCENTAGE}" && "${CPU_PERCENTAGE}" != "null" ]]; then
+        CPU_PERCENTAGE=$(printf "%.0f" "${CPU_PERCENTAGE}")
+        
+        # Set color based on usage
+        COLOR=""
+        if (( CPU_PERCENTAGE >= 80 )); then
+            COLOR=" | color=red"
+        elif (( CPU_PERCENTAGE >= 50 )); then
+            COLOR=" | color=orange"
+        fi
+        
+        CPU_DISPLAY="(${CPU_PERCENTAGE}%)"
+    fi
+fi
+
+# Display count and CPU metrics in menu bar
+echo "${ONLINE_COUNT}${CPU_DISPLAY}${COLOR}"
 echo "---"
 
 # Create temp file for storing device data
@@ -216,6 +245,9 @@ done
 # Clean up temp file
 rm -f "$TEMP_FILE"
 
-# Add refresh option
-echo "Refresh | refresh=true"
-echo "Open Tailscale Admin | href=https://login.tailscale.com/admin/machines"
+# Add admin and monitoring options
+echo "Tailscale Admin | href=https://login.tailscale.com/admin/machines"
+if [ -n "$CPU_DISPLAY" ]; then
+    echo "Prometheus UI | href=http://${PROMETHEUS_HOST}:${PROMETHEUS_PORT}"
+    echo "Node Exporter | href=http://${PROMETHEUS_HOST}:9100/metrics"
+fi
