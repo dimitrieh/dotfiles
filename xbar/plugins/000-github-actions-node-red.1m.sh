@@ -154,9 +154,9 @@ if [ -z "$RUNNING_RUNS" ]; then
     
     echo "💤"
     echo "---"
-    echo "Recent Runs:"
+    echo "Recent Runs: | href=https://github.com/$REPO/actions"
     
-    echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.conclusion != "skipped" and .conclusion != null) | [(.status + "-" + (.conclusion // "null")), .display_title, .head_branch, (.id | tostring), .updated_at] | @tsv' | head -10 | while IFS=$'\t' read -r run_status run_name run_branch run_id run_updated; do
+    echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.conclusion != "skipped" and .conclusion != null) | [(.status + "-" + (.conclusion // "null")), .display_title, .head_branch, (.id | tostring), .created_at, .updated_at] | @tsv' | head -10 | while IFS=$'\t' read -r run_status run_name run_branch run_id run_created run_updated; do
         case "$run_status" in
             "completed-success") run_icon="✅" ;;
             "completed-failure") run_icon="❌" ;;
@@ -164,7 +164,29 @@ if [ -z "$RUNNING_RUNS" ]; then
             *) run_icon="❓" ;;
         esac
         
-        run_time=$(get_relative_time "$run_updated")
+        # Calculate duration
+        run_start=$(parse_timestamp "$run_created")
+        run_end=$(parse_timestamp "$run_updated")
+        if [ -n "$run_start" ] && [ -n "$run_end" ]; then
+            run_duration=$((run_end - run_start))
+            if [ $run_duration -lt 60 ]; then
+                duration_text="${run_duration}s"
+            elif [ $run_duration -lt 3600 ]; then
+                duration_text="$((run_duration / 60))m"
+            else
+                hours=$((run_duration / 3600))
+                minutes=$(((run_duration % 3600) / 60))
+                if [ $minutes -gt 0 ]; then
+                    duration_text="${hours}h${minutes}m"
+                else
+                    duration_text="${hours}h"
+                fi
+            fi
+            run_time="(${duration_text}) $(get_relative_time "$run_updated")"
+        else
+            run_time=$(get_relative_time "$run_updated")
+        fi
+        
         formatted_line=$(format_workflow_line "$run_icon" "$run_name" "$run_branch" "$run_time")
         echo "$formatted_line | href=https://github.com/$REPO/actions/runs/$run_id size=12 font=Monaco trim=false"
     done
@@ -181,10 +203,10 @@ FIRST_RUN=$(echo "$RUNNING_RUNS" | jq -s 'sort_by(.created_at) | reverse | .[0]'
 RUN_ID=$(echo "$FIRST_RUN" | jq -r '.id')
 WORKFLOW_NAME=$(echo "$FIRST_RUN" | jq -r '.display_title')
 BRANCH=$(echo "$FIRST_RUN" | jq -r '.head_branch')
-CREATED_AT=$(echo "$FIRST_RUN" | jq -r '.created_at')
+RUN_STARTED_AT=$(echo "$FIRST_RUN" | jq -r '.run_started_at')
 
-# Calculate duration
-START_TIME=$(parse_timestamp "$CREATED_AT")
+# Calculate duration (use run_started_at for re-runs, created_at as fallback)
+START_TIME=$(parse_timestamp "$RUN_STARTED_AT")
 if [ -z "$START_TIME" ]; then
     START_TIME=$(date "+%s")
 fi
@@ -199,8 +221,18 @@ else
     DURATION_TEXT="${DURATION_SEC}s"
 fi
 
-# Get job details for running workflow
-JOB_DATA=$(gh api "repos/$REPO/actions/runs/$RUN_ID/jobs" --jq '.jobs[0]')
+# Get job details for running workflow - find the running job
+JOBS_RESPONSE=$(gh api "repos/$REPO/actions/runs/$RUN_ID/jobs")
+# First try to find a job that's currently in_progress, otherwise get the first job
+JOB_DATA=$(echo "$JOBS_RESPONSE" | jq '[.jobs[] | select(.status == "in_progress")] | .[0]')
+if [ -z "$JOB_DATA" ] || [ "$JOB_DATA" = "null" ]; then
+    # No in_progress job found, get the first non-skipped job
+    JOB_DATA=$(echo "$JOBS_RESPONSE" | jq '[.jobs[] | select(.conclusion != "skipped")] | .[0]')
+fi
+if [ -z "$JOB_DATA" ] || [ "$JOB_DATA" = "null" ]; then
+    # Fallback to first job if nothing else works
+    JOB_DATA=$(echo "$JOBS_RESPONSE" | jq '.jobs[0]')
+fi
 JOB_ID=$(echo "$JOB_DATA" | jq -r '.id')
 JOB_NAME=$(echo "$JOB_DATA" | jq -r '.name')
 CURRENT_STEP=$(echo "$JOB_DATA" | jq -r '.steps[] | select(.status == "in_progress") | .name' | head -1)
@@ -330,8 +362,8 @@ if [ $RUNNING_COUNT -gt 1 ]; then
     echo "---"
     echo "Other Running Jobs:"
     
-    echo "$RUNNING_RUNS" | jq -rs --arg exclude_id "$RUN_ID" '.[] | select(.id != ($exclude_id | tonumber)) | [.display_title, .head_branch, .id, .created_at] | @tsv' | while IFS=$'\t' read -r run_name run_branch run_id run_created; do
-        run_start=$(parse_timestamp "$run_created")
+    echo "$RUNNING_RUNS" | jq -rs --arg exclude_id "$RUN_ID" '.[] | select(.id != ($exclude_id | tonumber)) | [.display_title, .head_branch, .id, .run_started_at] | @tsv' | while IFS=$'\t' read -r run_name run_branch run_id run_started; do
+        run_start=$(parse_timestamp "$run_started")
         if [ -z "$run_start" ]; then
             run_start=$(date "+%s")
         fi
@@ -351,9 +383,9 @@ if [ $RUNNING_COUNT -gt 1 ]; then
 fi
 
 echo "---"
-echo "Recent Completed:"
+echo "Recent Completed: | href=https://github.com/$REPO/actions"
 
-echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.status == "completed" and .conclusion != "skipped" and .conclusion != null) | [(.status + "-" + (.conclusion // "null")), .display_title, .head_branch, (.id | tostring), .updated_at] | @tsv' | head -10 | while IFS=$'\t' read -r run_status run_name run_branch run_id run_updated; do
+echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.status == "completed" and .conclusion != "skipped" and .conclusion != null) | [(.status + "-" + (.conclusion // "null")), .display_title, .head_branch, (.id | tostring), .created_at, .updated_at] | @tsv' | head -10 | while IFS=$'\t' read -r run_status run_name run_branch run_id run_created run_updated; do
     case "$run_status" in
         "completed-success") run_icon="✅" ;;
         "completed-failure") run_icon="❌" ;;
@@ -361,7 +393,29 @@ echo "$ALL_RUNS_RAW" | jq -r '.workflow_runs[] | select(.status == "completed" a
         *) run_icon="❓" ;;
     esac
     
-    run_time=$(get_relative_time "$run_updated")
+    # Calculate duration
+    run_start=$(parse_timestamp "$run_created")
+    run_end=$(parse_timestamp "$run_updated")
+    if [ -n "$run_start" ] && [ -n "$run_end" ]; then
+        run_duration=$((run_end - run_start))
+        if [ $run_duration -lt 60 ]; then
+            duration_text="${run_duration}s"
+        elif [ $run_duration -lt 3600 ]; then
+            duration_text="$((run_duration / 60))m"
+        else
+            hours=$((run_duration / 3600))
+            minutes=$(((run_duration % 3600) / 60))
+            if [ $minutes -gt 0 ]; then
+                duration_text="${hours}h${minutes}m"
+            else
+                duration_text="${hours}h"
+            fi
+        fi
+        run_time="(${duration_text}) $(get_relative_time "$run_updated")"
+    else
+        run_time=$(get_relative_time "$run_updated")
+    fi
+    
     formatted_line=$(format_workflow_line "$run_icon" "$run_name" "$run_branch" "$run_time")
     echo "$formatted_line | href=https://github.com/$REPO/actions/runs/$run_id size=12 font=Monaco"
 done
