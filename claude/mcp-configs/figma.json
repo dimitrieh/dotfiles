@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "Figma": {
+      "command": "bun",
+      "args": [
+        "/Users/dimitrie/projects/figma-mcp/src/talk_to_figma_mcp/server.ts"
+      ]
+    }
+  }
+}

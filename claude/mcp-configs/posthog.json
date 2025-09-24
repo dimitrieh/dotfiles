@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "posthog": {
+      "command": "sh",
+      "args": [
+        "-c",
+        "export POSTHOG_AUTH_HEADER=\"Bearer $(op read 'op://CLI/POSTHOG/credential')\" && export POSTHOG_BASE_URL='https://eu.posthog.com' && npx -y mcp-remote@latest https://mcp.posthog.com/mcp --header \"Authorization:${POSTHOG_AUTH_HEADER}\""
+      ]
+    }
+  }
+}

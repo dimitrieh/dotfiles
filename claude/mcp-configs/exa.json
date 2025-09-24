@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "exa": {
+      "command": "sh",
+      "args": [
+        "-c",
+        "export EXA_API_KEY=\"$(op read 'op://CLI/EXA_TOKEN/credential')\" && npx -y mcp-remote https://mcp.exa.ai/mcp?exaApiKey=${EXA_API_KEY}"
+      ]
+    }
+  }
+}

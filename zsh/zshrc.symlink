@@ -52,3 +52,7 @@ set +o nohup
 # Activate for profiling and run in terminal
 # zprof
 export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/opt/icu4c/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+# Claude Code workaround for EBADF crash on Kill Bash
+# See: https://github.com/anthropics/claude-code/issues/3157
+export BASH_DEFAULT_TIMEOUT_MS=600000  # 10 minutes timeout to prevent Kill Bash crashes

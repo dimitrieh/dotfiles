@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "dovetail": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["/Users/dimitrie/projects/dovetail-mcp/dist/index.js"],
+      "env": {
+        "DOVETAIL_API_TOKEN": "op://CLI/DOVETAIL/credential"
+      }
+    }
+  }
+}
