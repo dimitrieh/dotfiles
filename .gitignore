@@ -24,3 +24,6 @@ keyboard.png
 
 # Compiled zsh files
 *.zwc
+
+# Claude local settings
+.claude/settings.local.json
