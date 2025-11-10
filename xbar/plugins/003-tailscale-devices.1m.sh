@@ -40,14 +40,14 @@ if [ "$BACKEND_STATE" != "Running" ]; then
     exit 0
 fi
 
-# Count online devices
-ONLINE_COUNT=$(echo "$TAILSCALE_STATUS" | jq '[.Self, .Peer[]] | map(select(.Online == true)) | length' 2>/dev/null)
+# Count online devices (excluding nr-experiment)
+ONLINE_COUNT=$(echo "$TAILSCALE_STATUS" | jq '[.Self, .Peer[]] | map(select(.Online == true and ((.Tags // []) | map(. == "tag:nr-experiment") | any | not))) | length' 2>/dev/null)
 if [ -z "$ONLINE_COUNT" ]; then
     ONLINE_COUNT=0
 fi
 
 # Try to get CPU metrics from Mac mini if available
-PROMETHEUS_HOST="100.86.115.50"
+PROMETHEUS_HOST="dimitries-mac-mini.tailbfedba.ts.net"
 PROMETHEUS_PORT="9090"
 
 # Check if Prometheus is reachable - using simple query endpoint instead of range
@@ -104,6 +104,11 @@ echo "$TAILSCALE_STATUS" | jq -c '.Peer | to_entries[]' 2>/dev/null | while read
     
     # Get tags for the device
     TAGS=$(echo "$DEVICE" | jq -r '.Tags[]? // empty' 2>/dev/null | sed 's/^tag://' | tr '\n' ',' | sed 's/,$//')
+    
+    # Skip devices with nr-experiment tag
+    if echo "$TAGS" | grep -q "nr-experiment"; then
+        continue
+    fi
     
     # Check if device is on local network (check for private IP addresses only)
     CURADDR=$(echo "$DEVICE" | jq -r '.CurAddr' 2>/dev/null)
@@ -184,6 +189,11 @@ fi
 for OWNER_ID in $OWNERS; do
     # Skip if this is the dimitriehoekstra owner we already displayed
     if [ "$OWNER_ID" = "$MY_OWNER_ID" ]; then
+        continue
+    fi
+    
+    # Skip nr-experiment section entirely
+    if [ "$OWNER_ID" = "nr-experiment" ]; then
         continue
     fi
     
