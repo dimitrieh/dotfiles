@@ -65,7 +65,8 @@ cask "colorsnapper"
 cask "color-oracle"
 cask "sim-daltonism"
 
-# System Utilities
+# System Utilities & Automation
+cask "hammerspoon"
 cask "dropbox"
 cask "mullvad-vpn"
 cask "tailscale-app"
