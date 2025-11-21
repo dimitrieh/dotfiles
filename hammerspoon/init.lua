@@ -9,22 +9,22 @@ hs.window.animationDuration = 0
 --------------------------------------------------------------------------------
 -- Only moves cursor when switching windows via Cmd+Tab or Cmd+`
 -- Does NOT move cursor when clicking on a window with the mouse
-
-local mouseClickTime = 0
-local MOUSE_CLICK_THRESHOLD = 0.15  -- 150ms threshold
+--
+-- Detection method: Position-based
+-- If cursor is inside the newly focused window, assume it was a mouse click.
+-- This is more robust than time-based detection, especially on macOS Sequoia
+-- where hs.window.filter events can be delayed.
 
 -- Feature toggle
 local cursorFollowsEnabled = true
 
--- Track mouse clicks to distinguish keyboard vs mouse focus changes
-local mouseClickWatcher = hs.eventtap.new({
-    hs.eventtap.event.types.leftMouseDown,
-    hs.eventtap.event.types.rightMouseDown
-}, function(event)
-    mouseClickTime = hs.timer.secondsSinceEpoch()
-    return false  -- don't consume the event
-end)
-mouseClickWatcher:start()
+-- Check if a point is inside a rect
+local function pointInRect(point, rect)
+    return point.x >= rect.x
+       and point.x <= rect.x + rect.w
+       and point.y >= rect.y
+       and point.y <= rect.y + rect.h
+end
 
 -- Move cursor to center of window
 local function moveCursorToWindow(win)
@@ -49,10 +49,13 @@ wf:subscribe(hs.window.filter.windowFocused, function(win, appName, event)
     if not cursorFollowsEnabled then return end
     if not win then return end
 
-    local timeSinceClick = hs.timer.secondsSinceEpoch() - mouseClickTime
+    local mousePos = hs.mouse.absolutePosition()
+    local winFrame = win:frame()
 
-    -- Only move cursor if no recent mouse click (keyboard-triggered focus)
-    if timeSinceClick > MOUSE_CLICK_THRESHOLD then
+    -- Only move cursor if mouse is NOT inside the focused window
+    -- If mouse is inside, user likely clicked to focus (don't move cursor)
+    -- If mouse is outside, focus was triggered by keyboard (move cursor)
+    if not pointInRect(mousePos, winFrame) then
         moveCursorToWindow(win)
     end
 end)
