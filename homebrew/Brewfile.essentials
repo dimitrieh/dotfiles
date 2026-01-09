@@ -132,7 +132,6 @@ brew "rlwrap"
 brew "spark"
 brew "hstr"
 brew "noti"
-brew "thefuck"
 
 # Dark mode CLI (macOS specific but CLI)
 brew "dark-mode"
