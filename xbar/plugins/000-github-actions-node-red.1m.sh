@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # Ensure GNU date is used if available (for correct UTC timestamp parsing)
-if [ -d "/usr/local/opt/coreutils/libexec/gnubin" ]; then
+# Support both Apple Silicon (/opt/homebrew) and Intel (/usr/local) paths
+if [ -d "/opt/homebrew/opt/coreutils/libexec/gnubin" ]; then
+    export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+elif [ -d "/usr/local/opt/coreutils/libexec/gnubin" ]; then
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 fi
 
