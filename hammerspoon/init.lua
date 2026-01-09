@@ -45,9 +45,15 @@ local wf = hs.window.filter.new()
         allowRoles = { "AXStandardWindow" }
     })
 
+-- Apps to exclude from cursor-follows-focus
+local excludedApps = {
+    ["CleanShot X"] = true,
+}
+
 wf:subscribe(hs.window.filter.windowFocused, function(win, appName, event)
     if not cursorFollowsEnabled then return end
     if not win then return end
+    if excludedApps[appName] then return end
 
     local mousePos = hs.mouse.absolutePosition()
     local winFrame = win:frame()
