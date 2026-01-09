@@ -56,3 +56,6 @@ export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/opt/icu4c/lib/pkgconfig:$PKG_CONFIG_P
 # Claude Code workaround for EBADF crash on Kill Bash
 # See: https://github.com/anthropics/claude-code/issues/3157
 export BASH_DEFAULT_TIMEOUT_MS=600000  # 10 minutes timeout to prevent Kill Bash crashes
+
+# Added by Antigravity
+export PATH="/Users/dimitrie/.antigravity/antigravity/bin:$PATH"

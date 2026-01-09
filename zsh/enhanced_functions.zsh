@@ -3,15 +3,7 @@
 # Command-not-found with suggestions
 command_not_found_handler() {
   local command="$1"
-  
-  # Check if it's a typo of a known command
-  if command -v thefuck >/dev/null 2>&1; then
-    echo "zsh: command not found: $command"
-    echo ""
-    thefuck --alias fuck 2>/dev/null || echo "Maybe you meant to run 'fuck' for suggestions?"
-    return 127
-  fi
-  
+
   # Simple suggestions for common typos
   case "$command" in
     'cd..' | 'cd..') echo "Did you mean: cd .."; return 127 ;;
