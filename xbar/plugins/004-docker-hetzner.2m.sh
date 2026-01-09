@@ -135,7 +135,7 @@ if [ -x "$TAILSCALE" ]; then
                 # Main item with link
                 echo "• $device_name | href=https://$device"
                 # Submenu with cleanup action
-                echo "--Cleanup | shell=/usr/local/bin/gh terminal=false param1=workflow param2=run param3=\"Deploy to Hetzner\" param4=--ref param5=\"$branch_name\" param6=--repo param7=dimitrieh/node-red param8=-f param9=\"branch=$branch_name\" param10=-f param11=\"action=cleanup\""
+                echo "--Cleanup | shell=/opt/homebrew/bin/gh terminal=false param1=workflow param2=run param3=\"Deploy to Hetzner\" param4=--ref param5=\"$branch_name\" param6=--repo param7=dimitrieh/node-red param8=-f param9=\"branch=$branch_name\" param10=-f param11=\"action=cleanup\""
             done <<< "$NR_DEVICES"
             echo "---"
         fi
