@@ -30,3 +30,9 @@ keyboard.png
 
 # Zed editor settings
 zed/
+
+# Backup files
+*.bak
+
+# iTerm2 settings (contains hardcoded paths)
+iterm/
