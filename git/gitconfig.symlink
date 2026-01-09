@@ -54,6 +54,7 @@
 	    format = ssh
 [gpg "ssh"]
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	allowedSignersFile = /Users/dimitrie/.config/git/allowed_signers
 [user]
 	    name = Dimitrie Hoekstra
 	    email = hi@dimitr.ie
@@ -69,3 +70,5 @@
         conflictstyle = diff3
 [diff]
         colorMoved = default
+[gitbutler]
+	aiModelProvider = anthropic

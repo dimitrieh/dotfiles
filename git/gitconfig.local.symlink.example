@@ -1,6 +1,6 @@
 [user]
         name = AUTHORNAME
         email = AUTHOREMAIL
-        signingkey = SIGNINGKEY
+        signingkey = SIGNINGKEY (replace this with public key of the key you sign locally with)
 [credential]
         helper = GIT_CREDENTIAL_HELPER
