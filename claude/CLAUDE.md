@@ -6,6 +6,12 @@
 - Always review and incorporate workflow improvement recommendations when working with Claude Code
 - Continuously monitor the Claude Code best practices URL for updates and new recommendations to optimize development workflows
 
+## Implementation Approach
+
+- Bias towards research first - look up documentation, read existing code, and understand patterns before trial-and-error (this includes researching how to set up automated feedback loops)
+- Bias towards automated feedback loops - think of ways to verify your own work (tests, Playwright, linters, running code) rather than asking the user to check
+- When automated verification isn't feasible, discuss options with the user
+
 ## Git Commits
 
 - NEVER include Claude references in commit messages (no "Generated with Claude Code" or "Co-Authored-By: Claude")
@@ -30,6 +36,29 @@
 - Use GitHub MCP for comprehensive repository operations
 - Utilize Notion for searching for web information in my personal tailored database. As it is a CRUD and not RAG MCP server, this is less ideal but can be worth a shot.
 - Use Exa AI for research tasks requiring current web information
+
+## npm Usage
+
+- NEVER use `npm install` - always use `npm ci` instead
+- `npm ci` provides clean, reproducible installs from package-lock.json
+- `npm ci` is faster and more reliable for development and CI/CD
+
+## Docker / Podman Containers
+
+- ALWAYS run containers in detached mode: `docker-compose up -d` or `podman-compose up -d`
+- NEVER run without `-d` flag - dev servers block indefinitely
+- Use `docker-compose logs -f` or `podman-compose logs -f` to view logs after starting
+- When a `compose.yaml` or `docker-compose.yml` exists, check it for the configured port before starting
+- For Node.js projects: node_modules should be in an anonymous volume (`/app/node_modules`) to isolate from host
+- Refresh dependencies with: `[docker|podman]-compose down -v && [docker|podman]-compose up -d`
+
+### Tailnet-First Port Binding
+
+When encountering port configurations bound to all interfaces (e.g., `"5173:5173"` without IP prefix, or `host: true` in vite.config.js), proactively ask:
+
+> "This port is accessible from any network. Would you like to restrict it to your Tailnet only?"
+
+If yes, bind to Tailscale IP: `"$(tailscale ip -4):5173:5173"` in compose.yaml. This is more secure than exposing to all interfaces.
 
 ## Python Usage
 
