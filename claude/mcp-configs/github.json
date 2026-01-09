@@ -4,7 +4,7 @@
       "command": "sh",
       "args": [
         "-c",
-        "docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN=\"$(op read 'op://CLI/GITHUB/credential')\" ghcr.io/github/github-mcp-server"
+        "podman run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN=\"$(op read 'op://CLI/GITHUB/credential')\" ghcr.io/github/github-mcp-server"
       ]
     }
   }

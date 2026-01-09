@@ -2,27 +2,7 @@
   "mcpServers": {
     "playwright": {
       "command": "npx",
-      "args": [
-        "@playwright/mcp@latest",
-        "--config",
-        "/Users/dimitrie/.claude/playwright-configs/main-config.json"
-      ]
-    },
-    "playwright-extra-session1": {
-      "command": "npx",
-      "args": [
-        "@playwright/mcp@latest",
-        "--config",
-        "/Users/dimitrie/.claude/playwright-configs/session1-config.json"
-      ]
-    },
-    "playwright-extra-session2": {
-      "command": "npx",
-      "args": [
-        "@playwright/mcp@latest",
-        "--config",
-        "/Users/dimitrie/.claude/playwright-configs/session2-config.json"
-      ]
+      "args": ["@playwright/mcp@latest", "--extension"]
     }
   }
 }
