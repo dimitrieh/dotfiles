@@ -75,25 +75,21 @@ get_relative_time() {
     fi
 }
 
-# Function to format issue line (with milestone)
-# Columns: NUMBER  TYPE  TITLE  STATUS  MILESTONE  SIZE  TIME
+# Function to format issue line (without milestone - it's now a section header)
+# Columns: NUMBER  TYPE  TITLE  STATUS  SIZE  TIME
 format_issue_line() {
     local number="$1"
     local type="$2"
     local title="$3"
     local status="$4"
-    local milestone="$5"
-    local size="$6"
-    local time="$7"
+    local size="$5"
+    local time="$6"
 
-    if [ ${#title} -gt 40 ]; then
-        title="${title:0:37}..."
-    fi
-    if [ ${#milestone} -gt 12 ]; then
-        milestone="${milestone:0:9}..."
+    if [ ${#title} -gt 45 ]; then
+        title="${title:0:42}..."
     fi
 
-    printf "  #%-5d  %-8s  %-40.40s  %-12s  %-12s  %5s  %10s" "$number" "$type" "$title" "$status" "$milestone" "$size" "$time"
+    printf "    #%-5d  %-8s  %-45.45s  %-12s  %5s  %10s" "$number" "$type" "$title" "$status" "$size" "$time"
 }
 
 # Function to format PR line (aligned with issue line)
@@ -226,13 +222,17 @@ ISSUE_COUNT=$(echo "$ISSUES" | jq 'length')
 PR_COUNT=$(echo "$MY_PRS" | jq 'length')
 REVIEW_COUNT=$(echo "$REVIEWS" | jq 'length')
 
+# Extract all URLs for each section (for "open all" feature)
+REVIEW_URLS=$(echo "$REVIEWS" | jq -r '.[].url' | tr '\n' ' ')
+ISSUE_URLS=$(echo "$ISSUES" | jq -r '.[].url' | tr '\n' ' ')
+PR_URLS=$(echo "$MY_PRS" | jq -r '.[].url' | tr '\n' ' ')
+
 # Menu bar
 echo "I:$ISSUE_COUNT P:$PR_COUNT R:$REVIEW_COUNT"
 echo "---"
 
 # Review Requested Section (FIRST - most urgent)
-echo "Review Requested ($REVIEW_COUNT)"
-echo "---"
+echo "REVIEW REQUESTED ($REVIEW_COUNT) | color=#FF9500 shell=/bin/bash param1=-c param2=\"open $REVIEW_URLS\" terminal=false"
 
 echo "$REVIEWS" | jq -r '
   group_by(.repository.nameWithOwner) |
@@ -255,28 +255,41 @@ done
 echo "---"
 
 # Assigned Issues Section
-echo "Assigned Issues ($ISSUE_COUNT) | href=https://github.com/issues/assigned"
-echo "---"
+echo "ASSIGNED ISSUES ($ISSUE_COUNT) | color=#FF9500 shell=/bin/bash param1=-c param2=\"open $ISSUE_URLS\" terminal=false"
 
-# Group issues by repository and output
-# Note: Using "_" as placeholder for empty fields to prevent bash IFS collapsing consecutive tabs
+# Group issues by milestone first, then by repository within each milestone
+# Output format: MILESTONE:name, REPO:name, ISSUE:fields...
 echo "$ISSUES" | jq -r '
-  group_by(.repository.nameWithOwner) |
+  # Group by milestone (use zzz prefix for sorting "No Release" last)
+  group_by(.milestone.title // "zzz_No Release") |
+  sort_by(.[0].milestone.title // "zzz_No Release") |
   .[] |
-  .[0].repository.nameWithOwner as $repo |
-  "\($repo)",
-  (.[] | "\(.number)\t\(.title)\t\(.url)\t\(.updatedAt)\t\(.milestone.title // "_")\t\(.labels.nodes | map(.name) | tojson)\t\(.projectItems.nodes | tojson)")
+  # Get milestone name (strip zzz_ prefix for display)
+  (.[0].milestone.title // "No Release") as $milestone |
+  "MILESTONE:\($milestone)",
+  # Within each milestone, group by repository
+  (group_by(.repository.nameWithOwner) | .[] |
+    .[0].repository.nameWithOwner as $repo |
+    "REPO:\($repo)",
+    (.[] | "ISSUE:\(.number)\t\(.title)\t\(.url)\t\(.updatedAt)\t\(.labels.nodes | map(.name) | tojson)\t\(.projectItems.nodes | tojson)")
+  )
 ' | while IFS= read -r line; do
-    # Check if this is a repo header (no tab) or an issue line
-    if [[ "$line" != *$'\t'* ]]; then
-        # Repository header
-        echo "$line | color=gray href=https://github.com/$line"
-    else
+    if [[ "$line" == MILESTONE:* ]]; then
+        # Milestone/Release header
+        milestone="${line#MILESTONE:}"
+        if [ "$milestone" = "No Release" ]; then
+            echo "No Release | color=#888888"
+        else
+            echo "Release $milestone | color=#0066cc"
+        fi
+    elif [[ "$line" == REPO:* ]]; then
+        # Repository header (indented under milestone)
+        repo="${line#REPO:}"
+        echo "    $repo | color=gray href=https://github.com/$repo size=12 font=Monaco trim=false"
+    elif [[ "$line" == ISSUE:* ]]; then
         # Issue line - parse fields
-        IFS=$'\t' read -r number title url updated_at milestone labels project_items <<< "$line"
-
-        # Convert placeholder back to empty
-        [ "$milestone" = "_" ] && milestone=""
+        issue_data="${line#ISSUE:}"
+        IFS=$'\t' read -r number title url updated_at labels project_items <<< "$issue_data"
 
         # Extract work type label (epic, story, task, bug, feature-request)
         work_type=""
@@ -321,7 +334,7 @@ echo "$ISSUES" | jq -r '
         fi
 
         rel_time=$(get_relative_time "$updated_at")
-        formatted=$(format_issue_line "$number" "$work_type" "$title" "$status" "$milestone" "$size" "$rel_time")
+        formatted=$(format_issue_line "$number" "$work_type" "$title" "$status" "$size" "$rel_time")
         echo "$formatted | href=$url size=12 font=Monaco trim=false"
     fi
 done
@@ -329,8 +342,7 @@ done
 echo "---"
 
 # My PRs Section
-echo "My PRs ($PR_COUNT) | href=https://github.com/pulls"
-echo "---"
+echo "MY PRS ($PR_COUNT) | color=#FF9500 shell=/bin/bash param1=-c param2=\"open $PR_URLS\" terminal=false"
 
 echo "$MY_PRS" | jq -r '
   group_by(.repository.nameWithOwner) |
