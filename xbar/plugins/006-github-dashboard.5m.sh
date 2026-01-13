@@ -145,7 +145,7 @@ get_pr_status() {
 # GraphQL query to fetch all data in one call
 GRAPHQL_QUERY='
 query {
-  assignedIssues: search(query: "is:issue is:open assignee:@me", type: ISSUE, first: 50) {
+  assignedIssues: search(query: "is:issue is:open assignee:@me archived:false", type: ISSUE, first: 50) {
     nodes {
       ... on Issue {
         number
@@ -175,7 +175,7 @@ query {
       }
     }
   }
-  authoredPRs: search(query: "is:pr is:open author:@me", type: ISSUE, first: 30) {
+  authoredPRs: search(query: "is:pr is:open author:@me archived:false", type: ISSUE, first: 30) {
     nodes {
       ... on PullRequest {
         number
@@ -188,7 +188,7 @@ query {
       }
     }
   }
-  reviewRequested: search(query: "is:pr is:open review-requested:@me", type: ISSUE, first: 20) {
+  reviewRequested: search(query: "is:pr is:open review-requested:@me archived:false", type: ISSUE, first: 20) {
     nodes {
       ... on PullRequest {
         number
@@ -238,13 +238,17 @@ echo "$REVIEWS" | jq -r '
   group_by(.repository.nameWithOwner) |
   .[] |
   .[0].repository.nameWithOwner as $repo |
-  "\($repo)",
-  (.[] | "\(.number)\t\(.title)\t\(.url)\t\(.updatedAt)\t\(.author.login // "")")
+  ([.[].url] | join(" ")) as $urls |
+  "REPO:\($repo)\t\($urls)",
+  (.[] | "ITEM:\(.number)\t\(.title)\t\(.url)\t\(.updatedAt)\t\(.author.login // "")")
 ' | while IFS= read -r line; do
-    if [[ "$line" != *$'\t'* ]]; then
-        echo "$line | color=gray href=https://github.com/$line"
-    else
-        IFS=$'\t' read -r number title url updated_at author <<< "$line"
+    if [[ "$line" == REPO:* ]]; then
+        repo_data="${line#REPO:}"
+        IFS=$'\t' read -r repo repo_urls <<< "$repo_data"
+        echo "$repo | color=gray shell=/bin/bash param1=-c param2=\"open $repo_urls\" terminal=false"
+    elif [[ "$line" == ITEM:* ]]; then
+        item_data="${line#ITEM:}"
+        IFS=$'\t' read -r number title url updated_at author <<< "$item_data"
 
         rel_time=$(get_relative_time "$updated_at")
         formatted=$(format_review_line "$number" "$title" "$author" "$rel_time")
@@ -258,34 +262,38 @@ echo "---"
 echo "ASSIGNED ISSUES ($ISSUE_COUNT) | color=#FF9500 shell=/bin/bash param1=-c param2=\"open $ISSUE_URLS\" terminal=false"
 
 # Group issues by milestone first, then by repository within each milestone
-# Output format: MILESTONE:name, REPO:name, ISSUE:fields...
+# Output format: MILESTONE:name\turls, REPO:name, ISSUE:fields...
 echo "$ISSUES" | jq -r '
   # Group by milestone (use zzz prefix for sorting "No Release" last)
   group_by(.milestone.title // "zzz_No Release") |
   sort_by(.[0].milestone.title // "zzz_No Release") |
   .[] |
-  # Get milestone name (strip zzz_ prefix for display)
+  # Get milestone name and collect all URLs for this milestone
   (.[0].milestone.title // "No Release") as $milestone |
-  "MILESTONE:\($milestone)",
+  ([.[].url] | join(" ")) as $urls |
+  "MILESTONE:\($milestone)\t\($urls)",
   # Within each milestone, group by repository
   (group_by(.repository.nameWithOwner) | .[] |
     .[0].repository.nameWithOwner as $repo |
-    "REPO:\($repo)",
+    ([.[].url] | join(" ")) as $repo_urls |
+    "REPO:\($repo)\t\($repo_urls)",
     (.[] | "ISSUE:\(.number)\t\(.title)\t\(.url)\t\(.updatedAt)\t\(.labels.nodes | map(.name) | tojson)\t\(.projectItems.nodes | tojson)")
   )
 ' | while IFS= read -r line; do
     if [[ "$line" == MILESTONE:* ]]; then
-        # Milestone/Release header
-        milestone="${line#MILESTONE:}"
+        # Milestone/Release header - parse milestone name and URLs
+        milestone_data="${line#MILESTONE:}"
+        IFS=$'\t' read -r milestone milestone_urls <<< "$milestone_data"
         if [ "$milestone" = "No Release" ]; then
-            echo "No Release | color=#888888"
+            echo "No Release | color=#888888 shell=/bin/bash param1=-c param2=\"open $milestone_urls\" terminal=false"
         else
-            echo "Release $milestone | color=#0066cc"
+            echo "Release $milestone | color=#0066cc shell=/bin/bash param1=-c param2=\"open $milestone_urls\" terminal=false"
         fi
     elif [[ "$line" == REPO:* ]]; then
         # Repository header (indented under milestone)
-        repo="${line#REPO:}"
-        echo "    $repo | color=gray href=https://github.com/$repo size=12 font=Monaco trim=false"
+        repo_data="${line#REPO:}"
+        IFS=$'\t' read -r repo repo_urls <<< "$repo_data"
+        echo "    $repo | color=gray shell=/bin/bash param1=-c param2=\"open $repo_urls\" terminal=false size=12 font=Monaco trim=false"
     elif [[ "$line" == ISSUE:* ]]; then
         # Issue line - parse fields
         issue_data="${line#ISSUE:}"
@@ -348,13 +356,17 @@ echo "$MY_PRS" | jq -r '
   group_by(.repository.nameWithOwner) |
   .[] |
   .[0].repository.nameWithOwner as $repo |
-  "\($repo)",
-  (.[] | "\(.number)\t\(.title)\t\(.url)\t\(.updatedAt)\t\(.reviewDecision // "")\t\(.isDraft)")
+  ([.[].url] | join(" ")) as $urls |
+  "REPO:\($repo)\t\($urls)",
+  (.[] | "ITEM:\(.number)\t\(.title)\t\(.url)\t\(.updatedAt)\t\(.reviewDecision // "")\t\(.isDraft)")
 ' | while IFS= read -r line; do
-    if [[ "$line" != *$'\t'* ]]; then
-        echo "$line | color=gray href=https://github.com/$line"
-    else
-        IFS=$'\t' read -r number title url updated_at review_decision is_draft <<< "$line"
+    if [[ "$line" == REPO:* ]]; then
+        repo_data="${line#REPO:}"
+        IFS=$'\t' read -r repo repo_urls <<< "$repo_data"
+        echo "$repo | color=gray shell=/bin/bash param1=-c param2=\"open $repo_urls\" terminal=false"
+    elif [[ "$line" == ITEM:* ]]; then
+        item_data="${line#ITEM:}"
+        IFS=$'\t' read -r number title url updated_at review_decision is_draft <<< "$item_data"
 
         status=$(get_pr_status "$review_decision" "$is_draft")
         rel_time=$(get_relative_time "$updated_at")
