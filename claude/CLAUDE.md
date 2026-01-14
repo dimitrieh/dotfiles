@@ -52,6 +52,10 @@
 - For Node.js projects: node_modules should be in an anonymous volume (`/app/node_modules`) to isolate from host
 - Refresh dependencies with: `[docker|podman]-compose down -v && [docker|podman]-compose up -d`
 
+### When npm/npx Commands Are Blocked
+
+When a hook blocks npm/npx commands on host, use the `/podman-dev-container` skill to set up or use a dev container. Do NOT improvise podman compose commands.
+
 ### Tailnet-First Port Binding
 
 When encountering port configurations bound to all interfaces (e.g., `"5173:5173"` without IP prefix, or `host: true` in vite.config.js), proactively ask:

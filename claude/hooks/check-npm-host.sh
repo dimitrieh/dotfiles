@@ -11,8 +11,7 @@ fi
 # Block bare npm/npx commands
 if [[ "$COMMAND" =~ ^(npm|npx)[[:space:]] ]]; then
     echo "npm/npx commands on host are not allowed." >&2
-    echo "Use: podman compose run --rm dev npm <command>" >&2
-    echo "Or: podman compose run --rm dev npx <command>" >&2
+    echo "Use the /podman-dev-container skill to set up or use a dev container." >&2
     exit 2
 fi
 
